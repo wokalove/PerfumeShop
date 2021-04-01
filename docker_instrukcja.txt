@@ -1,0 +1,20 @@
+1. Po zbudowaniu kontenera trzeba użyć komendy:
+
+    sudo docker exec -it perfumeshop_php_1 bash
+
+żeby przejść do terminala w kontenerze php.
+
+2. Następnie zainstalować symfony komendą:
+
+    curl -sS https://get.symfony.com/cli/installer | bash
+
+    mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+3. NGINX jest ustawiony na czytanie plików z folderu /app/symfony/public.
+
+4. Można sprawdzić działanie symfony tworząc nowy projekt w /app, najłatwiej komendą:
+
+    symfony new symfony --no-git --demo
+
+wywołujac ją w terminalu dockera. 
+Tylko potem w .gitignore dopisać linijkę /symfony, żeby nie wrzucać przykładowego projektu do repozytorium.
