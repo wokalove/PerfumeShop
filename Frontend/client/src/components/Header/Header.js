@@ -1,4 +1,5 @@
-import { Container } from '@material-ui/core';
+import Container from 'components/common/Container';
+import DIMENSIONS from 'constants/dimensions';
 import React from 'react';
 import {
     MainHeader,
@@ -12,7 +13,7 @@ const Header = () => {
     return (
         <header>
             <TopHeader>
-                <Container maxWidth="md">
+                <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                     <TopHeaderContent>
                         <ul>
                             <li>Log in</li>
@@ -22,7 +23,7 @@ const Header = () => {
                 </Container>
             </TopHeader>
             <MainHeaderContainer>
-                <Container maxWidth="md">
+                <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                     <MainHeader>
                         <h1>Logo</h1>
                         <StyledNav>
