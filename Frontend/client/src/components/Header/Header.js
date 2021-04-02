@@ -11,7 +11,7 @@ import {
 
 const Header = () => {
     return (
-        <header>
+        <>
             <TopHeader>
                 <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                     <TopHeaderContent>
@@ -37,7 +37,7 @@ const Header = () => {
                     </MainHeader>
                 </Container>
             </MainHeaderContainer>
-        </header>
+        </>
     );
 };
 

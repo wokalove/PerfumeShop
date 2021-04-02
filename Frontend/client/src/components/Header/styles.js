@@ -31,9 +31,10 @@ export const MainHeaderContainer = styled.div`
     width: 100%;
     background-color: white;
     position: sticky;
+    top: 0;
 `;
 
-export const MainHeader = styled.div`
+export const MainHeader = styled.header`
     height: 80px;
     width: 100%;
     display: flex;
