@@ -5,15 +5,6 @@ export const TopHeader = styled.div`
 `;
 
 export const TopHeaderContent = styled.div`
-    height: 35px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-
     & > ul {
         height: 35px;
         display: flex;
@@ -24,6 +15,7 @@ export const TopHeaderContent = styled.div`
         text-transform: uppercase;
         font-size: 0.8rem;
         list-style-type: none;
+        letter-spacing: 0.04em;
 
         & > li {
             margin-left: 3em;
@@ -55,6 +47,7 @@ export const StyledNav = styled.nav`
         list-style-type: none;
         text-transform: uppercase;
         color: #575757;
+        letter-spacing: 0.02em;
 
         & > li {
             margin-left: 3rem;
