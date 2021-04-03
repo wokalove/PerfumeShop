@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const TopHeader = styled.div`
     background-color: black;
+    z-index: 100;
 `;
 
 export const TopHeaderContent = styled.div`
@@ -32,6 +33,7 @@ export const MainHeaderContainer = styled.div`
     background-color: white;
     position: sticky;
     top: 0;
+    z-index: 90;
 `;
 
 export const MainHeader = styled.header`

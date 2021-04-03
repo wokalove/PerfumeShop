@@ -1,3 +1,4 @@
+import { Badge } from '@material-ui/core';
 import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
 import React from 'react';
@@ -31,7 +32,18 @@ const Header = () => {
                                 <li>Home</li>
                                 <li>Shop</li>
                                 <li>Contact</li>
-                                <li>Cart</li>
+                                <li>
+                                    <Badge
+                                        badgeContent={4}
+                                        color="primary"
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                        }}
+                                    >
+                                        Cart
+                                    </Badge>
+                                </li>
                             </ul>
                         </StyledNav>
                     </MainHeader>

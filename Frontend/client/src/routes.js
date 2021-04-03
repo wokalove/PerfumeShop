@@ -3,6 +3,7 @@ import React from 'react';
 import HomeView from 'views/HomeView';
 import LoginView from 'views/LoginView';
 import RegisterView from 'views/RegisterView';
+import ShopView from 'views/ShopView';
 
 const routes = (isLoggedIn) => [
     {
@@ -10,8 +11,10 @@ const routes = (isLoggedIn) => [
         element: <Layout />,
         children: [
             { path: '/', element: <HomeView /> },
+            { path: 'home', element: <HomeView /> },
+            { path: 'shop', element: <ShopView /> },
             { path: 'login', element: <LoginView /> },
-            { path: 'second', element: <RegisterView /> },
+            { path: 'register', element: <RegisterView /> },
         ],
     },
     // {
