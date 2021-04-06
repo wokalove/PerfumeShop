@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.label`
     position: relative;
-    padding-left: 2.2rem;
+    padding-left: 2.5rem;
     cursor: pointer;
     font-size: 1rem;
     user-select: none;
@@ -29,8 +29,8 @@ export const Checkmark = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1rem;
-    width: 1rem;
+    height: 1.375rem;
+    width: 1.375rem;
     border-radius: 0.3125rem;
     border: 1px solid black;
     transition: background-color ease-in-out 250ms,

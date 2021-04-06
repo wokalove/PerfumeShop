@@ -7,9 +7,7 @@ export const PageContainer = styled.div`
 `;
 
 export const StyledAside = styled.aside`
-    width: 243px;
-    height: 500px;
-    background-color: red;
+    width: 300px;
     margin-right: 1rem;
     margin-top: 47px;
 `;
@@ -35,4 +33,30 @@ export const PaginationContainer = styled.div`
 export const StyledPagination = styled(Pagination)`
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
+`;
+
+export const LeftSection = styled.section`
+    margin-bottom: 2rem;
+
+    & > h1 {
+        font-weight: normal;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+`;
+
+export const CheckboxGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.2rem;
+    max-height: 250px;
+    overflow-y: auto;
+
+    & > * {
+        margin-bottom: 0.8rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 `;
