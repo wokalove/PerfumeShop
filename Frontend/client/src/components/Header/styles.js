@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const TopHeader = styled.div`
@@ -58,6 +59,19 @@ export const StyledNav = styled.nav`
             &:first-child {
                 margin: 0;
             }
+        }
+    }
+`;
+
+export const StyledNavLink = styled(NavLink)`
+    && {
+        text-decoration: none;
+
+        &,
+        &:link,
+        &:visited,
+        &:active {
+            color: ${(props) => props.color};
         }
     }
 `;

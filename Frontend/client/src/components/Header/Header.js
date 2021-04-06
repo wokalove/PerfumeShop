@@ -6,6 +6,7 @@ import {
     MainHeader,
     MainHeaderContainer,
     StyledNav,
+    StyledNavLink,
     TopHeader,
     TopHeaderContent,
 } from './styles';
@@ -17,8 +18,16 @@ const Header = () => {
                 <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                     <TopHeaderContent>
                         <ul>
-                            <li>Log in</li>
-                            <li>Create an account</li>
+                            <li>
+                                <StyledNavLink to="/login" color="white">
+                                    Log in
+                                </StyledNavLink>
+                            </li>
+                            <li>
+                                <StyledNavLink to="/register" color="white">
+                                    Create an account
+                                </StyledNavLink>
+                            </li>
                         </ul>
                     </TopHeaderContent>
                 </Container>
@@ -29,9 +38,21 @@ const Header = () => {
                         <h1>Logo</h1>
                         <StyledNav>
                             <ul>
-                                <li>Home</li>
-                                <li>Shop</li>
-                                <li>Contact</li>
+                                <li>
+                                    <StyledNavLink to="/home" color="black">
+                                        Home
+                                    </StyledNavLink>
+                                </li>
+                                <li>
+                                    <StyledNavLink to="/shop" color="black">
+                                        Shop
+                                    </StyledNavLink>
+                                </li>
+                                <li>
+                                    <StyledNavLink to="/contact" color="black">
+                                        Contact
+                                    </StyledNavLink>
+                                </li>
                                 <li>
                                     <Badge
                                         badgeContent={4}
@@ -41,7 +62,9 @@ const Header = () => {
                                             horizontal: 'right',
                                         }}
                                     >
-                                        Cart
+                                        <StyledNavLink to="/cart" color="black">
+                                            Cart
+                                        </StyledNavLink>
                                     </Badge>
                                 </li>
                             </ul>
