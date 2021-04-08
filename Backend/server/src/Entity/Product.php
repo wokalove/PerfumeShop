@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,13 +20,13 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ProductBase::class)
+     * @ORM\ManyToOne(targetEntity=ProductBase::class, inversedBy="product")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product_base_id;
+    private $product_base;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $price;
 
@@ -38,29 +40,44 @@ class Product
      */
     private $added_at;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Offer::class, mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $offer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="product", orphanRemoval=true)
+     */
+    private $transaction;
+
+    public function __construct()
+    {
+        $this->transaction = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProductBaseId(): ?ProductBase
+    public function getProductBase(): ?ProductBase
     {
-        return $this->product_base_id;
+        return $this->product_base;
     }
 
-    public function setProductBaseId(?ProductBase $product_base_id): self
+    public function setProductBase(?ProductBase $product_base): self
     {
-        $this->product_base_id = $product_base_id;
+        $this->product_base = $product_base;
 
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): self
+    public function setPrice(int $price): self
     {
         $this->price = $price;
 
@@ -87,6 +104,53 @@ class Product
     public function setAddedAt(\DateTimeInterface $added_at): self
     {
         $this->added_at = $added_at;
+
+        return $this;
+    }
+
+    public function getOffer(): ?Offer
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(Offer $offer): self
+    {
+        // set the owning side of the relation if necessary
+        if ($offer->getProduct() !== $this) {
+            $offer->setProduct($this);
+        }
+
+        $this->offer = $offer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransaction(): Collection
+    {
+        return $this->transaction;
+    }
+
+    public function addTransaction(Transaction $transaction): self
+    {
+        if (!$this->transaction->contains($transaction)) {
+            $this->transaction[] = $transaction;
+            $transaction->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction): self
+    {
+        if ($this->transaction->removeElement($transaction)) {
+            // set the owning side to null (unless already changed)
+            if ($transaction->getProduct() === $this) {
+                $transaction->setProduct(null);
+            }
+        }
 
         return $this;
     }

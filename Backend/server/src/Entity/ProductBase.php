@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductBaseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,7 +25,7 @@ class ProductBase
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=500)
      */
     private $description;
 
@@ -33,7 +35,7 @@ class ProductBase
     private $brand;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=300, nullable=true)
      */
     private $base_note;
 
@@ -41,6 +43,16 @@ class ProductBase
      * @ORM\Column(type="boolean")
      */
     private $for_women;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="product_base", orphanRemoval=true)
+     */
+    private $product;
+
+    public function __construct()
+    {
+        $this->product = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class ProductBase
     public function setForWomen(bool $for_women): self
     {
         $this->for_women = $for_women;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProduct(): Collection
+    {
+        return $this->product;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->product->contains($product)) {
+            $this->product[] = $product;
+            $product->setProductBase($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->product->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getProductBase() === $this) {
+                $product->setProductBase(null);
+            }
+        }
 
         return $this;
     }

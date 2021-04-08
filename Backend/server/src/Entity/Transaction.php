@@ -18,16 +18,16 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="transaction")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $users_id;
+    private $users;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class)
+     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="transaction")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product_id;
+    private $product;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -35,7 +35,7 @@ class Transaction
     private $product_name;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $price;
 
@@ -59,26 +59,26 @@ class Transaction
         return $this->id;
     }
 
-    public function getUsersId(): ?User
+    public function getUsers(): ?User
     {
-        return $this->users_id;
+        return $this->users;
     }
 
-    public function setUsersId(?User $users_id): self
+    public function setUsers(?User $users): self
     {
-        $this->users_id = $users_id;
+        $this->users = $users;
 
         return $this;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(?Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
 
         return $this;
     }
@@ -95,12 +95,12 @@ class Transaction
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(string $price): self
+    public function setPrice(int $price): self
     {
         $this->price = $price;
 

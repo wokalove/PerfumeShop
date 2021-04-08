@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc847bb7-71be-4026-a4dd-be9b97a676cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c0e68c49-f4f6-4851-beac-235fdedda91c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c0e68c49-f4f6-4851-beac-235fdedda91c.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/c0e68c49-f4f6-4851-beac-235fdedda91c/storage_v2/_src_/database/d5dlk4lqv5icmr.hfpSnw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c0e68c49-f4f6-4851-beac-235fdedda91c/storage_v2/_src_/database/d5dlk4lqv5icmr.hfpSnw/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/server/src/Entity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/server/src/Repository/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +18,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Backend/server" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="ProjectId" id="1qYyHPz4F92BrXZX3gULqrOqnSa" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -43,7 +45,9 @@
       <workItem from="1617270731140" duration="891000" />
       <workItem from="1617697436033" duration="3253000" />
       <workItem from="1617720721364" duration="27000" />
-      <workItem from="1617726761321" duration="3033000" />
+      <workItem from="1617726761321" duration="3241000" />
+      <workItem from="1617888904256" duration="258000" />
+      <workItem from="1617889389553" duration="2017000" />
     </task>
     <servers />
   </component>
@@ -55,6 +59,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1617700750551" />
+    <state x="-1569" y="-113" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1617729649648">
+      <screen x="-1920" y="-113" width="1280" height="680" />
+    </state>
+    <state x="-1569" y="-113" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1440.860/-1920.-113.1280.680@-1920.-113.1280.680" timestamp="1617729649648" />
     <state x="-1499" y="-17" key="FileChooserDialogImpl" timestamp="1617720748225">
       <screen x="-1920" y="-113" width="1280" height="680" />
     </state>

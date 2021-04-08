@@ -18,13 +18,13 @@ class Offer
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Product::class)
+     * @ORM\OneToOne(targetEntity=Product::class, inversedBy="offer", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $product_id;
+    private $product;
 
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $new_price;
 
@@ -33,24 +33,24 @@ class Offer
         return $this->id;
     }
 
-    public function getProductId(): ?Product
+    public function getProduct(): ?Product
     {
-        return $this->product_id;
+        return $this->product;
     }
 
-    public function setProductId(?Product $product_id): self
+    public function setProduct(Product $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
 
         return $this;
     }
 
-    public function getNewPrice(): ?string
+    public function getNewPrice(): ?int
     {
         return $this->new_price;
     }
 
-    public function setNewPrice(string $new_price): self
+    public function setNewPrice(int $new_price): self
     {
         $this->new_price = $new_price;
 
