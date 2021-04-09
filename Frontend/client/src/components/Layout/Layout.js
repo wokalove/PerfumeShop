@@ -4,14 +4,16 @@ import Header from 'components/Header';
 import DIMENSIONS from 'constants/dimensions';
 import React from 'react';
 import { Outlet } from 'react-router';
-import { StyledImg } from './styles';
+import { StyledImg, TextWrapper } from './styles';
 
 const Layout = () => {
     return (
         <>
             <Header />
             <Outlet />
-            <StyledImg />
+            <StyledImg>
+                <TextWrapper>Lorem ipsum dolor sit amet</TextWrapper>
+            </StyledImg>
             <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                 <Footer />
             </Container>

@@ -13,18 +13,12 @@ const routes = (isLoggedIn) => [
             { path: '/', element: <HomeView /> },
             { path: 'home', element: <HomeView /> },
             { path: 'shop', element: <ShopView /> },
+            { path: 'contact' },
+            { path: 'cart' },
             { path: 'login', element: <LoginView /> },
             { path: 'register', element: <RegisterView /> },
         ],
     },
-    // {
-    //     path: 'auth',
-    //     element: !isLoggedIn ? <AuthLayout /> : <Navigate to="/first" />,
-    //     children: [
-    //         { path: 'login', element: <LoginView /> },
-    //         { path: 'register', element: <RegisterView /> },
-    //     ],
-    // },
 ];
 
 export default routes;

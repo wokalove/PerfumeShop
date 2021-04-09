@@ -8,7 +8,7 @@ export const PageContainer = styled.div`
 
 export const StyledAside = styled.aside`
     width: 300px;
-    margin-right: 1rem;
+    margin-right: 2rem;
     margin-top: 47px;
 `;
 
