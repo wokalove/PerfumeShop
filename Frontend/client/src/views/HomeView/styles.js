@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
-export const HomeImage = styled.img`
+export const HomeImageWrapper = styled.div`
+    width: 100%;
+    height: 70vh;
+    overflow: hidden;
+`;
+
+export const StyledImg = styled.img`
     width: 100%;
     height: 70vh;
     object-fit: cover;
