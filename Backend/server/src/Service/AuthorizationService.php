@@ -4,18 +4,21 @@ namespace App\Service;
 use App\Repository\UserRepository;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use http\Env\Response;
 
 class AuthorizationService
 {
-    public function checkEmail(string $email): boolean
+    public function checkIfUserExists(string $email): boolean
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($email);
+        $user = $this->getDoctrine()->getRepository(User::class)->createQueryBuilder('u')
+                ->where('u.email=:email')
+                ->setParameter('email',$email)
+                ->getQuery()
+                ->getOneOrNullResult();
         if(!user)return true;
         else return false;
     }
 
-    public function addUser(string $name,string $surname, string $email, string $password, boolean $is_admin):Response
+    public function addUser(string $name,string $surname, string $email, string $password, boolean $is_admin):boolean
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -30,14 +33,15 @@ class AuthorizationService
         $entityManager->persist($user);
         $entityManager->flush;
 
-        return new Response('User saved');
+        return true;
     }
 
-    public function deleteUserById(int $id): Response
+    public function deleteUserById(int $id): boolean
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($id);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($user);
         $entityManager->flush();
+        return true;
     }
 }
