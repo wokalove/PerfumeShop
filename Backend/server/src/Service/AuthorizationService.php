@@ -7,21 +7,37 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AuthorizationService
 {
+    protected UserRepository $userRepository;
+
+    /**
+     * AuthorizationService constructor.
+     */
+    public function __construct()
+    {
+        $this->userRepository=new UserRepository();
+    }
+
+    public function login(string $email, string $password):boolean
+    {
+        $user=$this->userRepository->getUserByEmail($email);
+        if(!$user)return false;
+        else {
+            $password===$user->getPassword();
+            return true;
+        }
+        return false;
+
+    }
+
     public function checkIfUserExists(string $email): boolean
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->createQueryBuilder('u')
-                ->where('u.email=:email')
-                ->setParameter('email',$email)
-                ->getQuery()
-                ->getOneOrNullResult();
-        if(!user)return true;
+        $user=$this->userRepository->getUserByEmail($email);
+        if(!$user)return true;
         else return false;
     }
 
     public function addUser(string $name,string $surname, string $email, string $password, boolean $is_admin):boolean
     {
-        $entityManager = $this->getDoctrine()->getManager();
-
         $user = new User();
         $user->setName($name)
                 ->setSurname($surname)
@@ -29,19 +45,17 @@ class AuthorizationService
                 ->setPassword($password)
                 ->setIsAdmin($is_admin)
                 ->setCreatedAt(date("Y-m-d H:i:s"));
-
-        $entityManager->persist($user);
-        $entityManager->flush;
-
+        $this->userRepository->addUser($user);
         return true;
     }
 
     public function deleteUserById(int $id): boolean
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($user);
-        $entityManager->flush();
+        $user=$this->userRepository->getUserById($id);
+        if($user==NULL){
+            return false;
+        }
+        $this->userRepository->deleteUser($user);
         return true;
     }
 }

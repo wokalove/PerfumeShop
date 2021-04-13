@@ -19,6 +19,27 @@ class ProductBaseRepository extends ServiceEntityRepository
         parent::__construct($registry, ProductBase::class);
     }
 
+    public function getProductBaseById(int $id): ?ProductBase
+    {
+        $productBase = $this->getDoctrine()
+                ->getRepository(ProductBase::class)
+                ->find($id);
+        return $productBase;
+    }
+
+    public function getBrands(): Array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT DISTINCT brands FROM productBase
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAllAssociative();
+    }
+
+    
     // /**
     //  * @return ProductBase[] Returns an array of ProductBase objects
     //  */
