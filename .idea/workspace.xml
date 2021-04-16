@@ -4,6 +4,8 @@
     <list default="true" id="cc847bb7-71be-4026-a4dd-be9b97a676cc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/server/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/server/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/src/Entity/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/src/Repository/.gitignore" beforeDir="false" />
     </list>
@@ -16,6 +18,11 @@
     <execution />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/Backend/server" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Backend/server" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
@@ -29,7 +36,7 @@
     <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../myTone" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -48,6 +55,7 @@
       <workItem from="1617888904256" duration="258000" />
       <workItem from="1617889389553" duration="3028000" />
       <workItem from="1617953821510" duration="29000" />
+      <workItem from="1618564475084" duration="1293000" />
     </task>
     <servers />
   </component>
