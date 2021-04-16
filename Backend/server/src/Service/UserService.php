@@ -4,19 +4,13 @@ namespace App\Service;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
-class AuthorizationService
+class UserService
 {
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-    }
-
-    public function checkLoginData(string $email, string $password): bool
-    {
-        $user = $this->getUserByEmailAndPassword($email, $password);
-        return $user == null ? false : true;
     }
 
     public function addUser(User $user): bool
@@ -75,6 +69,18 @@ class AuthorizationService
         return true;
     }
 
+    public function checkIfAdmin(int $id)
+    {
+        $isAdmin = $this->getUserById($id)->getIsAdmin();
+        return $isAdmin ? true : false;
+    }
+
+    public function checkLoginData(string $email, string $password): bool
+    {
+        $user = $this->getUserByEmailAndPassword($email, $password);
+        return $user == null ? false : true;
+    }
+
     public function checkIfUserExistsById(int $id): bool
     {
         $user = $this->getUserById($id);
@@ -100,5 +106,15 @@ class AuthorizationService
     public function getUserByEmailAndPassword(string $email, string $password): ?User
     {
         return $this->em->getRepository(User::class)->findOneBy(array('email'=>$email, 'password'=>$password));
+    }
+
+    public function getUsers(int $limit)
+    {
+        return $this->em->getRepository(User::class)->findBy(null, null, $limit);
+    }
+
+    public function getAllUsers()
+    {
+        return $this->em->getRepository(User::class)->findAll();
     }
 }
