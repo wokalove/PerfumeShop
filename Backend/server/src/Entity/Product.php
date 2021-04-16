@@ -154,4 +154,12 @@ class Product
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getProductBase()." ".
+            $this->getPrice()." ".
+            $this->getVolume()." ".
+            $this->getAddedAt()->format("Y-m-d H:i:s");
+    }
 }

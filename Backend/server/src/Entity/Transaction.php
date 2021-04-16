@@ -142,4 +142,14 @@ class Transaction
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getUsers()->getEmail()." ".
+            $this->getProductName()." ".
+            $this->getPrice()." ".
+            $this->getIsCompleted()." ".
+            $this->getQuantity()." ".
+            $this->getDate()->format("Y-m-d H:i:s");
+    }
 }
