@@ -38,7 +38,7 @@ export const login = (email, password) => async (dispatch) => {
         });
 
         const res = await axios
-            .post('', { usernameOrEmail, password })
+            .post('', { email, password })
             .then((response) => {
                 if (response.data.token) {
                     const userData = {
