@@ -1,11 +1,13 @@
+import axios from 'axios';
+
 export const AUTH_ACTION_TYPES = {
-    LOADING = 'LOADING',
-    REGISTER_SUCCESS = 'REGISTER_SUCCESS',
-    REGISTER_FAIL = 'REGISTER_FAIL',
-    LOGIN_SUCCESS = 'LOGIN_SUCCESS',
-    LOGIN_FAIL = 'LOGIN_FAIL',
-    LOGOUT = 'LOGOUT',
-}
+    LOADING: 'LOADING',
+    REGISTER_SUCCESS: 'REGISTER_SUCCESS',
+    REGISTER_FAIL: 'REGISTER_FAIL',
+    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+    LOGIN_FAIL: 'LOGIN_FAIL',
+    LOGOUT: 'LOGOUT',
+};
 
 // TODO: auth actions url's
 
@@ -43,13 +45,10 @@ export const login = (email, password) => async (dispatch) => {
                 if (response.data.token) {
                     const userData = {
                         token: response.data.token,
-                        refreshToken: 'asdfasdf',
                     };
 
-                    localStorage.setItem(
-                        LOCAL_STORAGE.USER_DATA_NAME,
-                        JSON.stringify(userData)
-                    );
+                    // TODO: local storage data name
+                    localStorage.setItem('token', JSON.stringify(userData));
                 }
 
                 return response.data;
@@ -76,7 +75,8 @@ export const logout = () => (dispatch) => {
         type: AUTH_ACTION_TYPES.LOADING,
     });
 
-    localStorage.removeItem(LOCAL_STORAGE.USER_DATA_NAME);
+    // TODO: local storage data name
+    localStorage.removeItem('token');
 
     dispatch({
         type: AUTH_ACTION_TYPES.LOGOUT,
