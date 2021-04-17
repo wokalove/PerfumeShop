@@ -21,3 +21,9 @@ export const HomeProductsSection = styled.section`
     border: 1px solid black;
     margin-top: 6rem;
 `;
+
+export const RedSquare = styled.div`
+    width: 200px;
+    height: 200px;
+    background-color: red;
+`;
