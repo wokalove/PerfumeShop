@@ -6,8 +6,10 @@
       <change beforePath="$PROJECT_DIR$/Backend/server/.env" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/server/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/src/Entity/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/server/src/Repository/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/server/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/server/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
