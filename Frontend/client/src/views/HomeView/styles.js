@@ -2,15 +2,17 @@ import styled from 'styled-components';
 
 export const HomeImageWrapper = styled.div`
     width: 100%;
-    height: 70vh;
+    height: 75vh;
     overflow: hidden;
+    position: relative;
+    top: -40px;
 `;
 
 export const StyledImg = styled.img`
     width: 100%;
-    height: 70vh;
+    height: 75vh;
     object-fit: cover;
-    object-position: 0 36%;
+    object-position: 0 30%;
 `;
 
 export const HomeProductsSection = styled.section`
