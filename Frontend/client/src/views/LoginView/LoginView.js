@@ -22,13 +22,13 @@ const LoginView = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(login);
+        alert('login');
     };
 
     return (
         <Container>
             <h1>Log in</h1>
-            <StyledForm>
+            <StyledForm onSubmit={handleSubmit}>
                 {INPUTS.map((item, index) => (
                     <TextInput
                         key={index}
