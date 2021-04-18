@@ -1,6 +1,8 @@
 import '@brainhubeu/react-carousel/lib/style.css';
 import backgroundImage from 'assets/home-background.jpg';
+import image from 'assets/pngegg.png';
 import Container from 'components/common/Container';
+import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
 import React, { useState } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
@@ -39,19 +41,21 @@ const HomeView = () => {
                     <HomeSection title="New Products">
                         <CustomCarousel>
                             {/* //{slides.map((item, index) => item)} */}
-                            <RedSquare />
-                            <RedSquare />
-                            <RedSquare />
-                            <RedSquare />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
                         </CustomCarousel>
                     </HomeSection>
                     <HomeSection title="Special Offers">
                         <CustomCarousel>
                             {/* //{slides.map((item, index) => item)} */}
-                            <RedSquare />
-                            <RedSquare />
-                            <RedSquare />
-                            <RedSquare />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem imageSrc={image} price="59.99" />
                         </CustomCarousel>
                     </HomeSection>
                 </main>
