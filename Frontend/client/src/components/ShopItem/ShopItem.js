@@ -16,15 +16,15 @@ export const PriceContainer = styled.div`
     justify-content: center;
 
     & > span {
-        font-size: ${(props) => (props.theBigOne ? '1.875rem' : '1.2rem')};
+        font-size: ${(props) => (props.theBigOne ? '1.6rem' : '1.2rem')};
     }
 `;
 
-const ShopItem = ({ imageSrc, price }) => {
+const ShopItem = ({ imageSrc, price, theBigOne }) => {
     return (
-        <ItemWrapper>
-            <Image src={imageSrc} alt="item image" />
-            <PriceContainer>
+        <ItemWrapper theBigOne={theBigOne}>
+            <Image src={imageSrc} alt="item image" theBigOne={theBigOne} />
+            <PriceContainer theBigOne={theBigOne}>
                 <span>${price}</span>
             </PriceContainer>
         </ItemWrapper>
