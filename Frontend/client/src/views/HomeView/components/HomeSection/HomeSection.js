@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 export const StyledHomeSection = styled.section`
     width: 100%;
-    background-color: pink;
-    margin-top: 6.25rem;
+    margin-bottom: 8rem;
 `;
 
 export const TitleContainer = styled.div`

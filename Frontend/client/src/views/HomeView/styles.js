@@ -15,13 +15,6 @@ export const StyledImg = styled.img`
     object-position: 0 30%;
 `;
 
-export const HomeProductsSection = styled.section`
-    width: 100%;
-    height: 300px;
-    border: 1px solid black;
-    margin-top: 6rem;
-`;
-
 export const RedSquare = styled.div`
     width: 200px;
     height: 200px;
