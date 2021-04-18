@@ -9,6 +9,7 @@ import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
 import React, { useState } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
+import HomeSection from './components/HomeSection';
 import {
     HomeImageWrapper,
     HomeProductsSection,
@@ -44,6 +45,8 @@ const HomeView = () => {
             </HomeImageWrapper>
             <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                 <main>
+                    <HomeSection title="New Products"></HomeSection>
+                    <HomeSection title="Special Offers"></HomeSection>
                     <HomeProductsSection>
                         <Carousel
                             plugins={[
