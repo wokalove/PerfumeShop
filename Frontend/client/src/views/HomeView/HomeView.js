@@ -41,21 +41,61 @@ const HomeView = () => {
                     <HomeSection title="New Products">
                         <CustomCarousel>
                             {/* //{slides.map((item, index) => item)} */}
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
                         </CustomCarousel>
                     </HomeSection>
                     <HomeSection title="Special Offers">
                         <CustomCarousel>
                             {/* //{slides.map((item, index) => item)} */}
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
-                            <ShopItem imageSrc={image} price="59.99" />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
+                            <ShopItem
+                                theBigOne
+                                imageSrc={image}
+                                price="59.99"
+                            />
                         </CustomCarousel>
                     </HomeSection>
                 </main>

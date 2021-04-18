@@ -14,7 +14,6 @@ export const StyledAside = styled.aside`
 
 export const StyledMain = styled.main`
     width: 100%;
-    height: 2000px;
 `;
 
 export const MainTopBar = styled.div`
@@ -58,5 +57,15 @@ export const CheckboxGroup = styled.div`
         &:last-child {
             margin-bottom: 0;
         }
+    }
+`;
+
+export const ItemsContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    & > * {
+        margin-top: 5rem;
     }
 `;

@@ -1,11 +1,14 @@
+import image from 'assets/pngegg.png';
 import Button from 'components/common/Button';
 import Checkbox from 'components/common/Checkbox';
 import Container from 'components/common/Container';
 import TextInput from 'components/common/TextInput';
+import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
 import React from 'react';
 import {
     CheckboxGroup,
+    ItemsContainer,
     LeftSection,
     MainTopBar,
     PageContainer,
@@ -14,6 +17,45 @@ import {
     StyledMain,
     StyledPagination,
 } from './styles';
+
+const ITEMS = [
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+];
 
 const ShopView = () => {
     return (
@@ -75,6 +117,15 @@ const ShopView = () => {
                             <StyledPagination count={10} shape="rounded" />
                         </PaginationContainer>
                     </MainTopBar>
+                    <ItemsContainer>
+                        {ITEMS.map((item, index) => (
+                            <ShopItem
+                                key={index}
+                                imageSrc={item.imageSrc}
+                                price={item.price}
+                            />
+                        ))}
+                    </ItemsContainer>
                 </StyledMain>
             </PageContainer>
         </Container>
