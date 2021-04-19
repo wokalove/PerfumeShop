@@ -1,4 +1,4 @@
-import Carousel, { Dots, slidesToShowPlugin } from '@brainhubeu/react-carousel';
+import Carousel, { slidesToShowPlugin } from '@brainhubeu/react-carousel';
 import React from 'react';
 
 const CustomCarousel = ({ children }) => {
@@ -19,7 +19,6 @@ const CustomCarousel = ({ children }) => {
             >
                 {children}
             </Carousel>
-            <Dots value={1} onChange={() => {}} number={4} />
         </div>
     );
 };
