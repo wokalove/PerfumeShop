@@ -54,7 +54,7 @@ class OfferService
     }
 
     public function getOffers(int $limit): array {
-        return $this->em->getRepository(Offer::class)->findBy(null, null, $limit);
+        return $this->em->getRepository(Offer::class)->findBy(array(), null, $limit);
     }
 
     public function getAllOffers(): array {

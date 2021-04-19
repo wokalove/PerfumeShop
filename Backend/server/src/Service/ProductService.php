@@ -125,7 +125,7 @@ class ProductService
 
     public function getProducts(int $limit): array
     {
-        return $this->em->getRepository(Product::class)->findBy(null, null, $limit);
+        return $this->em->getRepository(Product::class)->findBy(array(), null, $limit);
     }
 
     public function getAllProducts(): array
