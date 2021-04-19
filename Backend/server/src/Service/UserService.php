@@ -61,7 +61,7 @@ class UserService
         return true;
     }
 
-    public function deleteUserByEmail(string $email)
+    public function deleteUserByEmail(string $email): bool
     {
         $user = $this->getUserByEmail($email);
         if ($user == null) return false;
@@ -108,12 +108,12 @@ class UserService
         return $this->em->getRepository(User::class)->findOneBy(array('email'=>$email, 'password'=>$password));
     }
 
-    public function getUsers(int $limit)
+    public function getUsers(int $limit): array
     {
         return $this->em->getRepository(User::class)->findBy(null, null, $limit);
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): array
     {
         return $this->em->getRepository(User::class)->findAll();
     }
