@@ -3,18 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BrandController extends AbstractController
 {
     /**
-     * @Route("/brand", name="brand")
+     * @Route("/brands", name="brands")
      */
-    public function index(): Response
+    public function brands(): JsonResponse
     {
-        return $this->render('brand/index.html.twig', [
-            'controller_name' => 'BrandController',
-        ]);
+        return new JsonResponse("brands controller");
     }
 }

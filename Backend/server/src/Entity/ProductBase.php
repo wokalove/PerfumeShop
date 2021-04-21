@@ -148,4 +148,13 @@ class ProductBase
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getName()." ".
+            $this->getDescription()." ".
+            $this->getBrand()." ".
+            $this->getBaseNote()." ".
+            $this->getForWomen();
+    }
 }

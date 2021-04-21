@@ -19,6 +19,36 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function getUserByEmail(string $email): ?User
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->createQueryBuilder('u')
+                ->where('u.email=:email')
+                ->setParameter('email',$email)
+                ->getQuery()
+                ->getOneOrNullResult();
+        return $user;
+    }
+
+    public function getUserById(int $id): ?User
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        return $user;
+    }
+
+    public function addUser(User $user)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush;
+    }
+
+    public function deleteUser(User $user)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($user);
+        $entityManager->flush();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

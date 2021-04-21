@@ -3,18 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BaseNoteController extends AbstractController
 {
     /**
-     * @Route("/base/note", name="base_note")
+     * @Route("/base-notes", name="base_notes")
      */
-    public function index(): Response
+    public function baseNotes(): JsonResponse
     {
-        return $this->render('base_note/index.html.twig', [
-            'controller_name' => 'BaseNoteController',
-        ]);
+        return new JsonResponse("base-notes controller");
     }
 }
