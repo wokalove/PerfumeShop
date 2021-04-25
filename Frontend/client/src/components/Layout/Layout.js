@@ -1,0 +1,24 @@
+import Container from 'components/common/Container';
+import Footer from 'components/Footer';
+import Header from 'components/Header';
+import DIMENSIONS from 'constants/dimensions';
+import React from 'react';
+import { Outlet } from 'react-router';
+import { StyledImg, TextWrapper } from './styles';
+
+const Layout = () => {
+    return (
+        <>
+            <Header />
+            <Outlet />
+            <StyledImg>
+                <TextWrapper>Lorem ipsum dolor sit amet</TextWrapper>
+            </StyledImg>
+            <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
+                <Footer />
+            </Container>
+        </>
+    );
+};
+
+export default Layout;
