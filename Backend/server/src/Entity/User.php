@@ -166,4 +166,14 @@ class User
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getName()." ".
+            $this->getSurname()." ".
+            $this->getEmail()." ".
+            $this->getPassword()." ".
+            $this->getIsAdmin()." ".
+            $this->getCreatedAt()->format("Y-m-d H:i:s");
+    }
 }
