@@ -20,6 +20,11 @@ export const StyledForm = styled.form`
     & > * {
         margin-bottom: 1rem;
     }
+
+    & > p {
+        color: red;
+        font-size: 0.875rem;
+    }
 `;
 
 export const LinksWrapper = styled.div`
