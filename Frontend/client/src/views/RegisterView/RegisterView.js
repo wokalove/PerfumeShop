@@ -1,66 +1,76 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import Button from 'components/common/Button';
 import TextInput from 'components/common/TextInput';
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
 import { Container, LinksWrapper, StyledForm } from './styles';
 
+const schema = yup.object().shape({
+    username: yup.string().required().min(3).max(100),
+    email: yup.string().required().email().max(65),
+    password: yup.string().required().min(6).max(50),
+    confirm: yup
+        .string()
+        .required()
+        .oneOf([yup.ref('password')], 'Passwords must match'),
+});
+
+const inputs = [
+    {
+        placeholder: 'username...',
+        name: 'username',
+        type: 'text',
+    },
+    {
+        placeholder: 'email...',
+        name: 'email',
+        type: 'email',
+    },
+    {
+        placeholder: 'password...',
+        name: 'password',
+        type: 'password',
+    },
+    {
+        placeholder: 'confirm...',
+        name: 'confirm',
+        type: 'password',
+    },
+];
+
 const RegisterView = () => {
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirm, setConfirm] = useState('');
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ resolver: yupResolver(schema) });
 
-    const INPUTS = [
-        {
-            type: 'text',
-            placeholder: 'Name...',
-            updateFunc: setName,
-        },
-        {
-            type: 'text',
-            placeholder: 'Surname...',
-            updateFunc: setSurname,
-        },
-        {
-            type: 'email',
-            placeholder: 'Email...',
-            updateFunc: setEmail,
-        },
-        {
-            type: 'password',
-            placeholder: 'Password...',
-            updateFunc: setPassword,
-        },
-        {
-            type: 'password',
-            placeholder: 'Confirm password...',
-            updateFunc: setConfirm,
-        },
-    ];
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        alert('register');
+    const onSubmit = (data) => {
+        console.log(data);
     };
 
     return (
         <Container>
             <h1>Create an account</h1>
-            <StyledForm onSubmit={handleSubmit}>
-                {INPUTS.map((item, index) => (
-                    <TextInput
-                        key={index}
-                        type={item.type}
-                        width="100%"
-                        height="47px"
-                        backgroundColor="#EFEFEF"
-                        placeholder={item.placeholder}
-                        onChange={(event) =>
-                            item.updateFunc(event.target.value)
-                        }
-                    />
+            <StyledForm onSubmit={handleSubmit(onSubmit)}>
+                {inputs.map((item, index) => (
+                    <>
+                        <TextInput
+                            key={index}
+                            type={item.type}
+                            width="100%"
+                            height="47px"
+                            backgroundColor="#EFEFEF"
+                            placeholder={item.placeholder}
+                            {...register(item.name)}
+                        />
+                        {errors[item.name] && (
+                            <p>{errors[item.name]?.message}</p>
+                        )}
+                    </>
                 ))}
-                <Button width="100%" height="47px">
+                <Button type="submit" width="100%" height="47px">
                     Register
                 </Button>
             </StyledForm>
