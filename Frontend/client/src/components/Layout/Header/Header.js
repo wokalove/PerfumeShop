@@ -2,6 +2,7 @@ import { Badge } from '@material-ui/core';
 import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
     MainHeader,
     MainHeaderContainer,
@@ -11,23 +12,64 @@ import {
     TopHeaderContent,
 } from './styles';
 
+const topBarLinksAuth = [
+    {
+        text: 'Account',
+        to: '/#',
+    },
+    {
+        text: 'History',
+        to: '/#',
+    },
+    {
+        text: 'Log out',
+        to: '/#',
+    },
+];
+
+const topBarLinksNotAuth = [
+    {
+        text: 'Log in',
+        to: '/login',
+    },
+    {
+        text: 'Create an account',
+        to: '/register',
+    },
+];
+
 const Header = () => {
+    const authState = useSelector((state) => state.auth);
+
     return (
         <>
             <TopHeader>
                 <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                     <TopHeaderContent>
                         <ul>
-                            <li>
-                                <StyledNavLink to="/login" color="white">
-                                    Log in
-                                </StyledNavLink>
-                            </li>
-                            <li>
-                                <StyledNavLink to="/register" color="white">
-                                    Create an account
-                                </StyledNavLink>
-                            </li>
+                            {authState.isLoggedIn
+                                ? topBarLinksAuth.map((item, index) => (
+                                      <li>
+                                          <StyledNavLink
+                                              key={index}
+                                              to={item.to}
+                                              color="white"
+                                          >
+                                              {item.text}
+                                          </StyledNavLink>
+                                      </li>
+                                  ))
+                                : topBarLinksNotAuth.map((item, index) => (
+                                      <li>
+                                          <StyledNavLink
+                                              key={index}
+                                              to={item.to}
+                                              color="white"
+                                          >
+                                              {item.text}
+                                          </StyledNavLink>
+                                      </li>
+                                  ))}
                         </ul>
                     </TopHeaderContent>
                 </Container>
