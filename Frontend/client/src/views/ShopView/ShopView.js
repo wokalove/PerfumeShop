@@ -5,7 +5,7 @@ import Container from 'components/common/Container';
 import TextInput from 'components/common/TextInput';
 import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     CheckboxGroup,
     ItemsContainer,
@@ -18,7 +18,43 @@ import {
     StyledPagination,
 } from './styles';
 
-const ITEMS = [
+const items = [
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        imageSrc: image,
+        price: 59.99,
+    },
     {
         imageSrc: image,
         price: 59.99,
@@ -57,7 +93,19 @@ const ITEMS = [
     },
 ];
 
+const ITEMS_PER_PAGE = 9;
+
 const ShopView = () => {
+    const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+
+    useEffect(() => {
+        setMaxPage(Math.ceil(items.length / ITEMS_PER_PAGE));
+    }, [items]);
+
     return (
         <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
             <PageContainer>
@@ -114,17 +162,28 @@ const ShopView = () => {
                             </Button>
                         </form>
                         <PaginationContainer>
-                            <StyledPagination count={10} shape="rounded" />
+                            <StyledPagination
+                                count={maxPage}
+                                page={page}
+                                onChange={handleChange}
+                                shape="rounded"
+                            />
                         </PaginationContainer>
                     </MainTopBar>
                     <ItemsContainer>
-                        {ITEMS.map((item, index) => (
-                            <ShopItem
-                                key={index}
-                                imageSrc={item.imageSrc}
-                                price={item.price}
-                            />
-                        ))}
+                        {items.map((item, index) => {
+                            if (
+                                index >= (page - 1) * ITEMS_PER_PAGE &&
+                                index < page * ITEMS_PER_PAGE
+                            )
+                                return (
+                                    <ShopItem
+                                        key={index}
+                                        imageSrc={item.imageSrc}
+                                        price={index}
+                                    />
+                                );
+                        })}
                     </ItemsContainer>
                 </StyledMain>
             </PageContainer>
