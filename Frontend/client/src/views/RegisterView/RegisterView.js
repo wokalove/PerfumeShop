@@ -4,6 +4,7 @@ import Button from 'components/common/Button';
 import TextInput from 'components/common/TextInput';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { Container, LinksWrapper, StyledForm } from './styles';
 
@@ -41,13 +42,15 @@ const inputs = [
 ];
 
 const RegisterView = () => {
+    const dispatch = useDispatch();
+    const authState = useSelector((state) => state.auth);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         await dispatch(
             registerAction(data.username, data.email, data.password)
         );
@@ -74,7 +77,7 @@ const RegisterView = () => {
                     </>
                 ))}
                 <Button type="submit" width="100%" height="47px">
-                    Register
+                    {authState.loading ? 'loading...' : 'Register'}
                 </Button>
             </StyledForm>
             <LinksWrapper>
