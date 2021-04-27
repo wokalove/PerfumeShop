@@ -9,7 +9,6 @@ import {
   Button,
   Card,
   CardHeader,
-  Chip,
   Divider,
   Table,
   TableBody,
@@ -18,7 +17,7 @@ import {
   TableRow,
   TableSortLabel,
   Tooltip,
-  makeStyles
+  makeStyles, TextField
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
@@ -92,6 +91,20 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+const status = [
+  {
+    value: 'pending',
+    label: 'pending'
+  },
+  {
+    value: 'sent',
+    label: 'sent'
+  },
+  {
+    value: 'delivered',
+    label: 'delivered'
+  }
+];
 const LatestOrders = ({ className, ...rest }) => {
   const classes = useStyles();
   const [orders] = useState(data);
@@ -148,11 +161,22 @@ const LatestOrders = ({ className, ...rest }) => {
                     {moment(order.createdAt).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
-                    <Chip
-                      color="primary"
-                      label={order.status}
+                    <TextField
                       size="small"
-                    />
+                      name="status"
+                      select
+                      SelectProps={{ native: true }}
+                      variant="outlined"
+                    >
+                      {status.map((option) => (
+                        <option
+                          key={option.status}
+                          value={option.status}
+                        >
+                          {option.label}
+                        </option>
+                      ))}
+                    </TextField>
                   </TableCell>
                 </TableRow>
               ))}
@@ -170,6 +194,7 @@ const LatestOrders = ({ className, ...rest }) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
+          href="/app/orders"
         >
           View all
         </Button>
