@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { login } from 'actions/authActions';
 import Button from 'components/common/Button';
 import TextInput from 'components/common/TextInput';
 import React from 'react';
@@ -32,7 +33,9 @@ const LoginView = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
     const onSubmit = (data) => {
-        console.log(data);
+        await dispatch(
+            login(data.email, data.password)
+        );
     };
 
     return (

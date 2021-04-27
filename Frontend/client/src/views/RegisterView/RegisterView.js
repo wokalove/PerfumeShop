@@ -1,4 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { register as registerAction } from 'actions/authActions';
 import Button from 'components/common/Button';
 import TextInput from 'components/common/TextInput';
 import React from 'react';
@@ -47,7 +48,9 @@ const RegisterView = () => {
     } = useForm({ resolver: yupResolver(schema) });
 
     const onSubmit = (data) => {
-        console.log(data);
+        await dispatch(
+            registerAction(data.username, data.email, data.password)
+        );
     };
 
     return (
