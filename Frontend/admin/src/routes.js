@@ -10,6 +10,8 @@ import NotFoundView from 'src/views/errors/NotFoundView';
 import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
+import AddProductView from 'src/views/addProduct/AddProductView';
+import OrdersListView from 'src/views/orders/OrdersView';
 
 const routes = [
   {
@@ -21,7 +23,9 @@ const routes = [
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'products', element: <ProductListView /> },
       { path: 'settings', element: <SettingsView /> },
-      { path: '*', element: <Navigate to="/404" /> }
+      { path: 'addProduct', element: <AddProductView /> },
+      { path: '*', element: <Navigate to="/404" /> },
+      { path: 'orders', element: <OrdersListView /> },
     ]
   },
   {
