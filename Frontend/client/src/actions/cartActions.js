@@ -1,6 +1,21 @@
 export const CART_ACTION_TYPES = {
     LOADING: 'LOADING',
-    ADD_TO_CART: 'ADD_ITEM',
+    ADD_TO_CART: 'ADD_TO_CART',
+};
+
+export const addToCart = (item) => (dispatch) => {
+    dispatch({
+        type: CART_ACTION_TYPES.LOADING,
+    });
+
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    cart.push(item);
+    localStorage.setItem('cart', cart);
+
+    dispatch({
+        type: CART_ACTION_TYPES.ADD_TO_CART,
+        payload: item,
+    });
 };
 
 // TODO: auth actions url's

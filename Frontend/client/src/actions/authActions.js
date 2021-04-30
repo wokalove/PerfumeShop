@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axiosConfig';
 
 export const AUTH_ACTION_TYPES = {
     LOADING: 'LOADING',
@@ -17,7 +17,7 @@ export const register = (username, email, password) => async (dispatch) => {
             type: AUTH_ACTION_TYPES.LOADING,
         });
 
-        await axios.post('', {
+        await axios.post('auth/register', {
             username,
             email,
             password,
@@ -40,14 +40,13 @@ export const login = (email, password) => async (dispatch) => {
         });
 
         const res = await axios
-            .post('', { email, password })
+            .post('auth/login', { email, password })
             .then((response) => {
                 if (response.data.token) {
                     const userData = {
                         token: response.data.token,
                     };
 
-                    // TODO: local storage data name
                     localStorage.setItem('token', JSON.stringify(userData));
                 }
 
@@ -75,7 +74,6 @@ export const logout = () => (dispatch) => {
         type: AUTH_ACTION_TYPES.LOADING,
     });
 
-    // TODO: local storage data name
     localStorage.removeItem('token');
 
     dispatch({
