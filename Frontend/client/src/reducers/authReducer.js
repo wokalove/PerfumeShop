@@ -1,5 +1,10 @@
 import { AUTH_ACTION_TYPES } from 'actions/authActions';
 
+const initialState = {
+    loading: false,
+    cart: [],
+};
+
 const loadStateFromLocalStorage = () => {
     try {
         const retrievedData = localStorage.getItem('token');
