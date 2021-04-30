@@ -1,11 +1,28 @@
 import { AUTH_ACTION_TYPES } from 'actions/authActions';
 
-const initialState = {
-    loading: false,
-    isLoggedIn: false,
+const loadStateFromLocalStorage = () => {
+    try {
+        const retrievedData = localStorage.getItem('token');
+        const data = retrievedData ? JSON.parse(retrievedData) : undefined;
+
+        if (data) {
+            const userData = JSON.parse(atob(data.token.split('.')[1]));
+            return {
+                ...data,
+                ...userData,
+                loading: false,
+                isLoggedIn: true,
+            };
+        }
+    } catch {
+        // TODO: exception
+        return initialState;
+    }
+
+    return initialState;
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = loadStateFromLocalStorage(), action) => {
     switch (action.type) {
         case AUTH_ACTION_TYPES.LOADING:
             return {
