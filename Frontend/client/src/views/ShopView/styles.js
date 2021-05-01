@@ -65,6 +65,7 @@ export const ItemsContainer = styled.div`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin-bottom: 6rem;
 
     & > * {
         margin-top: 5rem;

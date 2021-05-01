@@ -19,8 +19,7 @@ export const addToCart = (item) => (dispatch) => {
             type: CART_ACTION_TYPES.ADD_TO_CART_SUCCESS,
             payload: cart,
         });
-    } catch (e) {
-        console.log(e);
+    } catch {
         dispatch({
             type: CART_ACTION_TYPES.ADD_TO_CART_FAIL,
         });

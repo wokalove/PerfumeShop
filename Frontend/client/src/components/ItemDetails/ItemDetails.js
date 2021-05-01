@@ -54,9 +54,9 @@ const Description = styled.p`
     font-size: 1.1rem;
 `;
 
-const ItemDetails = ({ imageSrc }) => {
+const ItemDetails = ({ imageSrc, innerRef }) => {
     return (
-        <Container>
+        <Container ref={innerRef}>
             <Left>
                 <Image src={imageSrc} alt="item image" />
                 <Button backgroundColor="black" height="47px">
