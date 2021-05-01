@@ -12,7 +12,7 @@ const Layout = () => {
             <Header />
             <Outlet />
             <StyledImg>
-                <TextWrapper>Lorem ipsum dolor sit amet</TextWrapper>
+                <TextWrapper>Lorem ipsum</TextWrapper>
             </StyledImg>
             <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                 <Footer />

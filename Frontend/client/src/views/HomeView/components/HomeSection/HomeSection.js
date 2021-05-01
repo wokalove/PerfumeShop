@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const StyledHomeSection = styled.section`
     width: 100%;
     margin-top: 1rem;
-    margin-bottom: 10rem;
+    margin-bottom: 6rem;
 `;
 
 export const TitleContainer = styled.div`
