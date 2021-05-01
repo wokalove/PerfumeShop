@@ -10,7 +10,6 @@ export const StyledImg = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     filter: grayscale(90%);
-    margin-top: 8rem;
     display: flex;
     justify-content: center;
     align-items: center;

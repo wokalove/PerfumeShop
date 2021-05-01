@@ -31,3 +31,9 @@ export const LinksWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
 `;
+
+export const ExternalContainer = styled.div`
+    width: 100%;
+    background-color: #fafafa;
+    padding: 1px;
+`;
