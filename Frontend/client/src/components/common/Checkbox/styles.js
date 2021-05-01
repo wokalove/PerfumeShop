@@ -8,9 +8,8 @@ export const Container = styled.label`
     user-select: none;
     color: black;
 
-    & > input:checked ~ span {
-        background-color: pink;
-        border-color: pink;
+    & > input:checked ~ span > * {
+        opacity: 1;
     }
 `;
 
@@ -33,6 +32,9 @@ export const Checkmark = styled.span`
     width: 1.375rem;
     border-radius: 0.3125rem;
     border: 1px solid black;
-    transition: background-color ease-in-out 250ms,
-        border-color ease-in-out 250ms;
+
+    & > * {
+        opacity: 0;
+        transition: opacity ease-in-out 250ms;
+    }
 `;
