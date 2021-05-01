@@ -1,4 +1,5 @@
 import Button from 'components/common/Button';
+import Counter from 'components/Counter';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
@@ -54,14 +55,55 @@ const Description = styled.p`
     font-size: 1.1rem;
 `;
 
+const LeftBottom = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    & > * {
+        margin-bottom: 1rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+`;
+
+const QuantityContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    & h5 {
+        width: auto;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    & > * {
+        margin-bottom: 0.2rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+`;
+
 const ItemDetails = ({ imageSrc, innerRef }) => {
     return (
         <Container ref={innerRef}>
             <Left>
                 <Image src={imageSrc} alt="item image" />
-                <Button backgroundColor="black" height="47px">
-                    Add to Cart: $139
-                </Button>
+                <LeftBottom>
+                    <QuantityContainer>
+                        <h5>Quantity</h5>
+                        <Counter />
+                    </QuantityContainer>
+                    <Button backgroundColor="black" height="47px" width="100%">
+                        Add to Cart: $139
+                    </Button>
+                </LeftBottom>
             </Left>
             <Right>
                 <Title>Item Name</Title>
