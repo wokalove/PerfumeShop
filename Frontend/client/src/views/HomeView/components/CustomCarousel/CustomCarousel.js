@@ -1,5 +1,6 @@
 import Carousel, {
     arrowsPlugin,
+    Dots,
     slidesToScrollPlugin,
     slidesToShowPlugin,
 } from '@brainhubeu/react-carousel';
@@ -13,6 +14,9 @@ import styled from 'styled-components';
 import CarouselButton from '../CarouselButton';
 
 const StyledCarousel = styled(Carousel)`
+    overflow: visible;
+    margin-bottom: 2rem;
+
     &:hover button {
         background-color: #efefef;
     }
@@ -57,6 +61,11 @@ const CustomCarousel = ({ children }) => {
             >
                 {children}
             </StyledCarousel>
+            <Dots
+                value={0}
+                // onChange={this.onchange}
+                number={5}
+            />
         </div>
     );
 };

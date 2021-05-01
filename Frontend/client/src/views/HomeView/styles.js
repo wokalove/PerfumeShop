@@ -6,7 +6,6 @@ export const HomeImageWrapper = styled.div`
     overflow: hidden;
     position: relative;
     top: -40px;
-    margin-bottom: 4rem;
 `;
 
 export const StyledImg = styled.img`
