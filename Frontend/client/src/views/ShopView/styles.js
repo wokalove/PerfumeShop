@@ -1,3 +1,4 @@
+import { Backdrop } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import styled from 'styled-components';
 
@@ -67,5 +68,11 @@ export const ItemsContainer = styled.div`
 
     & > * {
         margin-top: 5rem;
+    }
+`;
+
+export const StyledBackdrop = styled(Backdrop)`
+    && {
+        z-index: 100;
     }
 `;

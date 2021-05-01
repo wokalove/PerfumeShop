@@ -3,6 +3,7 @@ import Button from 'components/common/Button';
 import Checkbox from 'components/common/Checkbox';
 import Container from 'components/common/Container';
 import TextInput from 'components/common/TextInput';
+import ItemDetails from 'components/ItemDetails';
 import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
 import React, { useEffect, useState } from 'react';
@@ -14,6 +15,7 @@ import {
     PageContainer,
     PaginationContainer,
     StyledAside,
+    StyledBackdrop,
     StyledMain,
     StyledPagination,
 } from './styles';
@@ -96,6 +98,8 @@ const items = [
 const ITEMS_PER_PAGE = 9;
 
 const ShopView = () => {
+    const [backdrop, setBackdrop] = useState(false);
+    const [backdropItemIndex, setBackdropItemIndex] = useState(0);
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
     const handleChange = (event, value) => {
@@ -106,8 +110,18 @@ const ShopView = () => {
         setMaxPage(Math.ceil(items.length / ITEMS_PER_PAGE));
     }, [items]);
 
+    const handleBackdropClose = () => setBackdrop(false);
+
+    const handleBackdropOpen = (index) => {
+        setBackdropItemIndex(index);
+        setBackdrop(true);
+    };
+
     return (
         <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
+            <StyledBackdrop open={backdrop} onClick={handleBackdropClose}>
+                {backdrop && <ItemDetails imageSrc={image} />}
+            </StyledBackdrop>
             <PageContainer>
                 <StyledAside>
                     <LeftSection>
@@ -181,6 +195,9 @@ const ShopView = () => {
                                         key={index}
                                         imageSrc={item.imageSrc}
                                         price={index}
+                                        onClick={() =>
+                                            handleBackdropOpen(index)
+                                        }
                                     />
                                 );
                         })}

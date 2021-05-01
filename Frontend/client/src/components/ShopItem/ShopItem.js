@@ -3,12 +3,21 @@ import styled from 'styled-components';
 
 export const ItemWrapper = styled.div`
     width: ${(props) => (props.theBigOne ? '300px' : '250px')};
+
+    &:hover {
+        cursor: pointer;
+
+        & img {
+            transform: scale(1.1);
+        }
+    }
 `;
 
 export const Image = styled.img`
     width: 100%;
     height: ${(props) => (props.theBigOne ? '300px' : '250px')};
     object-fit: contain;
+    transition: transform ease-in-out 300ms;
 `;
 
 export const PriceContainer = styled.div`
@@ -20,9 +29,9 @@ export const PriceContainer = styled.div`
     }
 `;
 
-const ShopItem = ({ imageSrc, price, theBigOne }) => {
+const ShopItem = ({ imageSrc, price, theBigOne, onClick }) => {
     return (
-        <ItemWrapper theBigOne={theBigOne}>
+        <ItemWrapper theBigOne={theBigOne} onClick={onClick}>
             <Image src={imageSrc} alt="item image" theBigOne={theBigOne} />
             <PriceContainer theBigOne={theBigOne}>
                 <span>${price}</span>
