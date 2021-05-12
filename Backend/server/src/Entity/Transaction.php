@@ -18,12 +18,6 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="transaction")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $users;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="transaction")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -54,21 +48,15 @@ class Transaction
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="transactions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $usr;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUsers(): ?User
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?User $users): self
-    {
-        $this->users = $users;
-
-        return $this;
     }
 
     public function getProduct(): ?Product
@@ -145,11 +133,23 @@ class Transaction
 
     public function __toString()
     {
-        return $this->getUsers()->getEmail()." ".
+        return $this->getUsr()->getEmail()." ".
             $this->getProductName()." ".
             $this->getPrice()." ".
             $this->getIsCompleted()." ".
             $this->getQuantity()." ".
             $this->getDate()->format("Y-m-d H:i:s");
+    }
+
+    public function getUsr(): ?User
+    {
+        return $this->usr;
+    }
+
+    public function setUsr(?User $usr): self
+    {
+        $this->usr = $usr;
+
+        return $this;
     }
 }
