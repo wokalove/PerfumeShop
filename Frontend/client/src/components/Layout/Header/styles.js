@@ -15,7 +15,7 @@ export const TopHeaderContent = styled.div`
         color: white;
         font-weight: bold;
         text-transform: uppercase;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         list-style-type: none;
         letter-spacing: 0.04em;
 
@@ -34,6 +34,7 @@ export const MainHeaderContainer = styled.div`
     background-color: white;
     position: sticky;
     top: 0;
+    font-size: 0.875rem;
     z-index: 90;
 `;
 

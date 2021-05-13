@@ -1,6 +1,6 @@
 import Button from 'components/common/Button';
 import Counter from 'components/Counter';
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const open = keyframes`
@@ -91,6 +91,8 @@ const QuantityContainer = styled.div`
 `;
 
 const ItemDetails = ({ imageSrc, innerRef }) => {
+    const [quantity, setQuantity] = useState(1);
+
     return (
         <Container ref={innerRef}>
             <Left>
@@ -98,10 +100,10 @@ const ItemDetails = ({ imageSrc, innerRef }) => {
                 <LeftBottom>
                     <QuantityContainer>
                         <h5>Quantity</h5>
-                        <Counter />
+                        <Counter counter={quantity} setCounter={setQuantity} />
                     </QuantityContainer>
                     <Button backgroundColor="black" height="47px" width="100%">
-                        Add to Cart: $139
+                        Add to Cart: ${59 * quantity}
                     </Button>
                 </LeftBottom>
             </Left>
