@@ -15,6 +15,7 @@ export const TitleContainer = styled.div`
     & > h1 {
         font-size: 2.25rem;
         font-weight: normal;
+        letter-spacing: 0.05rem;
     }
 `;
 
