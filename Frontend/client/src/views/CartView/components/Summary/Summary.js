@@ -1,5 +1,6 @@
 import Button from 'components/common/Button';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
@@ -23,6 +24,7 @@ const ContentContainer = styled.div`
     background-color: white;
     margin-bottom: 0.5rem;
     padding-top: 0.5rem;
+    border-radius: inherit;
 `;
 
 const ContentElement = styled.div`
@@ -45,26 +47,30 @@ const Total = styled(ContentElement)`
     margin-top: 1rem;
 `;
 
+const delivery = 10;
+
 const Summary = () => {
+    const cartState = useSelector((state) => state.cart);
+
     return (
         <StyledContainer>
             <StyledHeader>Orders Summary:</StyledHeader>
             <ContentContainer>
                 <ContentElementHeader>
                     <p>Products:</p>
-                    <p>10</p>
+                    <p>{cartState.cart.length}</p>
                 </ContentElementHeader>
                 <ContentElement>
                     <p>Price:</p>
-                    <p>$50.00</p>
+                    <p>0</p>
                 </ContentElement>
                 <ContentElement>
                     <p>Delivery:</p>
-                    <p>$50.00</p>
+                    <p>{delivery}</p>
                 </ContentElement>
                 <Total>
                     <p>Total:</p>
-                    <p>$50.00</p>
+                    <p>0</p>
                 </Total>
             </ContentContainer>
             <Button backgroundColor="white" color="black" width="100%">

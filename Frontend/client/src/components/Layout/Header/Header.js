@@ -41,6 +41,7 @@ const topBarLinksNotAuth = [
 
 const Header = () => {
     const authState = useSelector((state) => state.auth);
+    const cartState = useSelector((state) => state.cart);
 
     return (
         <>
@@ -98,7 +99,9 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Badge
-                                        badgeContent={4}
+                                        badgeContent={
+                                            cartState?.cart?.length ?? 0
+                                        }
                                         color="primary"
                                         anchorOrigin={{
                                             vertical: 'bottom',

@@ -21,76 +21,177 @@ import {
     StyledPagination,
 } from './styles';
 
+const descrition = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Cras malesuada dolor in lectus posuere rhoncus. Mauris a
+nunc ac mi rutrum semper at et tortor. Curabitur commodo ex
+eget lacus vehicula gravida.`;
+
 const items = [
     {
+        name: 'Product xyz1',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz2',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz3',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
     {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
+        imageSrc: image,
+        price: 59.99,
+    },
+    {
+        name: 'Product xyz',
+        description: descrition,
         imageSrc: image,
         price: 59.99,
     },
@@ -123,7 +224,14 @@ const ShopView = () => {
         <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
             <StyledBackdrop open={backdrop}>
                 {backdrop && (
-                    <ItemDetails innerRef={backdropItemRef} imageSrc={image} />
+                    <ItemDetails
+                        innerRef={backdropItemRef}
+                        imageSrc={image}
+                        name={items[backdropItemIndex].name}
+                        description={items[backdropItemIndex].description}
+                        price={items[backdropItemIndex].price}
+                        hide={() => setBackdrop(false)}
+                    />
                 )}
             </StyledBackdrop>
             <PageContainer>
