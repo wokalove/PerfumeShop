@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
@@ -34,6 +33,7 @@ class JWTCreatedListener
         $payload = array_merge(
             $event->getData(),
             [
+                'userId' => $user->getId(),
                 'name' => $user->getName(),
                 'surname' => $user->getSurname()
             ]

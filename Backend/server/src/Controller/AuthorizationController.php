@@ -28,7 +28,7 @@ class AuthorizationController extends AbstractController
     }
 
     /**
-     * @Route("/register", name="register")
+     * @Route("/register", name="register", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
@@ -61,10 +61,14 @@ class AuthorizationController extends AbstractController
     }
 
     /**
-     * @Route("/auth/user/{id}", name="delete_user")
+     * @Route("/user/{id}", name="delete_user", methods={"DELETE"})
      */
     public function deleteUser(int $id): JsonResponse
     {
-        return new JsonResponse("delete user controller");
+        if (!$this->userService->deleteUserById($id)) {
+            return $this->json(['message' => 'No user with such id'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json(['message' => 'User deleted'], Response::HTTP_OK);
     }
 }
