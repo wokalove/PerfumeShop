@@ -33,7 +33,7 @@ class JWTCreatedListener
         $payload = array_merge(
             $event->getData(),
             [
-                'userId' => $user->getId(),
+                'id' => $user->getId(),
                 'name' => $user->getName(),
                 'surname' => $user->getSurname()
             ]
