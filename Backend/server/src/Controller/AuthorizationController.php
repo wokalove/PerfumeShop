@@ -28,14 +28,6 @@ class AuthorizationController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="login")
-     */
-    public function login(): JsonResponse
-    {
-        return new JsonResponse("login controller");
-    }
-
-    /**
      * @Route("/register", name="register")
      * @param Request $request
      * @return JsonResponse
