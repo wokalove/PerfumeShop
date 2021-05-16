@@ -1,6 +1,8 @@
+import { addToCart } from 'actions/cartActions';
 import Button from 'components/common/Button';
 import Counter from 'components/Counter';
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
 
 const open = keyframes`
@@ -90,7 +92,23 @@ const QuantityContainer = styled.div`
     }
 `;
 
-const ItemDetails = ({ imageSrc, innerRef }) => {
+const ItemDetails = ({
+    imageSrc,
+    innerRef,
+    name,
+    description,
+    price,
+    hide,
+}) => {
+    const dispatch = useDispatch();
+    const [quantity, setQuantity] = useState(1);
+
+    const handleButtonClick = () => {
+        const item = { name, description, price, imageSrc, quantity };
+        dispatch(addToCart(item));
+        hide();
+    };
+
     return (
         <Container ref={innerRef}>
             <Left>
@@ -98,21 +116,21 @@ const ItemDetails = ({ imageSrc, innerRef }) => {
                 <LeftBottom>
                     <QuantityContainer>
                         <h5>Quantity</h5>
-                        <Counter />
+                        <Counter counter={quantity} setCounter={setQuantity} />
                     </QuantityContainer>
-                    <Button backgroundColor="black" height="47px" width="100%">
-                        Add to Cart: $139
+                    <Button
+                        backgroundColor="black"
+                        height="47px"
+                        width="100%"
+                        onClick={handleButtonClick}
+                    >
+                        Add to Cart: ${price * quantity}
                     </Button>
                 </LeftBottom>
             </Left>
             <Right>
-                <Title>Item Name</Title>
-                <Description>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Cras malesuada dolor in lectus posuere rhoncus. Mauris a
-                    nunc ac mi rutrum semper at et tortor. Curabitur commodo ex
-                    eget lacus vehicula gravida.
-                </Description>
+                <Title>{name}</Title>
+                <Description>{description}</Description>
             </Right>
         </Container>
     );

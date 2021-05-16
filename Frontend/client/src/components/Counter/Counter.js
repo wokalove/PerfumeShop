@@ -4,7 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '@material-ui/core';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -33,9 +33,7 @@ const Content = styled.div`
     width: 60px;
 `;
 
-const Counter = () => {
-    const [counter, setCounter] = useState(1);
-
+const Counter = ({ counter, setCounter }) => {
     return (
         <Container>
             <Arrow

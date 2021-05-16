@@ -17,7 +17,7 @@ export const register = (username, email, password) => async (dispatch) => {
             type: AUTH_ACTION_TYPES.LOADING,
         });
 
-        await axios.post('auth/register', {
+        await axios.post('api/register', {
             username,
             email,
             password,
@@ -40,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
         });
 
         const res = await axios
-            .post('auth/login', { email, password })
+            .post('api/login', { email, password })
             .then((response) => {
                 if (response.data.token) {
                     const userData = {

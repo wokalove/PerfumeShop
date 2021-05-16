@@ -7,12 +7,12 @@ const initialState = {
 
 const loadStateFromLocalStorage = () => {
     try {
-        const retrievedData = localStorage.getItem('token');
+        const retrievedData = localStorage.getItem('cart');
         const data = retrievedData ? JSON.parse(retrievedData) : undefined;
 
         if (data) {
             return {
-                ...data,
+                cart: data,
                 loading: false,
             };
         }
@@ -24,7 +24,10 @@ const loadStateFromLocalStorage = () => {
     return initialState;
 };
 
-const cartReducer = (state = loadStateFromLocalStorage(), action) => {
+const cartReducer = (
+    state = loadStateFromLocalStorage() ?? initialState,
+    action
+) => {
     switch (action.type) {
         case CART_ACTION_TYPES.LOADING:
             return {

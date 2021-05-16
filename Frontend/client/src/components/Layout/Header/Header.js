@@ -1,9 +1,9 @@
 import { Badge } from '@material-ui/core';
-import { addToCart } from 'actions/cartActions';
 import Container from 'components/common/Container';
+import Logo from 'components/Logo';
 import DIMENSIONS from 'constants/dimensions';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import {
     MainHeader,
     MainHeaderContainer,
@@ -40,13 +40,8 @@ const topBarLinksNotAuth = [
 ];
 
 const Header = () => {
-    const dispatch = useDispatch(); // TODO: remove
-    const cartState = useSelector((state) => state.cart); // TODO: remove
     const authState = useSelector((state) => state.auth);
-
-    useEffect(() => {
-        console.log(cartState);
-    }, [cartState]);
+    const cartState = useSelector((state) => state.cart);
 
     return (
         <>
@@ -84,14 +79,7 @@ const Header = () => {
             <MainHeaderContainer>
                 <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
                     <MainHeader>
-                        {/* TODO: remove */}
-                        <h1
-                            onClick={() =>
-                                dispatch(addToCart({ data: 'data' }))
-                            }
-                        >
-                            Logo
-                        </h1>
+                        <Logo />
                         <StyledNav>
                             <ul>
                                 <li>
@@ -111,7 +99,9 @@ const Header = () => {
                                 </li>
                                 <li>
                                     <Badge
-                                        badgeContent={4}
+                                        badgeContent={
+                                            cartState?.cart?.length ?? 0
+                                        }
                                         color="primary"
                                         anchorOrigin={{
                                             vertical: 'bottom',

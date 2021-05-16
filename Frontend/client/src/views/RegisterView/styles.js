@@ -34,6 +34,5 @@ export const LinksWrapper = styled.div`
 
 export const ExternalContainer = styled.div`
     width: 100%;
-    background-color: #fafafa;
     padding: 1px;
 `;

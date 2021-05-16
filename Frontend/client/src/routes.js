@@ -1,5 +1,6 @@
 import Layout from 'components/Layout';
 import React from 'react';
+import CartView from 'views/CartView';
 import HomeView from 'views/HomeView';
 import LoginView from 'views/LoginView';
 import RegisterView from 'views/RegisterView';
@@ -14,7 +15,7 @@ const routes = (isLoggedIn) => [
             { path: 'home', element: <HomeView /> },
             { path: 'shop', element: <ShopView /> },
             { path: 'contact' },
-            { path: 'cart' },
+            { path: 'cart', element: <CartView /> },
             { path: 'login', element: <LoginView /> },
             { path: 'register', element: <RegisterView /> },
         ],
