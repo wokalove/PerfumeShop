@@ -18,6 +18,7 @@ import {
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
+  ShoppingCart as ShoppingCartIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon
 } from 'react-feather';
@@ -35,6 +36,11 @@ const items = [
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
+  },
+  {
+    href: '/app/orders',
+    icon: ShoppingCartIcon,
+    title: 'Orders'
   },
   {
     href: '/app/customers',
