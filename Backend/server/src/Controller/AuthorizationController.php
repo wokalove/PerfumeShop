@@ -34,10 +34,12 @@ class AuthorizationController extends AbstractController
      */
     public function register(Request $request): JsonResponse
     {
-        $email = $request->get('email');
-        $password = $request->get('password');
-        $name = $request->get('name');
-        $surname = $request->get('surname');
+        $data = json_decode($request->getContent(), true);
+
+        $email = isset($data['email']) ? $data['email'] : null;
+        $password = isset($data['password']) ? $data['password'] : null;
+        $name = isset($data['name']) ? $data['name'] : null;
+        $surname = isset($data['surname']) ? $data['surname'] : null;
 
         if ($this->userService->checkIfUserExistsByEmail($email)) {
             return $this->json(["message" => 'User with this email already exists'],
