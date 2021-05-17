@@ -15,6 +15,5 @@ return [
     Nelmio\CorsBundle\NelmioCorsBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     ApiPlatform\Core\Bridge\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
-    SymfonyBundles\JsonRequestBundle\JsonRequestBundle::class => ['all' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
 ];
