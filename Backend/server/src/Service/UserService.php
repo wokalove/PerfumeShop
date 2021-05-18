@@ -3,14 +3,24 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private EntityManagerInterface $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private UserPasswordEncoderInterface $passwordEncoder;
+
+    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->em = $em;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function addUser(User $user): bool
@@ -25,7 +35,7 @@ class UserService
     }
 
     public function addUserByDetails(string $name, string $surname, string $email,
-                                     string $password, bool $isAdmin): bool
+                                     string $password, array $roles): bool
     {
         if (!$this->checkIfUserExistsByEmail($email)) // blocks creating users with same email
         {
@@ -33,10 +43,12 @@ class UserService
             $user->setName($name)
                 ->setSurname($surname)
                 ->setEmail($email)
-                ->setPassword($password)
-                ->setIsAdmin($isAdmin)
+                ->setPassword($this->passwordEncoder->encodePassword($user, $password))
+                ->setRoles($roles)
                 ->setCreatedAt(new \DateTime());
-            $this->addUser($user);
+
+            $this->em->persist($user);
+            $this->em->flush();
             return true;
         }
         return false;
@@ -71,7 +83,7 @@ class UserService
 
     public function checkIfAdmin(int $id)
     {
-        $isAdmin = $this->getUserById($id)->getIsAdmin();
+        $isAdmin = in_array('ROLE_ADMIN', $this->getUserById($id)->getRoles());
         return $isAdmin ? true : false;
     }
 
