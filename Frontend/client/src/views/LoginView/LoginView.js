@@ -2,9 +2,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { login } from 'actions/authActions';
 import Button from 'components/common/Button';
 import TextInput from 'components/common/TextInput';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import * as yup from 'yup';
 import {
   Container,
@@ -33,12 +34,17 @@ const inputs = [
 
 const LoginView = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const authState = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
+  useEffect(() => {
+    authState.isLoggedIn && navigate('/shop');
+  }, [authState.isLoggedIn]);
 
   const onSubmit = async (data) => {
     await dispatch(login(data.email, data.password));
