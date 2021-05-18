@@ -5,15 +5,15 @@ import GlobalStyle from 'styles/GlobalStyles';
 import routes from './routes';
 
 const App = () => {
-    const authState = useSelector((state) => state.auth);
-    const routing = useRoutes(routes(authState.isLoggedIn));
+  const authState = useSelector((state) => state.auth);
+  const routing = useRoutes(routes(authState.isLoggedIn));
 
-    return (
-        <>
-            <GlobalStyle />
-            {routing}
-        </>
-    );
+  return (
+    <>
+      <GlobalStyle />
+      {routing}
+    </>
+  );
 };
 
 export default App;

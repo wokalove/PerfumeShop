@@ -7,18 +7,18 @@ import Header from './Header';
 import { StyledImg, TextWrapper } from './styles';
 
 const Layout = () => {
-    return (
-        <>
-            <Header />
-            <Outlet />
-            <StyledImg>
-                <TextWrapper>Lorem ipsum</TextWrapper>
-            </StyledImg>
-            <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
-                <Footer />
-            </Container>
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <StyledImg>
+        <TextWrapper>Lorem ipsum</TextWrapper>
+      </StyledImg>
+      <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
+        <Footer />
+      </Container>
+    </>
+  );
 };
 
 export default Layout;
