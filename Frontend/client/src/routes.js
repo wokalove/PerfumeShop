@@ -1,25 +1,21 @@
-import AuthLayout from 'layouts/AuthLayout';
-import MainLayout from 'layouts/MainLayout';
+import Layout from 'components/Layout';
 import React from 'react';
-import { Navigate } from 'react-router-dom';
-import FirstView from 'views/FirstView';
+import CartView from 'views/CartView';
+import HomeView from 'views/HomeView';
 import LoginView from 'views/LoginView';
 import RegisterView from 'views/RegisterView';
-import SecondView from 'views/SecondView';
+import ShopView from 'views/ShopView';
 
 const routes = (isLoggedIn) => [
     {
         path: '/',
-        element: isLoggedIn ? <MainLayout /> : <Navigate to="/auth/login" />,
+        element: <Layout />,
         children: [
-            { path: 'first', element: <FirstView /> },
-            { path: 'second', element: <SecondView /> },
-        ],
-    },
-    {
-        path: 'auth',
-        element: !isLoggedIn ? <AuthLayout /> : <Navigate to="/first" />,
-        children: [
+            { path: '/', element: <HomeView /> },
+            { path: 'home', element: <HomeView /> },
+            { path: 'shop', element: <ShopView /> },
+            { path: 'contact' },
+            { path: 'cart', element: <CartView /> },
             { path: 'login', element: <LoginView /> },
             { path: 'register', element: <RegisterView /> },
         ],
