@@ -147,12 +147,12 @@ class ProductService
 
         if ($brand != null) $qb->andWhere('pb.brand = :brand')->setParameter('brand', $brand);
         if ($name != null) $qb->andWhere('pb.name = :name')->setParameter('name', $name);
-        if ($priceBottom != null && $priceTop != null) $qb->andWhere(Criteria::expr()
-            ->andX(Criteria::expr()->gte("p.price", $priceBottom),
-                   Criteria::expr()->lte("p.price", $priceTop)));
-        if ($volumeBottom != null && $volumeTop != null) $qb->andWhere(Criteria::expr()
-            ->andX(Criteria::expr()->gte("p.volume", $volumeBottom),
-                   Criteria::expr()->lte("p.volume", $volumeTop)));
+        if ($priceBottom != null && $priceTop != null)
+            $qb->andWhere('p.price >= :priceBottom')->setParameter('priceBottom', $priceBottom)
+                ->andWhere('p.price <= :priceTop')->setParameter('priceTop', $priceTop);
+        if ($volumeBottom != null && $volumeTop != null)
+            $qb->andWhere('p.volume >= :volumeBottom')->setParameter('volumeBottom', $volumeBottom)
+                ->andWhere('p.volume <= :volumeTop')->setParameter('volumeTop', $volumeTop);
         if ($forWomen != null) $qb->andWhere('pb.for_women = :forWomen')->setParameter('forWomen', $forWomen);
         if ($baseNote != null) $qb->andWhere('pb.base_note = :baseNote')->setParameter('baseNote', $baseNote);
 
