@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\Product;
 use App\Entity\ProductBase;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductService
@@ -123,9 +124,39 @@ class ProductService
         return $this->em->getRepository(ProductBase::class)->find($id);
     }
 
-    public function getProducts(int $limit): array
+    public function getProductsByLimit(int $limit): array
     {
         return $this->em->getRepository(Product::class)->findBy(array(), null, $limit);
+    }
+
+    public function getProductsByFilters($brand, $name, $priceBottom,
+                                           $priceTop, $volumeBottom, $volumeTop,
+                                           $forWomen, $baseNote, $offerId): array
+    {
+        $qb = $this->em->createQueryBuilder();
+        if ($offerId != null) $qb->select('o', 'p', 'pb')
+            ->from('App:Offer', 'o')
+            ->join('App:Product', 'p', 'WITH', 'o.product = p')
+            ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb')
+            ->where('o.id = :offerId')
+            ->setParameter('offerId', $offerId);
+        else $qb->select('p', 'pb')
+            ->from('App:Product', 'p')
+            ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb');
+
+
+        if ($brand != null) $qb->andWhere('pb.brand = :brand')->setParameter('brand', $brand);
+        if ($name != null) $qb->andWhere('pb.name = :name')->setParameter('name', $name);
+        if ($priceBottom != null && $priceTop != null)
+            $qb->andWhere('p.price >= :priceBottom')->setParameter('priceBottom', $priceBottom)
+                ->andWhere('p.price <= :priceTop')->setParameter('priceTop', $priceTop);
+        if ($volumeBottom != null && $volumeTop != null)
+            $qb->andWhere('p.volume >= :volumeBottom')->setParameter('volumeBottom', $volumeBottom)
+                ->andWhere('p.volume <= :volumeTop')->setParameter('volumeTop', $volumeTop);
+        if ($forWomen != null) $qb->andWhere('pb.for_women = :forWomen')->setParameter('forWomen', $forWomen);
+        if ($baseNote != null) $qb->andWhere('pb.base_note = :baseNote')->setParameter('baseNote', $baseNote);
+
+        return $qb->getQuery()->getScalarResult();
     }
 
     public function getAllProducts(): array

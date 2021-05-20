@@ -25,12 +25,13 @@ class TransactionService
                                             int $price, bool $isCompleted, int $quantity)
     {
         $transaction = new Transaction();
-        $transaction->setUsers($user)
+        $transaction->setUsr($user)
             ->setProduct($product)
             ->setProductName($productName)
             ->setPrice($price)
             ->setIsCompleted($isCompleted)
-            ->setQuantity($quantity);
+            ->setQuantity($quantity)
+            ->setDate(new \DateTime("now", new \DateTimeZone("Europe/Warsaw")));
         $this->addTransaction($transaction);
     }
 
