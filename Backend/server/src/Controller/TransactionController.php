@@ -26,9 +26,9 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @Route("/api/transactions", name="all_transactions", methods={"POST"})
+     * @Route("/api/transactions", name="add_transactions", methods={"POST"})
      */
-    public function allTransactions(Request $request): JsonResponse
+    public function addTransactions(Request $request): JsonResponse
     {
         $transactions = json_decode($request->getContent(), true);
 
