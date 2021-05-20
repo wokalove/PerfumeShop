@@ -45,7 +45,7 @@ class UserService
                 ->setEmail($email)
                 ->setPassword($this->passwordEncoder->encodePassword($user, $password))
                 ->setRoles($roles)
-                ->setCreatedAt(new \DateTime());
+                ->setCreatedAt(new \DateTime("now", new \DateTimeZone("Europe/Warsaw")));
 
             $this->em->persist($user);
             $this->em->flush();

@@ -31,7 +31,7 @@ class TransactionService
             ->setPrice($price)
             ->setIsCompleted($isCompleted)
             ->setQuantity($quantity)
-            ->setDate(new \DateTime());
+            ->setDate(new \DateTime("now", new \DateTimeZone("Europe/Warsaw")));
         $this->addTransaction($transaction);
     }
 
