@@ -9,20 +9,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class TransactionController extends AbstractController
 {
     private TransactionService $transactionService;
     private ProductService $productService;
     private UserService $userService;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(TransactionService $transactionService,
                                 ProductService $productService,
-                                UserService $userService)
+                                UserService $userService,
+                                TokenStorageInterface $tokenStorage)
     {
         $this->transactionService = $transactionService;
         $this->productService = $productService;
         $this->userService = $userService;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -32,8 +36,9 @@ class TransactionController extends AbstractController
     {
         $transactions = json_decode($request->getContent(), true);
 
-        $userId = 1; // TODO: pobrać z tokenu
-        $user = $this->userService->getUserById($userId);
+        $token = $this->tokenStorage->getToken();
+        $userEmail = $token->getUsername();
+        $user = $this->userService->getUserByEmail($userEmail);
 
         foreach ($transactions as $transaction)
         {

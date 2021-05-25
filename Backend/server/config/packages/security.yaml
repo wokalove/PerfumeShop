@@ -29,11 +29,11 @@ security:
             stateless: true
             anonymous: true
 
-        transactions:
-            pattern: ^/api/transactions
-            stateless: true
-            anonymous: true
-            methods: [POST]
+#        transactions:
+#            pattern: ^/api/transactions
+#            stateless: true
+#            anonymous: true
+#            methods: [POST]
 
         brands:
             pattern: ^/api/brands
@@ -77,5 +77,5 @@ security:
          - { path: ^/api/brands, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/base-notes, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/products, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/transactions, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
+#         - { path: ^/api/transactions, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
          - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
