@@ -6,6 +6,7 @@ use App\Service\ProductService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
@@ -15,6 +16,40 @@ class ProductController extends AbstractController
     public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("admin/products", name="add_product", methods={"POST"})
+     */
+    public function addProduct(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $name = $data["name"];
+        $description = $data["description"];
+        $brand = $data["brand"];
+        $baseNote = $data["base_note"];
+        $forWomen = $data["for_women"];
+        $price = $data["price"];
+        $volume = $data["volume"];
+        $iriSplit = explode("/", $data["image"]);
+        $imageId = end($iriSplit);
+
+        if (!$this->productService->addProductByDetails(
+            $name,
+            $description,
+            $brand,
+            $forWomen,
+            $price,
+            $volume,
+            $imageId,
+            $baseNote
+        ))
+            return $this->json(["message" => "Can't link an image to the product: No such image"],
+            Response::HTTP_BAD_REQUEST);
+
+        return $this->json(["message" => "New product added"], Response::HTTP_CREATED);
     }
 
     /**
