@@ -29,11 +29,16 @@ security:
             stateless: true
             anonymous: true
 
-#        transactions:
-#            pattern: ^/api/transactions
-#            stateless: true
-#            anonymous: true
-#            methods: [POST]
+        admin:
+            pattern: ^/api/admin
+            stateless: true
+            anonymous: true
+
+        transactions:
+            pattern: ^/api/transactions
+            stateless: true
+            anonymous: true
+            methods: [POST]
 
         brands:
             pattern: ^/api/brands
@@ -47,6 +52,11 @@ security:
 
         products:
             pattern: ^/api/products
+            stateless: true
+            anonymous: true
+
+        docs:
+            pattern: ^/api/docs
             stateless: true
             anonymous: true
 
@@ -72,10 +82,12 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+         - { path: ^/api/admin, roles: ROLE_ADMIN }
+         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/brands, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/base-notes, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/api/products, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#         - { path: ^/api/transactions, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
+         - { path: ^/api/transactions, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
          - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
