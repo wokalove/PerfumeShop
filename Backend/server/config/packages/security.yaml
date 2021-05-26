@@ -29,10 +29,11 @@ security:
             stateless: true
             anonymous: true
 
-        admin:
-            pattern: ^/api/admin
+        product_images:
+            pattern: ^/api/product_images
             stateless: true
             anonymous: true
+            methods: [GET]
 
         transactions:
             pattern: ^/api/transactions
@@ -60,6 +61,13 @@ security:
             stateless: true
             anonymous: true
 
+        admin:
+            pattern: ^/admin
+            stateless: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+
         api:
             pattern: ^/api
             stateless: true
@@ -82,12 +90,18 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/api/admin, roles: ROLE_ADMIN }
-         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/brands, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/base-notes, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/products, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api/transactions, roles: IS_AUTHENTICATED_FULLY, methods: [POST] }
-         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+#       Endpointy admina
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/product_images, roles: ROLE_ADMIN, methods: [POST] }
+
+#       Endpointy anonimowe
+        - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/brands, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/base-notes, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/products, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/transactions, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
+
+#       Endpointy użytkownika
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
