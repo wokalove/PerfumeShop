@@ -49,6 +49,11 @@ class ProductBase
      */
     private $product;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ProductImage::class)
+     */
+    private $image;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
@@ -156,5 +161,17 @@ class ProductBase
             $this->getBrand()." ".
             $this->getBaseNote()." ".
             $this->getForWomen();
+    }
+
+    public function getImage(): ?ProductImage
+    {
+        return $this->image;
+    }
+
+    public function setImage(?ProductImage $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }

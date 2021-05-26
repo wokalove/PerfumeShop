@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\Product;
 use App\Entity\ProductBase;
+use App\Entity\ProductImage;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -28,23 +29,30 @@ class ProductService
     }
 
     public function addProductByDetails(string $name, string $description, string $brand,
-                                        bool $forWomen, int $price, int $volume,
+                                        bool $forWomen, int $price, int $volume, int $imageId,
                                         string $baseNote=null)
     {
+        $image = $this->getProductImageById($imageId);
+        if ($image == null)
+            return false;
+
         $productBase = new ProductBase();
         $productBase->setName($name)
             ->setDescription($description)
             ->setBrand($brand)
             ->setForWomen($forWomen)
-            ->setBaseNote($baseNote);
+            ->setBaseNote($baseNote)
+            ->setImage($image);
         $this->addProductBase($productBase);
 
         $product = new Product();
         $product->setProductBase($productBase)
             ->setPrice($price)
             ->setVolume($volume)
-            ->setAddedAt(new \DateTime());
+            ->setAddedAt(new \DateTime("now", new \DateTimeZone("Europe/Warsaw")));
         $this->addProduct($product);
+
+        return true;
     }
 
     public function addProductBaseByDetails(string $name, string $description, string $brand,
@@ -122,6 +130,11 @@ class ProductService
     public function getProductBaseById(int $id): ?ProductBase
     {
         return $this->em->getRepository(ProductBase::class)->find($id);
+    }
+
+    public function getProductImageById(int $id): ?ProductImage
+    {
+        return $this->em->getRepository(ProductImage::class)->find($id);
     }
 
     public function getProductsByLimit(int $limit): array
