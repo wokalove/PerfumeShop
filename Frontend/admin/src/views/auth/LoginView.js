@@ -1,20 +1,22 @@
-import React from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
 import {
   Box,
   Button,
   Container,
   Grid,
   Link,
-  TextField,
-  Typography,
-  makeStyles
+
+
+  makeStyles, TextField,
+  Typography
 } from '@material-ui/core';
+import { Formik } from 'formik';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import Page from 'src/components/Page';
 import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
-import Page from 'src/components/Page';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,8 +28,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginView = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const navigate = useNavigate();
+
+  async function onSubmit(data) {
+    await dispatch(login(data.email, data.password));
+  }
 
   return (
     <Page
