@@ -1,17 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {
   Box,
   Button,
   Card,
   CardContent,
-  TextField,
   InputAdornment,
-  SvgIcon,
-  makeStyles
+  makeStyles, SvgIcon, TextField
 } from '@material-ui/core';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Search as SearchIcon } from 'react-feather';
+import { NavLink as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -44,7 +43,8 @@ const Toolbar = ({ className, ...rest }) => {
         <Button
           color="primary"
           variant="contained"
-          href="/app/addProduct"
+          component={RouterLink}
+          to="/app/addProduct"
         >
           Add product
         </Button>

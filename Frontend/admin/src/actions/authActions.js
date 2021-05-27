@@ -7,7 +7,7 @@ export const login = (email, password) => async (dispatch) => {
       type: AUTH_ACTION_TYPES.LOADING,
     });
 
-    const res = await axios.post('login_check', { username: email, password });
+    const res = await axios.post('/api/login_check', { username: email, password });
 
     localStorage.setItem('token', res.data.token);
     const userData = JSON.parse(atob(res.data.token.split('.')[1]));
@@ -19,7 +19,7 @@ export const login = (email, password) => async (dispatch) => {
         name: userData.name,
         surname: userData.surname,
         email: userData.username,
-        token: res.token,
+        token: res.data.token,
       },
     });
   } catch (e) {

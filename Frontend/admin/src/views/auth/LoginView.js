@@ -4,15 +4,14 @@ import {
   Container,
   Grid,
   Link,
-
-
   makeStyles, TextField,
   Typography
 } from '@material-ui/core';
 import { Formik } from 'formik';
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { login } from 'src/actions/authActions';
 import Page from 'src/components/Page';
 import FacebookIcon from 'src/icons/Facebook';
 import GoogleIcon from 'src/icons/Google';
@@ -29,8 +28,15 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginView = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
+  const authState = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const classes = useStyles();
+
+  useEffect(() => {
+    if (authState.isLoggedIn) {
+      navigate('../app/dashboard');
+    }
+  }, [authState.isLoggedIn]);
 
   async function onSubmit(data) {
     await dispatch(login(data.email, data.password));
@@ -50,16 +56,14 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'demo@devias.io',
-              password: 'Password123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
-            }}
+            onSubmit={onSubmit}
           >
             {({
               errors,

@@ -11,7 +11,7 @@ const loadStateFromLocalStorage = () => {
     const data = retrievedData ? JSON.parse(retrievedData) : undefined;
 
     if (data) {
-      const userData = JSON.parse(atob(data.token.split('.')[1]));
+      const userData = JSON.parse(atob(data.split('.')[1]));
       return {
         ...data,
         ...userData,
