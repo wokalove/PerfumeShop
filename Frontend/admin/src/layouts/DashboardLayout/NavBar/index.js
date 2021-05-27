@@ -1,12 +1,11 @@
 import {
   Box,
-
   Divider,
   Drawer,
   Hidden,
   List,
-
-  makeStyles, Typography
+  makeStyles,
+  Typography
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
@@ -16,8 +15,8 @@ import {
   Lock as LockIcon,
   Settings as SettingsIcon,
   ShoppingBag as ShoppingBagIcon,
-  User as UserIcon,
   ShoppingCart as ShoppingCartIcon,
+  User as UserIcon,
   UserPlus as UserPlusIcon,
   Users as UsersIcon
 } from 'react-feather';
@@ -105,28 +104,12 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   }, [location.pathname]);
 
   const content = (
-    <Box
-      height="100%"
-      display="flex"
-      flexDirection="column"
-    >
-      <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        p={2}
-      >
-        <Typography
-          className={classes.name}
-          color="textPrimary"
-          variant="h5"
-        >
+    <Box height="100%" display="flex" flexDirection="column">
+      <Box alignItems="center" display="flex" flexDirection="column" p={2}>
+        <Typography className={classes.name} color="textPrimary" variant="h5">
           {user.name}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
+        <Typography color="textSecondary" variant="body2">
           {user.jobTitle}
         </Typography>
       </Box>
