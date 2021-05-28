@@ -29,12 +29,6 @@ security:
             stateless: true
             anonymous: true
 
-        product_images:
-            pattern: ^/api/product_images
-            stateless: true
-            anonymous: true
-            methods: [GET]
-
         transactions:
             pattern: ^/api/transactions
             stateless: true
