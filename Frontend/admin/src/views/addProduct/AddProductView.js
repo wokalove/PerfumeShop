@@ -52,8 +52,8 @@ const AddProductView = ({ className, ...rest }) => {
 
   useEffect(() => {
     const loadBaseNotes = async () => {
-      const tmpBrands = await axios.get('/api/base-notes');
-      setBaseNotes(tmpBrands.data);
+      const tmpBaseNotes = await axios.get('/api/base-notes');
+      setBaseNotes(tmpBaseNotes.data);
     };
     loadBaseNotes();
   }, []);

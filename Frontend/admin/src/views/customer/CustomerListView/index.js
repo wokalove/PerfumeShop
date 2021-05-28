@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import {
   Box,
   Container,
   makeStyles
 } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Page from 'src/components/Page';
+import axios from '../../../axiosConfig';
 import Results from './Results';
 import Toolbar from './Toolbar';
-import data from './data';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +20,16 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerListView = () => {
   const classes = useStyles();
-  const [customers] = useState(data);
+  const [customers, setCustomers] = useState([]);
+
+  useEffect(() => {
+    const loadCustomers = async () => {
+      const tmpCustomers = await axios.get('/admin/users'); // TODO: endpoint
+      console.log(tmpCustomers.data);
+      setCustomers(tmpCustomers.data);
+    };
+    loadCustomers();
+  }, []);
 
   return (
     <Page
