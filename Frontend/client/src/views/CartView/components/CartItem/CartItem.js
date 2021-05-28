@@ -56,8 +56,8 @@ const CartItem = ({ image, itemName, quantity, price }) => {
         <Left>
           <h1>{itemName}</h1>
           <div>
-            <p>details1: details</p>
-            <p>details2: details</p>
+            {/* <p>details1: details</p>
+            <p>details2: details</p> */}
             <p>quantity: {parseInt(quantity)}</p>
           </div>
         </Left>

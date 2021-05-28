@@ -42,6 +42,18 @@ const Total = styled(ContentElement)`
 
 const delivery = 10;
 
+function calculateNumberOfProducts(cart) {
+  let number = 0;
+  cart.forEach((item) => (number += item.quantity));
+  return number;
+}
+
+function calculatePrice(cart) {
+  let price = 0;
+  cart.forEach((item) => (price += item.price * item.quantity));
+  return price;
+}
+
 const Summary = () => {
   const cartState = useSelector((state) => state.cart);
 
@@ -51,11 +63,11 @@ const Summary = () => {
       <ContentContainer>
         <ContentElementHeader>
           <p>Products:</p>
-          <p>{cartState.cart.length}</p>
+          <p>{calculateNumberOfProducts(cartState.cart)}</p>
         </ContentElementHeader>
         <ContentElement>
           <p>Price:</p>
-          <p>0</p>
+          <p>{calculatePrice(cartState.cart)}</p>
         </ContentElement>
         <ContentElement>
           <p>Delivery:</p>
@@ -63,7 +75,7 @@ const Summary = () => {
         </ContentElement>
         <Total>
           <p>Total:</p>
-          <p>0</p>
+          <p>{calculatePrice(cartState.cart) + delivery}</p>
         </Total>
       </ContentContainer>
       <Button width="100%">Buy</Button>

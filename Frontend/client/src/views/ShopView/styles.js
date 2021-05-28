@@ -49,8 +49,6 @@ export const CheckboxGroup = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 0.2rem;
-  max-height: 250px;
-  overflow-y: auto;
 
   & > * {
     margin-bottom: 0.8rem;

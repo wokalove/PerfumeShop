@@ -1,4 +1,6 @@
+import { CircularProgress } from '@material-ui/core';
 import image from 'assets/pngegg.png';
+import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Checkbox from 'components/common/Checkbox';
 import Container from 'components/common/Container';
@@ -33,168 +35,6 @@ const items = [
     imageSrc: image,
     price: 59.99,
   },
-  {
-    name: 'Product xyz2',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz3',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-  {
-    name: 'Product xyz',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
 ];
 
 const ITEMS_PER_PAGE = 9;
@@ -205,20 +45,70 @@ const ShopView = () => {
   const [backdropItemIndex, setBackdropItemIndex] = useState(0);
   const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
-  useOnClickOutside(backdropItemRef, () => setBackdrop(false));
 
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
+  const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [baseNotes, setBaseNotes] = useState([]);
+
+  const [loadProducts, setLoadProducts] = useState(false);
+  const [loadBrands, setLoadBrands] = useState(false);
+  const [loadBaseNotes, setLoadBaseNotes] = useState(false);
+  useOnClickOutside(backdropItemRef, () => setBackdrop(false));
 
   useEffect(() => {
     setMaxPage(Math.ceil(items.length / ITEMS_PER_PAGE));
   }, [items]);
 
-  const handleBackdropOpen = (index) => {
+  useEffect(() => {
+    setLoadBrands(true);
+    setLoadBaseNotes(true);
+
+    const loadBrands = async () => {
+      try {
+        const tmpBrands = await axios.get('/brands');
+        setBrands(tmpBrands.data);
+      } catch (e) {
+        alert(e);
+      }
+      setLoadBrands(false);
+    };
+
+    const loadBaseNotes = async () => {
+      try {
+        const tmpBaseNotes = await axios.get('/base-notes');
+        setBaseNotes(tmpBaseNotes.data);
+      } catch (e) {
+        alert(e);
+      }
+      setLoadBaseNotes(false);
+    };
+
+    loadData();
+    loadBrands();
+    loadBaseNotes();
+  }, []);
+
+  async function loadData() {
+    setLoadProducts(true);
+
+    try {
+      const tmpProducts = await axios.get('/products');
+      setProducts(tmpProducts.data);
+    } catch (e) {
+      alert(e);
+    }
+
+    setLoadProducts(false);
+  }
+
+  function handleChange(event, value) {
+    setPage(value);
+  }
+
+  function handleBackdropOpen(index) {
     setBackdropItemIndex(index);
     setBackdrop(true);
-  };
+  }
 
   return (
     <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
@@ -227,9 +117,9 @@ const ShopView = () => {
           <ItemDetails
             innerRef={backdropItemRef}
             imageSrc={image}
-            name={items[backdropItemIndex].name}
-            description={items[backdropItemIndex].description}
-            price={items[backdropItemIndex].price}
+            name={products[backdropItemIndex].name}
+            description={products[backdropItemIndex].description}
+            price={products[backdropItemIndex].price}
             hide={() => setBackdrop(false)}
           />
         )}
@@ -239,16 +129,25 @@ const ShopView = () => {
           <LeftSection>
             <h1>Brands</h1>
             <CheckboxGroup>
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
-              <Checkbox label="Brand Name" />
+              {loadBrands ? (
+                <CircularProgress />
+              ) : (
+                brands.map((item, index) => (
+                  <Checkbox key={index} label={item.name} />
+                ))
+              )}
+            </CheckboxGroup>
+          </LeftSection>
+          <LeftSection>
+            <h1>Base notes</h1>
+            <CheckboxGroup>
+              {loadBaseNotes ? (
+                <CircularProgress />
+              ) : (
+                baseNotes.map((item, index) => (
+                  <Checkbox key={index} label={item.name} />
+                ))
+              )}
             </CheckboxGroup>
           </LeftSection>
           <LeftSection>
@@ -297,20 +196,24 @@ const ShopView = () => {
             </PaginationContainer>
           </MainTopBar>
           <ItemsContainer>
-            {items.map((item, index) => {
-              if (
-                index >= (page - 1) * ITEMS_PER_PAGE &&
-                index < page * ITEMS_PER_PAGE
-              )
-                return (
-                  <ShopItem
-                    key={index}
-                    imageSrc={item.imageSrc}
-                    price={index}
-                    onClick={() => handleBackdropOpen(index)}
-                  />
-                );
-            })}
+            {loadProducts ? (
+              <CircularProgress />
+            ) : (
+              products.map((item, index) => {
+                if (
+                  index >= (page - 1) * ITEMS_PER_PAGE &&
+                  index < page * ITEMS_PER_PAGE
+                )
+                  return (
+                    <ShopItem
+                      key={index}
+                      imageSrc={image}
+                      price={item.price}
+                      onClick={() => handleBackdropOpen(index)}
+                    />
+                  );
+              })
+            )}
           </ItemsContainer>
         </StyledMain>
       </PageContainer>

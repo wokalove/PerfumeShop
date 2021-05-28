@@ -42,12 +42,7 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     const res = await axios.post('login_check', { username: email, password });
-
-    const tokenData = {
-      token: res.data.token,
-    };
-
-    localStorage.setItem('token', JSON.stringify(tokenData));
+    localStorage.setItem('token', res.data.token);
     const userData = JSON.parse(atob(res.data.token.split('.')[1]));
 
     dispatch({
@@ -57,7 +52,7 @@ export const login = (email, password) => async (dispatch) => {
         name: userData.name,
         surname: userData.surname,
         email: userData.username,
-        token: res.token,
+        token: res.data.token,
       },
     });
   } catch (e) {
