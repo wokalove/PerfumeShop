@@ -147,15 +147,17 @@ class ProductService
                                            $forWomen, $baseNote, $offerId): array
     {
         $qb = $this->em->createQueryBuilder();
-        if ($offerId != null) $qb->select('o', 'p', 'pb')
+        if ($offerId != null) $qb->select('o', 'p', 'pb', 'pi')
             ->from('App:Offer', 'o')
             ->join('App:Product', 'p', 'WITH', 'o.product = p')
             ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb')
+            ->join('App:ProductImage', 'pi', 'WITH', 'pb.image = pi')
             ->where('o.id = :offerId')
             ->setParameter('offerId', $offerId);
-        else $qb->select('p', 'pb')
+        else $qb->select('p', 'pb', 'pi')
             ->from('App:Product', 'p')
-            ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb');
+            ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb')
+            ->join('App:ProductImage', 'pi', 'WITH', 'pb.image = pi');
 
 
         if ($brand != null) $qb->andWhere('pb.brand = :brand')->setParameter('brand', $brand);

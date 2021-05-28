@@ -59,8 +59,10 @@ class ProductController extends AbstractController
     {
         $product = $this->productService->getProductById($id);
         $productBase = $product->getProductBase();
+        $image = $productBase->getImage();
 
         $response = new JsonResponse([
+            'id' => $product->getId(),
             'name' => $productBase->getName(),
             'description' => $productBase->getDescription(),
             'brand' => $productBase->getBrand(),
@@ -68,7 +70,8 @@ class ProductController extends AbstractController
             'for_women' => $productBase->getForWomen(),
             'price' => $product->getPrice(),
             'volume' => $product->getVolume(),
-            'added_at' => $product->getAddedAt()
+            'added_at' => $product->getAddedAt(),
+            'image' => '/images/'.$image->filePath
         ]);
 
         $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
@@ -107,6 +110,7 @@ class ProductController extends AbstractController
         foreach ($serverResponse as $sr)
         {
             $response[] = array(
+                'id' => $sr["p_id"],
                 'name' => $sr["pb_name"],
                 'description' => $sr["pb_description"],
                 'brand' => $sr["pb_brand"],
@@ -114,7 +118,8 @@ class ProductController extends AbstractController
                 'for_women' => $sr["pb_for_women"],
                 'price' => $sr["p_price"],
                 'volume' => $sr["p_volume"],
-                'added_at' => $sr["p_added_at"]
+                'added_at' => $sr["p_added_at"],
+                'image' => '/image/'.$sr["pi_filePath"]
             );
         }
         return $response;
