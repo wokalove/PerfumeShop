@@ -17,33 +17,30 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import axios from '../../axiosConfig';
-
-const volume = [
-  {
-    value: '30ml',
-    label: '30ml'
-  },
-  {
-    value: '50ml',
-    label: '50ml'
-  },
-  {
-    value: '100ml',
-    label: '100ml'
-  }
-];
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
 const AddProductView = ({ className, ...rest }) => {
+  const isInitialMount = useRef(true);
   const classes = useStyles();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [brands, setBrands] = useState(null);
   const [baseNotes, setBaseNotes] = useState(null);
-  // const [file, setFile] = useState('');
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (success) {
+      navigate('../products');
+    }
+  }, [success]);
 
   useEffect(() => {
     const loadBrands = async () => {
@@ -54,51 +51,50 @@ const AddProductView = ({ className, ...rest }) => {
   }, []);
 
   useEffect(() => {
-    const loadBrands = async () => {
+    const loadBaseNotes = async () => {
       const tmpBrands = await axios.get('/api/base-notes');
       setBaseNotes(tmpBrands.data);
     };
-    loadBrands();
+    loadBaseNotes();
   }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    setLoading(true);
     const object = {};
     const formData = new FormData(event.target);
     formData.forEach((value, key) => { object[key] = value; });
-    // axios.post('asdfasdfasdf', formData);
-    // console.log(object);
+    const data = new FormData();
+    data.append('file', object.image);
 
-    console.log(object);
+    const options = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/ld+json',
+      }
+    };
 
-    // const data = new FormData();
-    // data.append('file', object.image);
+    try {
+      await axios.post('/api/product_images', data, options);
 
-    // // const data = {
-    // //   file: JSON.stringify(object.image)
-    // // };
+      await axios.post('/admin/products', {
+        name: object.name,
+        description: object.description,
+        brand: object.brand,
+        base_note: object.baseNote,
+        for_women: object.position === 'female',
+        price: parseInt(object.price, 10),
+        volume: parseInt(object.volume, 10),
+        image: '/api/product_images/13' // TODO: id from response
+      });
 
-    // const options = {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //     Accept: 'application/ld+json'
-    //   }
-    // };
+      setSuccess(true);
+    } catch (e) {
+      alert(e);
+    }
 
-    // const result = await axios.post('/api/product_images', data, options);
-
-    // console.log(result);
-
-    await axios.post('/admin/products', {
-      name: 'productname',
-      description: 'mydescription',
-      brand: 'mybrand',
-      base_note: 'mybasenote',
-      for_women: true,
-      price: 100,
-      volume: 1000,
-      image: '/api/product_image/1'
-    });
+    setLoading(false);
   }
 
   return (
@@ -117,7 +113,7 @@ const AddProductView = ({ className, ...rest }) => {
             <Grid item md={12}>
               <Button variant="contained" component="label">
                 Upload File
-                <input type="file" name="image" onChange={(event) => console.log(event.target.value)} hidden />
+                <input type="file" name="image" hidden />
               </Button>
             </Grid>
             <Grid item md={6} xs={12}>
@@ -130,6 +126,7 @@ const AddProductView = ({ className, ...rest }) => {
             </Grid>
             <Grid item md={6} xs={12}>
               <Autocomplete
+                debug
                 options={brands}
                 getOptionLabel={(option) => option?.name}
                 renderInput={(params) => (
@@ -164,6 +161,7 @@ const AddProductView = ({ className, ...rest }) => {
             <Grid item md={6} xs={12}>
               <Autocomplete
                 options={baseNotes}
+                debug
                 getOptionLabel={(option) => option?.name}
                 renderInput={(params) => (
                   <TextField
@@ -179,18 +177,11 @@ const AddProductView = ({ className, ...rest }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Volume"
+                label="Volume [ml]"
                 name="volume"
-                select
-                SelectProps={{ native: true }}
+                type="number"
                 variant="outlined"
-              >
-                {volume.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
@@ -229,7 +220,7 @@ const AddProductView = ({ className, ...rest }) => {
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
-          <Button type="submit" color="primary" variant="contained">
+          <Button type="submit" disabled={loading} color="primary" variant="contained">
             Add product
           </Button>
         </Box>

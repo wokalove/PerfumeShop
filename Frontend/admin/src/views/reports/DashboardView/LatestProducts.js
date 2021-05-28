@@ -17,6 +17,7 @@ import clsx from 'clsx';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { NavLink as RouterLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 const data = [
@@ -113,6 +114,8 @@ const LatestProducts = ({ className, ...rest }) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
+          component={RouterLink}
+          to="/app/products"
         >
           View all
         </Button>
