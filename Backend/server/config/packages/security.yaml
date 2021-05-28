@@ -92,7 +92,6 @@ security:
     access_control:
 #       Endpointy admina
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/api/product_images, roles: ROLE_ADMIN, methods: [POST] }
 
 #       Endpointy anonimowe
         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
