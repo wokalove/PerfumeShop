@@ -40,6 +40,8 @@ const ShopView = () => {
   const [loadBrands, setLoadBrands] = useState(false);
   const [loadBaseNotes, setLoadBaseNotes] = useState(false);
 
+  const [search, setSearch] = useState('');
+
   useOnClickOutside(backdropItemRef, () => setBackdrop(false));
 
   useEffect(() => {
@@ -75,11 +77,16 @@ const ShopView = () => {
     loadBaseNotes();
   }, []);
 
-  async function loadData() {
+  async function loadData(addSearchQuery = false) {
     setLoadProducts(true);
+    let searchQuery = '';
+
+    if (addSearchQuery && search !== '') {
+      searchQuery = `?name=${search}`;
+    }
 
     try {
-      const tmpProducts = await axios.get('/products');
+      const tmpProducts = await axios.get('/products' + searchQuery);
       setProducts(tmpProducts.data);
     } catch (e) {
       alert(e);
@@ -95,6 +102,11 @@ const ShopView = () => {
   function handleBackdropOpen(index) {
     setBackdropItemIndex(index);
     setBackdrop(true);
+  }
+
+  function handleSearch(event) {
+    event.preventDefault();
+    loadData(true);
   }
 
   return (
@@ -154,12 +166,13 @@ const ShopView = () => {
         </StyledAside>
         <StyledMain>
           <MainTopBar>
-            <form>
+            <form onSubmit={handleSearch}>
               <TextInput
                 backgroundColor="#EFEFEF"
                 height="47px"
                 width="250px"
                 placeholder="Product name..."
+                onChange={(event) => setSearch(event.target.value)}
               />
               <Button
                 backgroundColor="black"

@@ -1,34 +1,46 @@
+import { removeFromCart } from 'actions/cartActions';
 import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { Summary } from './components';
 import CartItem from './components/CartItem';
 import { StyledMain, SummaryContainer } from './styles';
 
-const buy = async (cart) => {
-  try {
-    await axios.post(
-      '/transactions',
-      cart.map((item) => {
-        return {
-          product_id: item.id,
-          quantity: item.quantity,
-        };
-      })
-    );
-  } catch (e) {
-    alert(e);
-  }
-};
-
 const CartView = () => {
+  const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart);
+  const authState = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  async function buy(cart) {
+    setLoading(true);
+
+    try {
+      await axios.post(
+        '/transactions',
+        cart.map((item) => {
+          return {
+            product_id: item.id,
+            quantity: item.quantity,
+          };
+        })
+      );
+      dispatch(removeFromCart());
+      navigate('../shop');
+    } catch (e) {
+      alert(e);
+    }
+
+    setLoading(false);
+  }
 
   async function handleTransaction() {
-    await buy(cartState.cart);
+    authState.isLoggedIn ? await buy(cartState.cart) : navigate('../login');
   }
 
   return (
@@ -46,12 +58,12 @@ const CartView = () => {
           ))}
           {cartState.cart.length > 0 && (
             <Button onClick={handleTransaction} width="230px">
-              Buy
+              {loading ? 'loading...' : 'Buy'}
             </Button>
           )}
         </StyledMain>
         <aside>
-          <Summary />
+          <Summary buy={handleTransaction} loading={loading} />
         </aside>
       </SummaryContainer>
     </Container>

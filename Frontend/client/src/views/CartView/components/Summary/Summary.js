@@ -54,7 +54,7 @@ function calculatePrice(cart) {
   return price;
 }
 
-const Summary = () => {
+const Summary = ({ buy, loading }) => {
   const cartState = useSelector((state) => state.cart);
 
   return (
@@ -78,7 +78,9 @@ const Summary = () => {
           <p>{calculatePrice(cartState.cart) + delivery}</p>
         </Total>
       </ContentContainer>
-      <Button width="100%">Buy</Button>
+      <Button width="100%" onClick={buy}>
+        {loading ? 'loading...' : 'Buy'}
+      </Button>
     </StyledContainer>
   );
 };
