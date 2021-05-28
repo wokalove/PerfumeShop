@@ -92,27 +92,30 @@ const QuantityContainer = styled.div`
   }
 `;
 
-const ItemDetails = ({
-  imageSrc,
-  innerRef,
-  name,
-  description,
-  price,
-  hide,
-}) => {
+const ItemDetails = ({ item, innerRef, hide }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   const handleButtonClick = () => {
-    const item = { name, description, price, imageSrc, quantity };
-    dispatch(addToCart(item));
+    dispatch(
+      addToCart({
+        name: item.name,
+        descritpion: item.description,
+        brand: item.brand,
+        forWomen: item.for_women,
+        id: item.id,
+        image: item.image,
+        price: item.price,
+        quantity,
+      })
+    );
     hide();
   };
 
   return (
     <Container ref={innerRef}>
       <Left>
-        <Image src={imageSrc} alt="item image" />
+        <Image src={'http://localhost:8080' + item.image} alt="item image" />
         <LeftBottom>
           <QuantityContainer>
             <h5>Quantity</h5>
@@ -124,13 +127,13 @@ const ItemDetails = ({
             width="100%"
             onClick={handleButtonClick}
           >
-            Add to Cart: ${price * quantity}
+            Add to Cart: ${item.price * quantity}
           </Button>
         </LeftBottom>
       </Left>
       <Right>
-        <Title>{name}</Title>
-        <Description>{description}</Description>
+        <Title>{item.name}</Title>
+        <Description>{item.description}</Description>
       </Right>
     </Container>
   );

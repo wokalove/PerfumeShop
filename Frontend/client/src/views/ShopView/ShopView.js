@@ -103,10 +103,7 @@ const ShopView = () => {
         {backdrop && (
           <ItemDetails
             innerRef={backdropItemRef}
-            imageSrc={BASE_URL + products[backdropItemIndex].image}
-            name={products[backdropItemIndex].name}
-            description={products[backdropItemIndex].description}
-            price={products[backdropItemIndex].price}
+            item={products[backdropItemIndex]}
             hide={() => setBackdrop(false)}
           />
         )}

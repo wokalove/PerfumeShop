@@ -1,3 +1,4 @@
+import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
@@ -7,8 +8,28 @@ import { Summary } from './components';
 import CartItem from './components/CartItem';
 import { StyledMain, SummaryContainer } from './styles';
 
+const buy = async (cart) => {
+  try {
+    await axios.post(
+      '/transactions',
+      cart.map((item) => {
+        return {
+          product_id: item.id,
+          quantity: item.quantity,
+        };
+      })
+    );
+  } catch (e) {
+    alert(e);
+  }
+};
+
 const CartView = () => {
   const cartState = useSelector((state) => state.cart);
+
+  async function handleTransaction() {
+    await buy(cartState.cart);
+  }
 
   return (
     <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
@@ -16,13 +37,18 @@ const CartView = () => {
         <StyledMain>
           {cartState.cart.map((item, index) => (
             <CartItem
+              key={index}
               itemName={item.name}
               price={item.price}
               quantity={item.quantity}
-              image={item.imageSrc}
+              image={'http://localhost:8080' + item.image}
             ></CartItem>
           ))}
-          {cartState.cart.length > 0 && <Button width="230px">Buy</Button>}
+          {cartState.cart.length > 0 && (
+            <Button onClick={handleTransaction} width="230px">
+              Buy
+            </Button>
+          )}
         </StyledMain>
         <aside>
           <Summary />

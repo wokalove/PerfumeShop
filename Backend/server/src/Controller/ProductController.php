@@ -119,7 +119,7 @@ class ProductController extends AbstractController
                 'price' => $sr["p_price"],
                 'volume' => $sr["p_volume"],
                 'added_at' => $sr["p_added_at"],
-                'image' => '/image/'.$sr["pi_filePath"]
+                'image' => '/images/'.$sr["pi_filePath"]
             );
         }
         return $response;
