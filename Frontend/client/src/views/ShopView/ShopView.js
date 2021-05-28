@@ -1,5 +1,4 @@
 import { CircularProgress } from '@material-ui/core';
-import image from 'assets/pngegg.png';
 import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Checkbox from 'components/common/Checkbox';
@@ -23,21 +22,8 @@ import {
   StyledPagination,
 } from './styles';
 
-const descrition = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Cras malesuada dolor in lectus posuere rhoncus. Mauris a
-nunc ac mi rutrum semper at et tortor. Curabitur commodo ex
-eget lacus vehicula gravida.`;
-
-const items = [
-  {
-    name: 'Product xyz1',
-    description: descrition,
-    imageSrc: image,
-    price: 59.99,
-  },
-];
-
 const ITEMS_PER_PAGE = 9;
+const BASE_URL = 'http://localhost:8080';
 
 const ShopView = () => {
   const backdropItemRef = useRef(null);
@@ -53,11 +39,12 @@ const ShopView = () => {
   const [loadProducts, setLoadProducts] = useState(false);
   const [loadBrands, setLoadBrands] = useState(false);
   const [loadBaseNotes, setLoadBaseNotes] = useState(false);
+
   useOnClickOutside(backdropItemRef, () => setBackdrop(false));
 
   useEffect(() => {
-    setMaxPage(Math.ceil(items.length / ITEMS_PER_PAGE));
-  }, [items]);
+    setMaxPage(Math.ceil(products.length / ITEMS_PER_PAGE));
+  }, [loadProducts]);
 
   useEffect(() => {
     setLoadBrands(true);
@@ -116,7 +103,7 @@ const ShopView = () => {
         {backdrop && (
           <ItemDetails
             innerRef={backdropItemRef}
-            imageSrc={image}
+            imageSrc={BASE_URL + products[backdropItemIndex].image}
             name={products[backdropItemIndex].name}
             description={products[backdropItemIndex].description}
             price={products[backdropItemIndex].price}
@@ -207,7 +194,10 @@ const ShopView = () => {
                   return (
                     <ShopItem
                       key={index}
-                      imageSrc={image}
+                      name={item.name}
+                      baseNote={item.base_note}
+                      volume={item.volume}
+                      imageSrc={BASE_URL + item.image}
                       price={item.price}
                       onClick={() => handleBackdropOpen(index)}
                     />
