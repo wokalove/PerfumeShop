@@ -19,8 +19,6 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @return JsonResponse
      * @Route("admin/products", name="add_product", methods={"POST"})
      */
     public function addProduct(Request $request): JsonResponse
@@ -53,9 +51,49 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/api/products/{id}", name="product", methods={"GET"})
+     * @Route("/admin/products/{id}", name="update_product", methods={"PUT"})
      */
-    public function product(int $id): JsonResponse
+    public function updateProduct(Request $request, int $id): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $name = $data["name"];
+        $description = $data["description"];
+        $brand = $data["brand"];
+        $baseNote = $data["base_note"];
+        $forWomen = $data["for_women"];
+        $price = $data["price"];
+        $volume = $data["volume"];
+        $iriSplit = explode("/", $data["image"]);
+        $imageId = end($iriSplit);
+
+        if (!$this->productService->updateProductByDetails(
+            $id, $name, $description,
+            $brand, $forWomen, $price,
+            $volume, $imageId, $baseNote
+        ))
+            return $this->json(["message" => "Wrong product id or image id"], Response::HTTP_BAD_REQUEST);
+
+        return $this->json(["message" => "Product updated"], Response::HTTP_CREATED);
+    }
+
+    /**
+     * @Route("/admin/products/{id}", name="get_product", methods={"DELETE"})
+     */
+    public function deleteProduct(int $id): JsonResponse
+    {
+        // service returns false if product don't exist
+        if (!$this->productService->deleteProductById($id))
+        {
+            return $this->json(['message' => 'No product with such id'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json(['message' => 'Product deleted'], Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/api/products/{id}", name="get_product", methods={"GET"})
+     */
+    public function getProduct(int $id): JsonResponse
     {
         $product = $this->productService->getProductById($id);
         $productBase = $product->getProductBase();
@@ -80,9 +118,9 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/api/products", name="products", methods={"GET"})
+     * @Route("/api/products", name="get_products", methods={"GET"})
      */
-    public function products(Request $request): JsonResponse
+    public function getProducts(Request $request): JsonResponse
     {
         $brand = $request->query->get("brand");
         $name = $request->query->get("name");
