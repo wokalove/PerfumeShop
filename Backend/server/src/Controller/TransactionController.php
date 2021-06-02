@@ -56,12 +56,27 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @Route("/api/transactions", name="transactions", methods={"GET"})
+     * @Route("/api/transactions", name="get_transactions_limit", methods={"GET"})
      */
-    public function transactions(Request $request): JsonResponse
+    public function getTransactionsAndLimit(Request $request): JsonResponse
     {
         $limit = $request->query->get("limit");
-        $transactions = $this->transactionService->getTransactions($limit);
+
+        $transactions = $this->transactionService->getTransactionsAndLimit($limit);
+
+        return $this->json($this->arrayToJson($transactions));
+    }
+
+    /**
+     * @Route("/admin/transactions", name="get_transactions", methods={"GET"})
+     */
+    public function getTransactionsByFiltersAndLimit(Request $request): JsonResponse
+    {
+        $limit = $request->query->get("limit");
+        $isCompleted = $request->query->get("completed") == "true";
+        $userId = $request->query->get("user-id");
+
+        $transactions = $this->transactionService->getTransactionsByFiltersAndLimit($limit, $isCompleted, $userId);
 
         return $this->json($this->arrayToJson($transactions));
     }
@@ -72,8 +87,13 @@ class TransactionController extends AbstractController
         foreach ($transactions as $transaction)
         {
             $response[] = array(
+                'user_id' => $transaction->getUsr()->getId(), // TODO: TODO: difference in naming between databases!!!
                 'product_id' => $transaction->getProduct()->getId(),
-                'quantity' => $transaction->getQuantity()
+                'product_name' => $transaction->getProductName(),
+                'price' => $transaction->getPrice(),
+                'is_completed' => $transaction->getIsCompleted(),
+                'quantity' => $transaction->getQuantity(),
+                'date' => $transaction->getDate()
             );
         }
         return $response;
