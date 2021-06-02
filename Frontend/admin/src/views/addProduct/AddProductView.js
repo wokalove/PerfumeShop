@@ -76,7 +76,7 @@ const AddProductView = ({ className, ...rest }) => {
     };
 
     try {
-      await axios.post('/api/product_images', data, options);
+      const response = await axios.post('/api/product_images', data, options);
 
       await axios.post('/admin/products', {
         name: object.name,
@@ -86,7 +86,7 @@ const AddProductView = ({ className, ...rest }) => {
         for_women: object.position === 'female',
         price: parseInt(object.price, 10),
         volume: parseInt(object.volume, 10),
-        image: '/api/product_images/13' // TODO: id from response
+        image: response.data['@id']
       });
 
       setSuccess(true);
