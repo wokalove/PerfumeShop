@@ -18,7 +18,7 @@ class Offer
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Product::class, inversedBy="offer", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Product::class, inversedBy="offer", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
