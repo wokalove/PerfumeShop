@@ -4,7 +4,6 @@ namespace App\Service;
 use App\Entity\Product;
 use App\Entity\ProductBase;
 use App\Entity\ProductImage;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProductService
@@ -30,7 +29,7 @@ class ProductService
 
     public function addProductByDetails(string $name, string $description, string $brand,
                                         bool $forWomen, int $price, int $volume, int $imageId,
-                                        string $baseNote=null)
+                                        string $baseNote=null): bool
     {
         $image = $this->getProductImageById($imageId);
         if ($image == null)
@@ -65,6 +64,39 @@ class ProductService
             ->setForWomen($forWomen)
             ->setBrand($baseNote);
         $this->addProductBase($productBase);
+    }
+
+    public function updateProduct(Product $product)
+    {
+        $this->em->merge($product);
+        $this->em->flush();
+    }
+
+    public function updateProductByDetails(int $productId, string $name, string $description,
+                                           string $brand, bool $forWomen, int $price,
+                                           int $volume, int $imageId, string $baseNote=null): bool
+    {
+        if (($product = $this->getProductById($productId)) == null)
+            return false;
+        if (($productBase = $product->getProductBase()) == null)
+            return false;
+        if (($image = $this->getProductImageById($imageId)) == null)
+            return false;
+
+        $productBase->setName($name)
+            ->setDescription($description)
+            ->setBrand($brand)
+            ->setForWomen($forWomen)
+            ->setBaseNote($baseNote)
+            ->setImage($image);
+        $this->addProductBase($productBase);
+
+        $product->setProductBase($productBase)
+            ->setPrice($price)
+            ->setVolume($volume);
+
+        $this->updateProduct($product);
+        return true;
     }
 
     public function deleteProduct(Product $product): bool

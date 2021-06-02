@@ -63,4 +63,37 @@ class AuthorizationController extends AbstractController
 
         return $this->json(['message' => 'User deleted'], Response::HTTP_OK);
     }
+
+    /**
+     * @Route("/admin/users", name="get_users", methods={"GET"})
+     */
+    public function getUsers(Request $request): JsonResponse
+    {
+        $limit = $request->query->get("limit");
+        $name = $request->query->get("name");
+        $surname = $request->query->get("surname");
+        $email = $request->query->get("email");
+
+        $users = $this->userService->getUsersByFiltersLimitAndSort($limit, $name, $surname, $email);
+
+        return $this->json($this->arrayToJson($users));
+    }
+
+    function arrayToJson(Array $users): array
+    {
+        $response = array();
+        foreach ($users as $user)
+        {
+            $response[] = array(
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'roles' => $user->getRoles(),
+                'password' => $user->getPassword(),
+                'name' => $user->getName(),
+                'surname' => $user->getSurname(),
+                'created_at' => $user->getCreatedAt()
+            );
+        }
+        return $response;
+    }
 }
