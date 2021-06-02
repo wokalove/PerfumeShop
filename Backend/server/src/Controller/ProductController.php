@@ -28,7 +28,7 @@ class ProductController extends AbstractController
         $description = $data["description"];
         $brand = $data["brand"];
         $baseNote = $data["base_note"];
-        $forWomen = $data["for_women"];
+        $forWomen = $data["for_women"] == "true";
         $price = $data["price"];
         $volume = $data["volume"];
         $iriSplit = explode("/", $data["image"]);
