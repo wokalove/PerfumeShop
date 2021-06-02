@@ -8,6 +8,7 @@ use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -68,7 +69,7 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @Route("/admin/transactions", name="get_transactions", methods={"GET"})
+     * @Route("/admin/transactions", name="get_transactions_filters_limit", methods={"GET"})
      */
     public function getTransactionsByFiltersAndLimit(Request $request): JsonResponse
     {
@@ -79,6 +80,20 @@ class TransactionController extends AbstractController
         $transactions = $this->transactionService->getTransactionsByFiltersAndLimit($limit, $isCompleted, $userId);
 
         return $this->json($this->arrayToJson($transactions));
+    }
+
+    /**
+     * @Route("/admin/transactions/{id}", name="update_transactions", methods={"PATCH"})
+     */
+    public function updateTransaction(Request $request, int $id): JsonResponse
+    {
+        $isCompleted = $request->query->get("value") == "true";
+
+        if (!$this->transactionService->updateTransactionByDetails($id, $isCompleted))
+            return $this->json(['message' => 'No transaction with such id'], Response::HTTP_CONFLICT);
+
+        return $this->json(['message' => 'Transaction updated'], Response::HTTP_OK);
+
     }
 
     function arrayToJson(Array $transactions): array

@@ -9,10 +9,14 @@ use Doctrine\ORM\EntityManagerInterface;
 class TransactionService
 {
     private EntityManagerInterface $em;
+    private ProductService $productService;
+    private UserService $userService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ProductService $productService, UserService $userService)
     {
         $this->em = $em;
+        $this->productService = $productService;
+        $this->userService = $userService;
     }
 
     public function addTransaction(Transaction $transaction)
@@ -33,6 +37,31 @@ class TransactionService
             ->setQuantity($quantity)
             ->setDate(new \DateTime("now", new \DateTimeZone("Europe/Warsaw")));
         $this->addTransaction($transaction);
+    }
+
+    public function updateTransaction(Transaction $transaction)
+    {
+        $this->em->merge($transaction);
+        $this->em->flush();
+    }
+
+    public function updateTransactionByDetails(int $transactionId, bool $isCompleted, int $productId=null,
+                                               int $usr_id=null, string $productName=null, int $price=null,
+                                               int $quantity=null): bool
+    {
+        if (($transaction = $this->getTransactionById($transactionId)) == null)
+            return false;
+
+        $transaction->setIsCompleted($isCompleted);
+        if ($productId != null) $transaction->setProduct($this->productService->getProductById($productId));
+        if ($usr_id != null) $transaction->setUsr($this->userService->getUserById($usr_id));
+        if ($productName != null) $transaction->setProductName($productName);
+        if ($price != null) $transaction->setPrice($price);
+        if ($quantity != null) $transaction->setQuantity($quantity);
+
+        $this->updateTransaction($transaction);
+
+        return true;
     }
 
     public function deleteTransaction(Transaction $transaction): bool
