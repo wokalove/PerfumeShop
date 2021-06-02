@@ -120,10 +120,13 @@ class UserService
         return $this->em->getRepository(User::class)->findOneBy(array('email'=>$email, 'password'=>$password));
     }
 
-    public function getUsers(int $limit, string $name=null, string $surname=null, string $email=null): array
+    public function getUsersByFiltersLimitAndSort($limit, $name, $surname, $email): array
     {
         $criteria = array();
-        if ($name != null && $surname != null && $email != null) $criteria = array('name' => $name, 'surname' => $surname, 'email' => $email);
+        if ($name != null) $criteria += array('name' => $name);
+        if ($surname != null) $criteria += array('surname' => $surname);
+        if ($email != null) $criteria += array('email' => $email);
+
         return $this->em->getRepository(User::class)->findBy($criteria, null, $limit);
     }
 
