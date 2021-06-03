@@ -1,11 +1,20 @@
 import axios from 'axios';
+// import { logout } from './actions/authActions';
+import store from './store';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
+  baseURL: 'http://localhost:8000',
 });
+
+instance.interceptors.request.use(
+  (config) => {
+    const { token } = store.getState().auth;
+    const auth = token ? `Bearer ${token}` : '';
+    config.headers.common.Authorization = auth;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // instance.interceptors.response.use(
 //   (response) => {

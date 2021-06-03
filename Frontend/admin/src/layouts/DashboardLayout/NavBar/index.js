@@ -20,13 +20,9 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon
 } from 'react-feather';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import NavItem from './NavItem';
-
-const user = {
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
-};
 
 const items = [
   {
@@ -95,6 +91,7 @@ const useStyles = makeStyles(() => ({
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
+  const authState = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -107,10 +104,10 @@ const NavBar = ({ onMobileClose, openMobile }) => {
     <Box height="100%" display="flex" flexDirection="column">
       <Box alignItems="center" display="flex" flexDirection="column" p={2}>
         <Typography className={classes.name} color="textPrimary" variant="h5">
-          {user.name}
+          {`${authState.name} ${authState.surname}`}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          admin
         </Typography>
       </Box>
       <Divider />

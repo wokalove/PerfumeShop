@@ -1,20 +1,19 @@
 import {
   Box,
   Card,
-
   makeStyles, Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   Typography
 } from '@material-ui/core';
 import clsx from 'clsx';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import Loading from 'src/components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -23,18 +22,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Results = ({ className, customers, ...rest }) => {
+const Results = ({
+  className,
+  customers,
+  loading,
+  ...rest
+}) => {
   const classes = useStyles();
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
 
   return (
     <Card
@@ -47,16 +41,16 @@ const Results = ({ className, customers, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
+                  Id
+                </TableCell>
+                <TableCell>
                   Name
                 </TableCell>
                 <TableCell>
+                  Surname
+                </TableCell>
+                <TableCell>
                   Email
-                </TableCell>
-                <TableCell>
-                  Location
-                </TableCell>
-                <TableCell>
-                  Phone
                 </TableCell>
                 <TableCell>
                   Registration date
@@ -64,7 +58,7 @@ const Results = ({ className, customers, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {customers.map((customer) => (
                 <TableRow
                   hover
                   key={customer.id}
@@ -78,29 +72,30 @@ const Results = ({ className, customers, ...rest }) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {customer.id}
                       </Typography>
                     </Box>
+                  </TableCell>
+                  <TableCell>
+                    {customer.name}
+                  </TableCell>
+                  <TableCell>
+                    {customer.surname}
                   </TableCell>
                   <TableCell>
                     {customer.email}
                   </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
-                  </TableCell>
-                  <TableCell>
-                    {customer.phone}
-                  </TableCell>
-                  <TableCell>
-                    {moment(customer.createdAt).format('DD/MM/YYYY')}
+                    {moment(customer.created_at).format('DD/MM/YYYY')}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          {loading && <Loading />}
         </Box>
       </PerfectScrollbar>
-      <TablePagination
+      {/* <TablePagination
         component="div"
         count={customers.length}
         onChangePage={handlePageChange}
@@ -108,14 +103,15 @@ const Results = ({ className, customers, ...rest }) => {
         page={page}
         rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
-      />
+      /> */}
     </Card>
   );
 };
 
 Results.propTypes = {
   className: PropTypes.string,
-  customers: PropTypes.array.isRequired
+  customers: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 export default Results;

@@ -20,13 +20,16 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerListView = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
     const loadCustomers = async () => {
+      setLoading(true);
       const tmpCustomers = await axios.get('/admin/users'); // TODO: endpoint
       console.log(tmpCustomers.data);
       setCustomers(tmpCustomers.data);
+      setLoading(false);
     };
     loadCustomers();
   }, []);
@@ -39,7 +42,7 @@ const CustomerListView = () => {
       <Container maxWidth={false}>
         <Toolbar />
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results customers={customers} loading={loading} />
         </Box>
       </Container>
     </Page>
