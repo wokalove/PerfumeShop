@@ -37,8 +37,6 @@ const ProductList = () => {
     loadProducts();
   }, []);
 
-  console.log(products);
-
   return (
     <Page
       className={classes.root}

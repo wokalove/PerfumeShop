@@ -19,10 +19,14 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
+import theme from 'src/theme';
 import axios from '../../axiosConfig';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {
+    backgroundColor: theme.palette.background.dark,
+    padding: theme.spacing(3)
+  }
 }));
 
 const AddProductView = ({ className, ...rest }) => {
