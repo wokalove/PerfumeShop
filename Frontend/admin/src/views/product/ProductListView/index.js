@@ -43,7 +43,7 @@ const ProductList = () => {
       title="Products"
     >
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar setProducts={setProducts} setLoading={setLoading} />
         <Box mt={3}>
           <Grid
             container

@@ -8,9 +8,10 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Search as SearchIcon } from 'react-feather';
 import { NavLink as RouterLink } from 'react-router-dom';
+import axios from '../../../axiosConfig';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -22,8 +23,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({
+  className,
+  setProducts,
+  setLoading,
+  ...rest
+}) => {
   const classes = useStyles();
+  const [searchValue, setSearchValue] = useState('');
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+      setProducts([]);
+      setLoading(true);
+      const url = `/api/products${searchValue ? `?name=${searchValue}` : ''}`;
+      const tmpProducts = await axios.get(url);
+      setProducts(tmpProducts.data);
+    } catch (e) {
+      alert(e);
+    }
+    setLoading(false);
+  }
 
   return (
     <div
@@ -47,23 +69,26 @@ const Toolbar = ({ className, ...rest }) => {
         <Card>
           <CardContent>
             <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Search product"
-                variant="outlined"
-              />
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon
+                          fontSize="small"
+                          color="action"
+                        >
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    )
+                  }}
+                  placeholder="Search product"
+                  variant="outlined"
+                />
+              </form>
             </Box>
           </CardContent>
         </Card>
@@ -73,7 +98,9 @@ const Toolbar = ({ className, ...rest }) => {
 };
 
 Toolbar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  setProducts: PropTypes.func,
+  setLoading: PropTypes.func
 };
 
 export default Toolbar;
