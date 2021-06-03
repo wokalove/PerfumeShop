@@ -4,7 +4,6 @@ import {
   Card,
   CardHeader,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -12,7 +11,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
@@ -34,7 +32,7 @@ const LatestProducts = ({ className, ...rest }) => {
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
-      const tmpProducts = await axios.get('/api/products?limit=5');
+      const tmpProducts = await axios.get('/api/products');
       setProducts(tmpProducts.data.reverse());
       setLoading(false);
     };
@@ -52,7 +50,7 @@ const LatestProducts = ({ className, ...rest }) => {
       />
       <Divider />
       <List>
-        {products.length > 0 && products.map((product, i) => (
+        {products.length > 0 && products.map((product, i) => i < 5 && (
           <ListItem
             divider={i < products.length - 1}
             key={product.id}
@@ -68,12 +66,17 @@ const LatestProducts = ({ className, ...rest }) => {
               primary={product.name}
               secondary={`${product.volume} [ml]`}
             />
-            <IconButton
+            <div>
+              {`Price: $${product.price}`}
+              <br />
+              Offer: -
+            </div>
+            {/* <IconButton
               edge="end"
               size="small"
             >
               <MoreVertIcon />
-            </IconButton>
+            </IconButton> */}
           </ListItem>
         ))}
       </List>

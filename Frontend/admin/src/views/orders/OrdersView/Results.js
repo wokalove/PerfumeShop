@@ -92,6 +92,7 @@ const Results = ({
               {orders.map((order) => (
                 <TableRow
                   hover
+                  key={order.id}
                 >
                   <TableCell>
                     {order.user_id}
