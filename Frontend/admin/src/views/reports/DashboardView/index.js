@@ -1,9 +1,9 @@
-import React from 'react';
 import {
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
+import React from 'react';
 import Page from 'src/components/Page';
 import LatestOrders from './LatestOrders';
 import LatestProducts from './LatestProducts';
