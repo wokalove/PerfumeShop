@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Card,
-  Table,
+  makeStyles, Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
-  makeStyles, Tooltip, TableSortLabel, TextField
+  TableSortLabel, TextField, Tooltip
 } from '@material-ui/core';
+import clsx from 'clsx';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import Loading from 'src/components/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -37,17 +37,16 @@ const status = [
   }
 ];
 
-const Results = ({ className, orders, ...rest }) => {
-  const classes = useStyles();
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
+// TODO: id
+// TODO: status
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
+const Results = ({
+  className,
+  orders,
+  loading,
+  ...rest
+}) => {
+  const classes = useStyles();
 
   return (
     <Card
@@ -60,10 +59,16 @@ const Results = ({ className, orders, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order Ref
+                  User Id
                 </TableCell>
                 <TableCell>
-                  Customer
+                  Product Id
+                </TableCell>
+                <TableCell>
+                  Price
+                </TableCell>
+                <TableCell>
+                  Quantity
                 </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
@@ -87,16 +92,21 @@ const Results = ({ className, orders, ...rest }) => {
               {orders.map((order) => (
                 <TableRow
                   hover
-                  key={order.id}
                 >
                   <TableCell>
-                    {order.ref}
+                    {order.user_id}
                   </TableCell>
                   <TableCell>
-                    {order.customer.name}
+                    {order.product_id}
                   </TableCell>
                   <TableCell>
-                    {moment(order.createdAt).format('DD/MM/YYYY')}
+                    {`${order.price * order.quantity} $`}
+                  </TableCell>
+                  <TableCell>
+                    {order.quantity}
+                  </TableCell>
+                  <TableCell>
+                    {moment(order.date).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
                     <TextField
@@ -120,24 +130,17 @@ const Results = ({ className, orders, ...rest }) => {
               ))}
             </TableBody>
           </Table>
+          {loading && <Loading />}
         </Box>
       </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={orders.length}
-        onChangePage={handlePageChange}
-        onChangeRowsPerPage={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
     </Card>
   );
 };
 
 Results.propTypes = {
   className: PropTypes.string,
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 export default Results;
