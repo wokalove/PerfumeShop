@@ -100,7 +100,7 @@ const Results = ({
                     {order.product_id}
                   </TableCell>
                   <TableCell>
-                    {`${order.price * order.quantity} $`}
+                    {`$${order.price * order.quantity}`}
                   </TableCell>
                   <TableCell>
                     {order.quantity}

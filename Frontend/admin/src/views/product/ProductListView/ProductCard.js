@@ -1,18 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
   Divider,
   Grid,
-  Typography,
-  makeStyles
+
+  makeStyles, Typography
 } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,13 +37,9 @@ const ProductCard = ({ className, product, ...rest }) => {
         <Box
           display="flex"
           justifyContent="center"
-          mb={3}
+          mb={4}
         >
-          <Avatar
-            alt="Product"
-            src={product.media}
-            variant="square"
-          />
+          <img src={`http://localhost:8000${product.image}`} alt="" style={{ height: '200px' }} />
         </Box>
         <Typography
           align="center"
@@ -54,14 +47,14 @@ const ProductCard = ({ className, product, ...rest }) => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {product.name}
         </Typography>
         <Typography
           align="center"
           color="textPrimary"
-          variant="body1"
+          gutterBottom
         >
-          {product.description}
+          {`${product.volume} [ml]`}
         </Typography>
       </CardContent>
       <Box flexGrow={1} />
@@ -76,34 +69,24 @@ const ProductCard = ({ className, product, ...rest }) => {
             className={classes.statsItem}
             item
           >
-            <AccessTimeIcon
-              className={classes.statsIcon}
-              color="action"
-            />
             <Typography
               color="textSecondary"
               display="inline"
               variant="body2"
             >
-              Updated 2hr ago
+              {`Price: $${product.price}`}
             </Typography>
           </Grid>
           <Grid
             className={classes.statsItem}
             item
           >
-            <GetAppIcon
-              className={classes.statsIcon}
-              color="action"
-            />
             <Typography
               color="textSecondary"
               display="inline"
               variant="body2"
             >
-              {product.totalDownloads}
-              {' '}
-              Downloads
+              Offer: -
             </Typography>
           </Grid>
         </Grid>
