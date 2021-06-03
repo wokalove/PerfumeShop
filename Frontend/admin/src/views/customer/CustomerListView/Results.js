@@ -95,15 +95,6 @@ const Results = ({
           {loading && <Loading />}
         </Box>
       </PerfectScrollbar>
-      {/* <TablePagination
-        component="div"
-        count={customers.length}
-        onChangePage={handlePageChange}
-        onChangeRowsPerPage={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      /> */}
     </Card>
   );
 };

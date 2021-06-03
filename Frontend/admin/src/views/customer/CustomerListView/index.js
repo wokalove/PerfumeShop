@@ -12,9 +12,7 @@ import Toolbar from './Toolbar';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    minHeight: '100%',
     paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
   }
 }));
 
@@ -26,8 +24,7 @@ const CustomerListView = () => {
   useEffect(() => {
     const loadCustomers = async () => {
       setLoading(true);
-      const tmpCustomers = await axios.get('/admin/users'); // TODO: endpoint
-      console.log(tmpCustomers.data);
+      const tmpCustomers = await axios.get('/admin/users');
       setCustomers(tmpCustomers.data);
       setLoading(false);
     };
@@ -40,7 +37,7 @@ const CustomerListView = () => {
       title="Customers"
     >
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar setCustomers={setCustomers} setLoading={setLoading} />
         <Box mt={3}>
           <Results customers={customers} loading={loading} />
         </Box>
