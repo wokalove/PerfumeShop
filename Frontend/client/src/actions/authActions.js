@@ -9,8 +9,6 @@ export const AUTH_ACTION_TYPES = {
   LOGOUT: 'LOGOUT',
 };
 
-// TODO: auth actions url's
-
 export const register =
   (name, surname, email, password) => async (dispatch) => {
     try {
