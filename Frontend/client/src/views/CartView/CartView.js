@@ -3,7 +3,6 @@ import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
-import { BASE } from 'constants/urls';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -49,13 +48,7 @@ const CartView = () => {
       <SummaryContainer>
         <StyledMain>
           {cartState.cart.map((item, index) => (
-            <CartItem
-              key={index}
-              itemName={item.name}
-              price={item.price}
-              quantity={item.quantity}
-              image={BASE + item.image}
-            ></CartItem>
+            <CartItem key={index} item={item}></CartItem>
           ))}
           {cartState.cart.length > 0 && (
             <Button onClick={handleTransaction} width="230px">

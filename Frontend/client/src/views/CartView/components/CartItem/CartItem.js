@@ -1,3 +1,4 @@
+import { BASE } from 'constants/urls';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -48,22 +49,22 @@ const Rigth = styled.div`
   margin: 0.2rem 0;
 `;
 
-const CartItem = ({ image, itemName, quantity, price }) => {
+const CartItem = ({ item }) => {
   return (
     <StyledContainer>
-      <Image src={image} />
+      <Image src={BASE + item.image} />
       <DetailsContainer>
         <Left>
-          <h1>{itemName}</h1>
+          <h1>{item.name}</h1>
           <div>
             {/* <p>details1: details</p>
             <p>details2: details</p> */}
-            <p>quantity: {parseInt(quantity)}</p>
+            <p>quantity: {parseInt(item.quantity)}</p>
           </div>
         </Left>
         <Rigth>
-          <p>${parseInt(price) * parseInt(quantity)}</p>
-          <p>remove</p>
+          <p>${parseInt(item.offer ?? item.price) * parseInt(item.quantity)}</p>
+          {/* <p>remove</p> */}
         </Rigth>
       </DetailsContainer>
     </StyledContainer>

@@ -50,7 +50,7 @@ function calculateNumberOfProducts(cart) {
 
 function calculatePrice(cart) {
   let price = 0;
-  cart.forEach((item) => (price += item.price * item.quantity));
+  cart.forEach((item) => (price += item.offer ?? item.price * item.quantity));
   return price;
 }
 
@@ -67,15 +67,15 @@ const Summary = ({ buy, loading }) => {
         </ContentElementHeader>
         <ContentElement>
           <p>Price:</p>
-          <p>{calculatePrice(cartState.cart)}</p>
+          <p>${calculatePrice(cartState.cart)}</p>
         </ContentElement>
         <ContentElement>
           <p>Delivery:</p>
-          <p>{delivery}</p>
+          <p>${delivery}</p>
         </ContentElement>
         <Total>
           <p>Total:</p>
-          <p>{calculatePrice(cartState.cart) + delivery}</p>
+          <p>${calculatePrice(cartState.cart) + delivery}</p>
         </Total>
       </ContentContainer>
       <Button width="100%" onClick={buy}>
