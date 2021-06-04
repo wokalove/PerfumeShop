@@ -173,20 +173,14 @@ class ProductService
 
     public function getProductsByFilters($brand, $name, $priceBottom,
                                            $priceTop, $volumeBottom, $volumeTop,
-                                           $forWomen, $baseNote, $offerId): array
+                                           $forWomen, $baseNote, $offer): array
     {
         $qb = $this->em->createQueryBuilder();
-        if ($offerId != null) $qb->select('o', 'p', 'pb', 'pi')
-            ->from('App:Offer', 'o')
-            ->join('App:Product', 'p', 'WITH', 'o.product = p')
-            ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb')
-            ->join('App:ProductImage', 'pi', 'WITH', 'pb.image = pi')
-            ->where('o.id = :offerId')
-            ->setParameter('offerId', $offerId);
-        else $qb->select('p', 'pb', 'pi')
+        $qb->select('p', 'pb', 'pi', 'o')
             ->from('App:Product', 'p')
             ->join('App:ProductBase', 'pb', 'WITH', 'p.product_base = pb')
-            ->join('App:ProductImage', 'pi', 'WITH', 'pb.image = pi');
+            ->join('App:ProductImage', 'pi', 'WITH', 'pb.image = pi')
+            ->leftJoin('App:Offer', 'o', 'WITH', 'p = o.product');
 
 
         if ($brand != null) $qb->andWhere('pb.brand = :brand')->setParameter('brand', $brand);
@@ -199,6 +193,7 @@ class ProductService
                 ->andWhere('p.volume <= :volumeTop')->setParameter('volumeTop', $volumeTop);
         if ($forWomen != null) $qb->andWhere('pb.for_women = :forWomen')->setParameter('forWomen', $forWomen);
         if ($baseNote != null) $qb->andWhere('pb.base_note = :baseNote')->setParameter('baseNote', $baseNote);
+        if ($offer == true) $qb->andWhere('o.new_price IS NOT NULL');
 
         return $qb->getQuery()->getScalarResult();
     }
