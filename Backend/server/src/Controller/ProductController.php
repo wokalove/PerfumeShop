@@ -63,13 +63,11 @@ class ProductController extends AbstractController
         $forWomen = $data["for_women"];
         $price = $data["price"];
         $volume = $data["volume"];
-        $iriSplit = explode("/", $data["image"]);
-        $imageId = end($iriSplit);
 
         if (!$this->productService->updateProductByDetails(
             $id, $name, $description,
             $brand, $forWomen, $price,
-            $volume, $imageId, $baseNote
+            $volume, $baseNote
         ))
             return $this->json(["message" => "Wrong product id or image id"], Response::HTTP_BAD_REQUEST);
 
@@ -98,6 +96,7 @@ class ProductController extends AbstractController
         $product = $this->productService->getProductById($id);
         $productBase = $product->getProductBase();
         $image = $productBase->getImage();
+        $offer = $product->getOffer();
 
         $response = new JsonResponse([
             'id' => $product->getId(),

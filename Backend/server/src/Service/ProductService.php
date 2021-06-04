@@ -74,21 +74,18 @@ class ProductService
 
     public function updateProductByDetails(int $productId, string $name, string $description,
                                            string $brand, bool $forWomen, int $price,
-                                           int $volume, int $imageId, string $baseNote=null): bool
+                                           int $volume, string $baseNote=null): bool
     {
         if (($product = $this->getProductById($productId)) == null)
             return false;
         if (($productBase = $product->getProductBase()) == null)
-            return false;
-        if (($image = $this->getProductImageById($imageId)) == null)
             return false;
 
         $productBase->setName($name)
             ->setDescription($description)
             ->setBrand($brand)
             ->setForWomen($forWomen)
-            ->setBaseNote($baseNote)
-            ->setImage($image);
+            ->setBaseNote($baseNote);
         $this->addProductBase($productBase);
 
         $product->setProductBase($productBase)
