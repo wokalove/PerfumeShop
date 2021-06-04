@@ -3,6 +3,7 @@ import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Container from 'components/common/Container';
 import DIMENSIONS from 'constants/dimensions';
+import { BASE } from 'constants/urls';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -53,7 +54,7 @@ const CartView = () => {
               itemName={item.name}
               price={item.price}
               quantity={item.quantity}
-              image={'http://localhost:8080' + item.image}
+              image={BASE + item.image}
             ></CartItem>
           ))}
           {cartState.cart.length > 0 && (

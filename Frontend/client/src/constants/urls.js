@@ -1,3 +1,4 @@
-const BASE_URL = 'http://localhost:8000/api';
+const BASE = 'http://localhost:8000';
+const BASE_URL = BASE + '/api';
 
-export { BASE_URL };
+export { BASE, BASE_URL };

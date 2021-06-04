@@ -7,6 +7,7 @@ import TextInput from 'components/common/TextInput';
 import ItemDetails from 'components/ItemDetails';
 import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
+import { BASE } from 'constants/urls';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -23,7 +24,6 @@ import {
 } from './styles';
 
 const ITEMS_PER_PAGE = 9;
-const BASE_URL = 'http://localhost:8080';
 
 const ShopView = () => {
   const backdropItemRef = useRef(null);
@@ -207,7 +207,7 @@ const ShopView = () => {
                       name={item.name}
                       baseNote={item.base_note}
                       volume={item.volume}
-                      imageSrc={BASE_URL + item.image}
+                      imageSrc={BASE + item.image}
                       price={item.price}
                       onClick={() => handleBackdropOpen(index)}
                     />

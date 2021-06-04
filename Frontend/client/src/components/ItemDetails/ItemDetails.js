@@ -1,6 +1,7 @@
 import { addToCart } from 'actions/cartActions';
 import Button from 'components/common/Button';
 import Counter from 'components/Counter';
+import { BASE } from 'constants/urls';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
@@ -115,7 +116,7 @@ const ItemDetails = ({ item, innerRef, hide }) => {
   return (
     <Container ref={innerRef}>
       <Left>
-        <Image src={'http://localhost:8080' + item.image} alt="item image" />
+        <Image src={BASE + item.image} alt="item image" />
         <LeftBottom>
           <QuantityContainer>
             <h5>Quantity</h5>
