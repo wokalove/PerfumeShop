@@ -12,6 +12,7 @@ import OrdersListView from 'src/views/orders/OrdersView';
 import ProductListView from 'src/views/product/ProductListView';
 import DashboardView from 'src/views/reports/DashboardView';
 import SettingsView from 'src/views/settings/SettingsView';
+import ProductView from './views/product/ProductView';
 
 const routes = (isLoggedIn) => [
   {
@@ -21,11 +22,12 @@ const routes = (isLoggedIn) => [
       { path: 'account', element: <AccountView /> },
       { path: 'customers', element: <CustomerListView /> },
       { path: 'dashboard', element: <DashboardView /> },
-      { path: 'products', element: <ProductListView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: 'addProduct', element: <AddProductView /> },
-      { path: '*', element: <Navigate to="/404" /> },
       { path: 'orders', element: <OrdersListView /> },
+      { path: 'products', element: <ProductListView /> },
+      { path: 'product/:id', element: <ProductView /> },
+      { path: '*', element: <Navigate to="/404" /> },
     ]
   },
   {

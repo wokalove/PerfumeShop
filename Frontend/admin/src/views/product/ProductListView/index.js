@@ -5,6 +5,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import Loading from 'src/components/Loading';
 import Page from 'src/components/Page';
 import axios from '../../../axiosConfig';
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductList = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -60,6 +62,7 @@ const ProductList = () => {
                 <ProductCard
                   className={classes.productCard}
                   product={product}
+                  onClick={() => navigate(`../product/${product.id}`)}
                 />
               </Grid>
             ))}

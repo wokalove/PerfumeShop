@@ -14,7 +14,8 @@ import React from 'react';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    cursor: 'pointer'
   },
   statsItem: {
     alignItems: 'center',

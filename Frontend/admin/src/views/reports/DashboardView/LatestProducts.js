@@ -71,12 +71,6 @@ const LatestProducts = ({ className, ...rest }) => {
               <br />
               Offer: -
             </div>
-            {/* <IconButton
-              edge="end"
-              size="small"
-            >
-              <MoreVertIcon />
-            </IconButton> */}
           </ListItem>
         ))}
       </List>
