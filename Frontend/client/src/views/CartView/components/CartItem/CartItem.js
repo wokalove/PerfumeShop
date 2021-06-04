@@ -63,7 +63,9 @@ const CartItem = ({ item }) => {
           </div>
         </Left>
         <Rigth>
-          <p>${parseInt(item.offer ?? item.price) * parseInt(item.quantity)}</p>
+          <p>
+            ${parseInt(item.new_price ?? item.price) * parseInt(item.quantity)}
+          </p>
           {/* <p>remove</p> */}
         </Rigth>
       </DetailsContainer>

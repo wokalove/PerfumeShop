@@ -1,10 +1,10 @@
 import '@brainhubeu/react-carousel/lib/style.css';
 import backgroundImage from 'assets/home-background.jpg';
-import image from 'assets/pngegg.png';
 import axios from 'axiosConfig';
 import Container from 'components/common/Container';
 import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
+import { BASE } from 'constants/urls';
 import React, { useEffect, useState } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import CustomCarousel from './components/CustomCarousel';
@@ -13,17 +13,23 @@ import { HomeImageWrapper, StyledImg } from './styles';
 
 const HomeView = () => {
   const [value, setValue] = useState(0);
+  const [products, setProducts] = useState([]);
   const [productsWithOffers, setProductsWithOffers] = useState([]);
 
   useEffect(() => {
+    const loadAllProducts = async () => {
+      const res = await axios.get('products');
+      setProducts(res.data.reverse().slice(0, 9));
+    };
+
     const loadProductsWithSpecialOffers = async () => {
       const res = await axios.get('products?offer=true');
       setProductsWithOffers(res.data);
     };
+
+    loadAllProducts();
     loadProductsWithSpecialOffers();
   }, []);
-
-  console.log(productsWithOffers);
 
   const handleChange = (value) => {
     setValue(value);
@@ -42,20 +48,24 @@ const HomeView = () => {
         <main>
           <HomeSection title="New Products">
             <CustomCarousel>
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
+              {products.map((item) => (
+                <ShopItem
+                  theBigOne
+                  imageSrc={BASE + item.image}
+                  price={item.price}
+                />
+              ))}
             </CustomCarousel>
           </HomeSection>
           <HomeSection title="Special Offers">
             <CustomCarousel>
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
-              <ShopItem theBigOne imageSrc={image} price="59.99" />
+              {productsWithOffers.map((item) => (
+                <ShopItem
+                  theBigOne
+                  imageSrc={BASE + item.image}
+                  price={item.price}
+                />
+              ))}
             </CustomCarousel>
           </HomeSection>
         </main>

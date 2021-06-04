@@ -50,7 +50,9 @@ function calculateNumberOfProducts(cart) {
 
 function calculatePrice(cart) {
   let price = 0;
-  cart.forEach((item) => (price += item.offer ?? item.price * item.quantity));
+  cart.forEach(
+    (item) => (price += item.new_price ?? item.price * item.quantity)
+  );
   return price;
 }
 
