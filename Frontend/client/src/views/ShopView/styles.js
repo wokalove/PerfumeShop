@@ -75,3 +75,12 @@ export const StyledBackdrop = styled(Backdrop)`
     z-index: 100;
   }
 `;
+
+export const NumberIntputsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    width: calc(50% - 1rem);
+  }
+`;

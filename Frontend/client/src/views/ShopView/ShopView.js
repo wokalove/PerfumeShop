@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, TextField } from '@material-ui/core';
 import axios from 'axiosConfig';
 import Button from 'components/common/Button';
 import Checkbox from 'components/common/Checkbox';
@@ -15,6 +15,7 @@ import {
   ItemsContainer,
   LeftSection,
   MainTopBar,
+  NumberIntputsContainer,
   PageContainer,
   PaginationContainer,
   StyledAside,
@@ -24,6 +25,17 @@ import {
 } from './styles';
 
 const ITEMS_PER_PAGE = 9;
+
+const genders = [
+  {
+    id: 1,
+    name: 'Female',
+  },
+  {
+    id: 2,
+    name: 'Male',
+  },
+];
 
 const ShopView = () => {
   const backdropItemRef = useRef(null);
@@ -41,6 +53,13 @@ const ShopView = () => {
   const [loadBaseNotes, setLoadBaseNotes] = useState(false);
 
   const [search, setSearch] = useState('');
+  const [brand, setBrand] = useState('');
+  const [baseNote, setBaseNote] = useState('');
+  const [gender, setGender] = useState('');
+  const [volumeBottom, setVolumeBottom] = useState('');
+  const [volumeTop, setVolumeTop] = useState('');
+  const [priceBottom, setPriceBottom] = useState('');
+  const [priceTop, setPriceTop] = useState('');
 
   useOnClickOutside(backdropItemRef, () => setBackdrop(false));
 
@@ -77,13 +96,19 @@ const ShopView = () => {
     loadBaseNotes();
   }, []);
 
-  async function loadData(addSearchQuery = false) {
+  async function loadData() {
     setLoadProducts(true);
-    let searchQuery = '';
-
-    if (addSearchQuery && search !== '') {
-      searchQuery = `?name=${search}`;
-    }
+    let searchQuery = '?';
+    searchQuery += search ? `name=${search}&` : '';
+    searchQuery += brand ? `brand=${brand}&` : '';
+    searchQuery += baseNote ? `base-note=${baseNote}&` : '';
+    searchQuery += gender
+      ? `for-women=${gender === 'Female' ? '1' : '0'}&`
+      : '';
+    searchQuery += volumeBottom ? `volume-bottom=${volumeBottom}&` : '';
+    searchQuery += volumeTop ? `volume-top=${volumeTop}&` : '';
+    searchQuery += priceBottom ? `price-bottom=${priceBottom}&` : '';
+    searchQuery += priceTop ? `price-top=${priceTop}&` : '';
 
     try {
       const tmpProducts = await axios.get('/products' + searchQuery);
@@ -94,6 +119,10 @@ const ShopView = () => {
 
     setLoadProducts(false);
   }
+
+  useEffect(() => {
+    loadData();
+  }, [brand, baseNote, gender, volumeBottom, volumeTop, priceBottom, priceTop]);
 
   function handleChange(event, value) {
     setPage(value);
@@ -129,7 +158,14 @@ const ShopView = () => {
                 <CircularProgress />
               ) : (
                 brands.map((item, index) => (
-                  <Checkbox key={index} label={item.name} />
+                  <Checkbox
+                    key={index}
+                    label={item.name}
+                    onChange={() =>
+                      setBrand((prev) => (prev === item.name ? '' : item.name))
+                    }
+                    checked={item.name === brand}
+                  />
                 ))
               )}
             </CheckboxGroup>
@@ -141,7 +177,16 @@ const ShopView = () => {
                 <CircularProgress />
               ) : (
                 baseNotes.map((item, index) => (
-                  <Checkbox key={index} label={item.name} />
+                  <Checkbox
+                    key={index}
+                    label={item.name}
+                    onChange={() =>
+                      setBaseNote((prev) =>
+                        prev === item.name ? '' : item.name
+                      )
+                    }
+                    checked={item.name === baseNote}
+                  />
                 ))
               )}
             </CheckboxGroup>
@@ -149,19 +194,47 @@ const ShopView = () => {
           <LeftSection>
             <h1>Gender</h1>
             <CheckboxGroup>
-              <Checkbox label="Female" />
-              <Checkbox label="Male" />
+              {genders.map((item) => (
+                <Checkbox
+                  key={item.id}
+                  label={item.name}
+                  onChange={() =>
+                    setGender((prev) => (prev === item.name ? '' : item.name))
+                  }
+                  checked={item.name === gender}
+                />
+              ))}
             </CheckboxGroup>
           </LeftSection>
           <LeftSection>
+            <h1>Volume</h1>
+            <NumberIntputsContainer>
+              <TextField
+                type="number"
+                label="Bottom"
+                onChange={(event) => setVolumeBottom(event.target.value)}
+              />
+              <TextField
+                type="number"
+                label="Top"
+                onChange={(event) => setVolumeTop(event.target.value)}
+              />
+            </NumberIntputsContainer>
+          </LeftSection>
+          <LeftSection>
             <h1>Price</h1>
-            <CheckboxGroup>
-              <Checkbox label="Any" />
-              <Checkbox label="€10 - €30" />
-              <Checkbox label="€30 - €50" />
-              <Checkbox label="€50 - €70" />
-              <Checkbox label="Over €70" />
-            </CheckboxGroup>
+            <NumberIntputsContainer>
+              <TextField
+                type="number"
+                label="Bottom"
+                onChange={(event) => setPriceBottom(event.target.value)}
+              />
+              <TextField
+                type="number"
+                label="Top"
+                onChange={(event) => setPriceTop(event.target.value)}
+              />
+            </NumberIntputsContainer>
           </LeftSection>
         </StyledAside>
         <StyledMain>
@@ -196,7 +269,7 @@ const ShopView = () => {
             {loadProducts ? (
               <CircularProgress />
             ) : (
-              products.map((item, index) => {
+              products?.map((item, index) => {
                 if (
                   index >= (page - 1) * ITEMS_PER_PAGE &&
                   index < page * ITEMS_PER_PAGE
