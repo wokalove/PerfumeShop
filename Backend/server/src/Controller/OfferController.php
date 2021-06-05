@@ -39,6 +39,23 @@ class OfferController extends AbstractController
     }
 
     /**
+     * @Route("/admin/offers/{id}", name="update_offer", methods={"PUT"})
+     */
+    public function updateOffer(Request $request, int $id): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $productId = $data["product_id"];
+        $newPrice = $data["new_price"];
+
+        if (!$this->offerService->updateOfferByDetails($id, $productId, $newPrice))
+        {
+            return $this->json(['message' => 'Wrong offer id or product id'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json(['message' => 'Offer updated'], Response::HTTP_OK);
+    }
+
+    /**
      * @Route("/admin/offers/{id}", name="delete_offer", methods={"DELETE"})
      */
     public function deleteOffer(int $id): JsonResponse
