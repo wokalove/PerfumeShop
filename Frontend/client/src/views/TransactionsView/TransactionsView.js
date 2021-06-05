@@ -1,6 +1,6 @@
-import { CircularProgress } from '@material-ui/core';
 import axios from 'axiosConfig';
 import Container from 'components/common/Container';
+import Loading from 'components/Loading';
 import DIMENSIONS from 'constants/dimensions';
 import React, { useEffect, useState } from 'react';
 import Item from './Item';
@@ -26,7 +26,7 @@ const TransactionsView = () => {
   return (
     <Container maxWidth={DIMENSIONS.PAGE_WIDTH + 'px'}>
       {loading ? (
-        <CircularProgress />
+        <Loading />
       ) : (
         transactions.map((item) => <Item product={item} />)
       )}
