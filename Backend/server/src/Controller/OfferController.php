@@ -34,8 +34,8 @@ class OfferController extends AbstractController
         if (($product = $this->productService->getProductById($productId)) == null)
             return $this->json(["message" => 'Wrong product id'], Response::HTTP_BAD_REQUEST);
 
-        $this->offerService->addOfferByDetails($product, $newPrice);
-        return $this->json(["message" => 'Offer added successfully'], Response::HTTP_CREATED);
+        $addedOffer = $this->offerService->addOfferByDetails($product, $newPrice);
+        return $this->json(["message" => 'Offer added successfully', 'id' => $addedOffer->getId()], Response::HTTP_CREATED);
     }
 
     /**

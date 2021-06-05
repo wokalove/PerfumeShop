@@ -19,11 +19,13 @@ class OfferService
         $this->em->flush();
     }
 
-    public function addOfferByDetails(Product $product, int $newPrice) {
+    public function addOfferByDetails(Product $product, int $newPrice): Offer {
         $offer = new Offer();
         $offer->setProduct($product)
             ->setNewPrice($newPrice);
         $this->addOffer($offer);
+
+        return $offer;
     }
 
     public function deleteOffer(Offer $offer): bool {
