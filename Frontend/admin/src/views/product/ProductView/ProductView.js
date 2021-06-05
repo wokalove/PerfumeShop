@@ -18,7 +18,7 @@ import clsx from 'clsx';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import theme from 'src/theme';
 import * as Yup from 'yup';
 import axios from '../../../axiosConfig';
@@ -79,8 +79,7 @@ const ProductView = ({ className, ...rest }) => {
   const classes = useStyles();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-
-  console.log(product);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -106,7 +105,7 @@ const ProductView = ({ className, ...rest }) => {
         volume: parseInt(data.volume, 10),
         image: product.image
       });
-      Navigate('../../');
+      navigate('../../products');
     } catch (e) {
       alert(e);
     }
@@ -123,7 +122,7 @@ const ProductView = ({ className, ...rest }) => {
             name: product?.name ?? '',
             brand: product?.brand ?? '',
             price: product?.price ?? '',
-            offer: product?.offer ?? '',
+            offer: product?.new_price ?? '',
             baseNote: product?.base_note ?? '',
             volume: product?.volume ?? '',
             description: product?.description ?? '',

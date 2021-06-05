@@ -51,14 +51,13 @@ const AddProductView = ({ className, ...rest }) => {
       const tmpBrands = await axios.get('/api/brands');
       setBrands(tmpBrands.data);
     };
-    loadBrands();
-  }, []);
 
-  useEffect(() => {
     const loadBaseNotes = async () => {
       const tmpBaseNotes = await axios.get('/api/base-notes');
       setBaseNotes(tmpBaseNotes.data);
     };
+
+    loadBrands();
     loadBaseNotes();
   }, []);
 
@@ -92,6 +91,14 @@ const AddProductView = ({ className, ...rest }) => {
         volume: parseInt(object.volume, 10),
         image: response.data['@id']
       });
+
+      // if (object.specialOffer) {
+      //   const offerData = {
+      //     product_id: res.data.id,
+      //     price: object.specialOffer
+      //   };
+      //   await axios.post('/admin/offers', offerData);
+      // }
 
       setSuccess(true);
     } catch (e) {
