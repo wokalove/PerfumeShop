@@ -87,7 +87,7 @@ const ProductCard = ({ className, product, ...rest }) => {
               display="inline"
               variant="body2"
             >
-              Offer: -
+              {`Offer: ${product.new_price ? `$${product.new_price}` : '-'}`}
             </Typography>
           </Grid>
         </Grid>

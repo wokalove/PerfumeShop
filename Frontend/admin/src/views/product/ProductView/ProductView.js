@@ -133,7 +133,7 @@ const ProductView = ({ className, ...rest }) => {
               name: Yup.string().required(),
               brand: Yup.string().required(),
               price: Yup.number().required(),
-              offer: Yup.number().required(),
+              offer: Yup.number(),
               baseNote: Yup.string().required(),
               volume: Yup.number().required(),
               description: Yup.string().required(),
