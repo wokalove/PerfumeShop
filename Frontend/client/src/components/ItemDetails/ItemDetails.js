@@ -151,7 +151,7 @@ const ItemDetails = ({ item, innerRef, hide }) => {
         <Description>{item.description}</Description>
         <Details>
           <li>Base Note: {item.base_note}</li>
-          <li>Volume: {item.volume}</li>
+          <li>Volume: {item.volume} [ml]</li>
         </Details>
       </Right>
     </Container>
