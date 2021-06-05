@@ -21,13 +21,14 @@ const OrdersListView = () => {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
 
+  const loadOrders = async () => {
+    setLoading(true);
+    const tmpOrders = await axios.get('/admin/transactions');
+    setOrders(tmpOrders.data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const loadOrders = async () => {
-      setLoading(true);
-      const tmpOrders = await axios.get('/admin/transactions');
-      setOrders(tmpOrders.data);
-      setLoading(false);
-    };
     loadOrders();
   }, []);
 
@@ -39,7 +40,12 @@ const OrdersListView = () => {
       <Container maxWidth={false}>
         <Toolbar setOrders={setOrders} setLoading={setLoading} />
         <Box mt={3}>
-          <Results orders={orders} loading={loading} />
+          <Results
+            orders={orders}
+            loading={loading}
+            setLoading={setLoading}
+            loadOrders={loadOrders}
+          />
         </Box>
       </Container>
     </Page>

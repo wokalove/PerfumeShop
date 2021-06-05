@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+
   makeStyles, Table,
   TableBody,
   TableCell,
@@ -24,21 +25,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-async function handleButtonClick(id) {
-  try {
-    await axios.patch(`/admin/transactions/${id}?op=replace&path=is_completed&value=true`);
-  } catch (e) {
-    alert(e);
-  }
-}
-
 const Results = ({
   className,
   orders,
   loading,
+  setLoading,
+  loadOrders,
   ...rest
 }) => {
   const classes = useStyles();
+
+  async function handleButtonClick(id) {
+    try {
+      setLoading(true);
+      await axios.patch(`/admin/transactions/${id}?op=replace&path=is_completed&value=true`);
+      await loadOrders();
+    } catch (e) {
+      alert(e);
+    }
+    setLoading(false);
+  }
 
   return (
     <Card
@@ -102,7 +108,7 @@ const Results = ({
                     {moment(order.date).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
-                    {order.is_completed ? 'Completed' : <Button onClick={() => handleButtonClick(order.id)} variant="contained">Done</Button>}
+                    {order.is_completed ? 'Completed' : <Button onClick={() => handleButtonClick(order.id)} variant="contained" disabled={loading}>Done</Button>}
                   </TableCell>
                 </TableRow>
               ))}
@@ -118,7 +124,9 @@ const Results = ({
 Results.propTypes = {
   className: PropTypes.string,
   orders: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  setLoading: PropTypes.func,
+  loadOrders: PropTypes.func
 };
 
 export default Results;
