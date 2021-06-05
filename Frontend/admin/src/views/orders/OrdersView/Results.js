@@ -1,12 +1,13 @@
 import {
   Box,
+  Button,
   Card,
   makeStyles, Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  TableSortLabel, TextField, Tooltip
+  TableSortLabel, Tooltip
 } from '@material-ui/core';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -14,6 +15,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Loading from 'src/components/Loading';
+import axios from '../../../axiosConfig';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -22,23 +24,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const status = [
-  {
-    value: 'pending',
-    label: 'pending'
-  },
-  {
-    value: 'sent',
-    label: 'sent'
-  },
-  {
-    value: 'delivered',
-    label: 'delivered'
+async function handleButtonClick(id) {
+  try {
+    await axios.patch(`/admin/transactions/${id}?op=replace&path=is_completed&value=true`);
+  } catch (e) {
+    alert(e);
   }
-];
-
-// TODO: id
-// TODO: status
+}
 
 const Results = ({
   className,
@@ -65,7 +57,7 @@ const Results = ({
                   Product Id
                 </TableCell>
                 <TableCell>
-                  Price
+                  Total Price
                 </TableCell>
                 <TableCell>
                   Quantity
@@ -110,22 +102,7 @@ const Results = ({
                     {moment(order.date).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
-                    <TextField
-                      size="small"
-                      name="status"
-                      select
-                      SelectProps={{ native: true }}
-                      variant="outlined"
-                    >
-                      {status.map((option) => (
-                        <option
-                          key={option.status}
-                          value={option.status}
-                        >
-                          {option.label}
-                        </option>
-                      ))}
-                    </TextField>
+                    {order.is_completed ? 'Completed' : <Button onClick={() => handleButtonClick(order.id)} variant="contained">Done</Button>}
                   </TableCell>
                 </TableRow>
               ))}

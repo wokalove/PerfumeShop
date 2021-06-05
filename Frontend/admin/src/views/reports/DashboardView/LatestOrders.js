@@ -29,8 +29,6 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-// TODO: order id
-
 const LatestOrders = ({ className, ...rest }) => {
   const classes = useStyles();
   const [orders, setOrders] = useState([]);
@@ -64,6 +62,9 @@ const LatestOrders = ({ className, ...rest }) => {
                 <TableCell>
                   Customer Id
                 </TableCell>
+                <TableCell>
+                  Price
+                </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
                     enterDelay={300}
@@ -90,6 +91,9 @@ const LatestOrders = ({ className, ...rest }) => {
                   </TableCell>
                   <TableCell>
                     {order.product_id}
+                  </TableCell>
+                  <TableCell>
+                    {`$${order.price}`}
                   </TableCell>
                   <TableCell>
                     {moment(order.date).format('DD/MM/YYYY - hh:mm')}

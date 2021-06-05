@@ -70,7 +70,7 @@ const Toolbar = ({
                       </InputAdornment>
                     )
                   }}
-                  placeholder="Search orders"
+                  placeholder="User ID"
                   variant="outlined"
                 />
               </form>
