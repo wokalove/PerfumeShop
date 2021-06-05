@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\OfferService;
 use App\Service\ProductService;
 use App\Service\TransactionService;
 use App\Service\UserService;
@@ -17,16 +18,19 @@ class TransactionController extends AbstractController
     private TransactionService $transactionService;
     private ProductService $productService;
     private UserService $userService;
+    private OfferService $offerService;
     private TokenStorageInterface $tokenStorage;
 
     public function __construct(TransactionService $transactionService,
                                 ProductService $productService,
                                 UserService $userService,
+                                OfferService $offerService,
                                 TokenStorageInterface $tokenStorage)
     {
         $this->transactionService = $transactionService;
         $this->productService = $productService;
         $this->userService = $userService;
+        $this->offerService = $offerService;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -48,7 +52,12 @@ class TransactionController extends AbstractController
 
             $product = $this->productService->getProductById($productId);
             $productName = $product->getProductBase()->getName();
-            $price = $product->getPrice();
+
+            $offer = $this->offerService->getOfferByProduct($product);
+            if ($offer != null)
+                $price = $offer->getNewPrice();
+            else
+                $price = $product->getPrice();
 
             $this->transactionService->addTransactionByDetails($user, $product, $productName,
                                                                $price, false, $quantity);
