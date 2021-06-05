@@ -18,19 +18,16 @@ class TransactionController extends AbstractController
     private TransactionService $transactionService;
     private ProductService $productService;
     private UserService $userService;
-    private OfferService $offerService;
     private TokenStorageInterface $tokenStorage;
 
     public function __construct(TransactionService $transactionService,
                                 ProductService $productService,
                                 UserService $userService,
-                                OfferService $offerService,
                                 TokenStorageInterface $tokenStorage)
     {
         $this->transactionService = $transactionService;
         $this->productService = $productService;
         $this->userService = $userService;
-        $this->offerService = $offerService;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -53,7 +50,7 @@ class TransactionController extends AbstractController
             $product = $this->productService->getProductById($productId);
             $productName = $product->getProductBase()->getName();
 
-            $offer = $this->offerService->getOfferByProduct($product);
+            $offer = $product->getOffer();
             if ($offer != null)
                 $price = $offer->getNewPrice();
             else

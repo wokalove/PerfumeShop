@@ -53,10 +53,6 @@ class OfferService
         return $this->em->getRepository(Offer::class)->find($id);
     }
 
-    public function getOfferByProduct($product): ?Offer {
-        return $this->em->getRepository(Offer::class)->findOneBy(array('product' => $product));
-    }
-
     public function getOffers(int $limit): array {
         return $this->em->getRepository(Offer::class)->findBy(array(), null, $limit);
     }
