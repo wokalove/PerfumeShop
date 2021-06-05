@@ -63,7 +63,11 @@ class TransactionController extends AbstractController
     {
         $limit = $request->query->get("limit");
 
-        $transactions = $this->transactionService->getTransactionsAndLimit($limit);
+        $token = $this->tokenStorage->getToken();
+        $userEmail = $token->getUsername();
+        $user = $this->userService->getUserByEmail($userEmail);
+
+        $transactions = $this->transactionService->getTransactionsForUserAndLimit($user, $limit);
 
         return $this->json($this->arrayToJson($transactions));
     }
