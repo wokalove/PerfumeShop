@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\OfferService;
 use App\Service\ProductService;
 use App\Service\TransactionService;
 use App\Service\UserService;
@@ -48,7 +49,12 @@ class TransactionController extends AbstractController
 
             $product = $this->productService->getProductById($productId);
             $productName = $product->getProductBase()->getName();
-            $price = $product->getPrice();
+
+            $offer = $product->getOffer();
+            if ($offer != null)
+                $price = $offer->getNewPrice();
+            else
+                $price = $product->getPrice();
 
             $this->transactionService->addTransactionByDetails($user, $product, $productName,
                                                                $price, false, $quantity);
@@ -63,7 +69,11 @@ class TransactionController extends AbstractController
     {
         $limit = $request->query->get("limit");
 
-        $transactions = $this->transactionService->getTransactionsAndLimit($limit);
+        $token = $this->tokenStorage->getToken();
+        $userEmail = $token->getUsername();
+        $user = $this->userService->getUserByEmail($userEmail);
+
+        $transactions = $this->transactionService->getTransactionsForUserAndLimit($user, $limit);
 
         return $this->json($this->arrayToJson($transactions));
     }

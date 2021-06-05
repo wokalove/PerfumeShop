@@ -94,11 +94,12 @@ class TransactionService
         return $this->em->getRepository(Transaction::class)->find($id);
     }
 
-    public function getTransactionsAndLimit($limit): array
+    public function getTransactionsForUserAndLimit($user, $limit): array
     {
+        $criteria = array('usr' => $user); // TODO: difference in naming between databases!!!
         $orderBy = array('date' => 'DESC');
 
-        return $this->em->getRepository(Transaction::class)->findBy(array(), $orderBy, $limit);
+        return $this->em->getRepository(Transaction::class)->findBy($criteria, $orderBy, $limit);
     }
 
     public function getTransactionsByFiltersAndLimit(?int $limit, ?bool $isCompleted, ?int $userId): array
