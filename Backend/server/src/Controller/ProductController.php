@@ -97,6 +97,7 @@ class ProductController extends AbstractController
         $productBase = $product->getProductBase();
         $image = $productBase->getImage();
         $newPrice = $product->getOffer() ? $product->getOffer()->getNewPrice() : null;
+        $offerId = $product->getOffer() != null ? $product->getOffer()->getId() : null;
 
         $response = new JsonResponse([
             'id' => $product->getId(),
@@ -109,7 +110,8 @@ class ProductController extends AbstractController
             'new_price' => $newPrice,
             'volume' => $product->getVolume(),
             'added_at' => $product->getAddedAt(),
-            'image' => '/images/'.$image->filePath
+            'image' => '/images/'.$image->filePath,
+            'offer_id' => $offerId
         ]);
 
         $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
