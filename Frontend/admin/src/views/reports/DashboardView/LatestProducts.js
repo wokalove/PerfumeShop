@@ -69,7 +69,7 @@ const LatestProducts = ({ className, ...rest }) => {
             <div>
               {`Price: $${product.price}`}
               <br />
-              Offer: -
+              {`Offer: ${product.new_price ? `$${product.new_price}` : '-'}`}
             </div>
           </ListItem>
         ))}
