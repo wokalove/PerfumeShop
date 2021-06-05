@@ -81,6 +81,6 @@ export const NumberIntputsContainer = styled.div`
   justify-content: space-between;
 
   & > * {
-    width: calc(50% - 1rem);
+    width: calc(50% - 0.5rem);
   }
 `;

@@ -43,7 +43,7 @@ const Header = () => {
               {authState.isLoggedIn ? (
                 <>
                   <li>
-                    <StyledNavLink to="#" color="white">
+                    <StyledNavLink to="/history" color="white">
                       History
                     </StyledNavLink>
                   </li>
