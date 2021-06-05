@@ -1,3 +1,4 @@
+import { BASE } from 'constants/urls';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -30,23 +31,29 @@ const Name = styled.span`
   font-weight: bold;
 `;
 
-const ShopItem = ({
-  name,
-  baseNote,
-  volume,
-  imageSrc,
-  price,
-  theBigOne,
-  onClick,
-}) => {
+const OldPrice = styled.span`
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  text-decoration-color: red;
+`;
+
+const ShopItem = ({ item, theBigOne, onClick }) => {
   return (
     <ItemWrapper theBigOne={theBigOne} onClick={onClick}>
-      <Image src={imageSrc} alt="item image" theBigOne={theBigOne} />
+      <Image src={BASE + item.image} alt="item image" theBigOne={theBigOne} />
       <DetailsContainer theBigOne={theBigOne}>
-        <Name>{name}</Name>
-        <span>{baseNote}</span>
-        <span>{volume} ml</span>
-        <span>${price}</span>
+        <Name>{item.name}</Name>
+        <span>{item.base_note}</span>
+        <span>{item.volume} ml</span>
+        <span>
+          {item.new_price ? (
+            <p>
+              <OldPrice>{'$' + item.price}</OldPrice> ${item.new_price}
+            </p>
+          ) : (
+            '$' + item.price
+          )}
+        </span>
       </DetailsContainer>
     </ItemWrapper>
   );

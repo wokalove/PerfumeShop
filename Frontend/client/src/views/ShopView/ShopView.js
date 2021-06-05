@@ -7,7 +7,6 @@ import TextInput from 'components/common/TextInput';
 import ItemDetails from 'components/ItemDetails';
 import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
-import { BASE } from 'constants/urls';
 import useOnClickOutside from 'hooks/useOnClickOutside';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -277,11 +276,7 @@ const ShopView = () => {
                   return (
                     <ShopItem
                       key={index}
-                      name={item.name}
-                      baseNote={item.base_note}
-                      volume={item.volume}
-                      imageSrc={BASE + item.image}
-                      price={item.price}
+                      item={item}
                       onClick={() => handleBackdropOpen(index)}
                     />
                   );

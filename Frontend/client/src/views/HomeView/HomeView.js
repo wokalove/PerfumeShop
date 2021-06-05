@@ -4,7 +4,6 @@ import axios from 'axiosConfig';
 import Container from 'components/common/Container';
 import ShopItem from 'components/ShopItem';
 import DIMENSIONS from 'constants/dimensions';
-import { BASE } from 'constants/urls';
 import React, { useEffect, useState } from 'react';
 import { Parallax, ParallaxProvider } from 'react-scroll-parallax';
 import CustomCarousel from './components/CustomCarousel';
@@ -12,7 +11,6 @@ import HomeSection from './components/HomeSection';
 import { HomeImageWrapper, StyledImg } from './styles';
 
 const HomeView = () => {
-  const [value, setValue] = useState(0);
   const [products, setProducts] = useState([]);
   const [productsWithOffers, setProductsWithOffers] = useState([]);
 
@@ -31,10 +29,6 @@ const HomeView = () => {
     loadProductsWithSpecialOffers();
   }, []);
 
-  const handleChange = (value) => {
-    setValue(value);
-  };
-
   return (
     <>
       <HomeImageWrapper>
@@ -49,22 +43,14 @@ const HomeView = () => {
           <HomeSection title="New Products">
             <CustomCarousel>
               {products.map((item) => (
-                <ShopItem
-                  theBigOne
-                  imageSrc={BASE + item.image}
-                  price={item.price}
-                />
+                <ShopItem key={item.id} theBigOne item={item} />
               ))}
             </CustomCarousel>
           </HomeSection>
           <HomeSection title="Special Offers">
             <CustomCarousel>
               {productsWithOffers.map((item) => (
-                <ShopItem
-                  theBigOne
-                  imageSrc={BASE + item.image}
-                  price={item.price}
-                />
+                <ShopItem key={item.id} theBigOne item={item} />
               ))}
             </CustomCarousel>
           </HomeSection>

@@ -93,6 +93,20 @@ const QuantityContainer = styled.div`
   }
 `;
 
+const Details = styled.ul`
+  list-style: none;
+  margin-top: 1rem;
+
+  & > li {
+    border-bottom: 1px solid lightgray;
+    padding: 1rem 0;
+
+    &:first-child {
+      border-top: 1px solid lightgray;
+    }
+  }
+`;
+
 const ItemDetails = ({ item, innerRef, hide }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
@@ -128,13 +142,17 @@ const ItemDetails = ({ item, innerRef, hide }) => {
             width="100%"
             onClick={handleButtonClick}
           >
-            Add to Cart: ${item.price * quantity}
+            Add to Cart: ${item.new_price ?? item.price * quantity}
           </Button>
         </LeftBottom>
       </Left>
       <Right>
         <Title>{item.name}</Title>
         <Description>{item.description}</Description>
+        <Details>
+          <li>Base Note: {item.base_note}</li>
+          <li>Volume: {item.volume}</li>
+        </Details>
       </Right>
     </Container>
   );
