@@ -121,6 +121,8 @@ const ItemDetails = ({ item, innerRef, hide }) => {
         id: item.id,
         image: item.image,
         price: item.price,
+        volume: item.volume,
+        baseNote: item.base_note,
         quantity,
       })
     );
@@ -142,7 +144,7 @@ const ItemDetails = ({ item, innerRef, hide }) => {
             width="100%"
             onClick={handleButtonClick}
           >
-            Add to Cart: ${item.new_price ?? item.price * quantity}
+            Add to Cart: ${(item.new_price ?? item.price) * quantity}
           </Button>
         </LeftBottom>
       </Left>

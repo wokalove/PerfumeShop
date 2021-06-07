@@ -57,6 +57,7 @@ const CartItem = ({ item }) => {
         <Left>
           <h1>{item.name}</h1>
           <div>
+            <p>base note: {item.baseNote}</p>
             <p>volume: {item.volume} [ml]</p>
             <p>quantity: {parseInt(item.quantity)}</p>
           </div>
