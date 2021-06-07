@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
 import {
   Box,
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import Loading from 'src/components/Loading';
 import Page from 'src/components/Page';
-import Toolbar from './Toolbar';
+import axios from '../../../axiosConfig';
 import ProductCard from './ProductCard';
-import data from './data';
+import Toolbar from './Toolbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    minHeight: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
   },
@@ -25,7 +25,19 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductList = () => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      setLoading(true);
+      const tmpProducts = await axios.get('/api/products');
+      setProducts(tmpProducts.data);
+      setLoading(false);
+    };
+    loadProducts();
+  }, []);
 
   return (
     <Page
@@ -33,13 +45,13 @@ const ProductList = () => {
       title="Products"
     >
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar setProducts={setProducts} setLoading={setLoading} />
         <Box mt={3}>
           <Grid
             container
             spacing={3}
           >
-            {products.map((product) => (
+            {products.length > 0 && products.map((product) => (
               <Grid
                 item
                 key={product.id}
@@ -50,21 +62,12 @@ const ProductList = () => {
                 <ProductCard
                   className={classes.productCard}
                   product={product}
+                  onClick={() => navigate(`../product/${product.id}`)}
                 />
               </Grid>
             ))}
           </Grid>
-        </Box>
-        <Box
-          mt={3}
-          display="flex"
-          justifyContent="center"
-        >
-          <Pagination
-            color="primary"
-            count={3}
-            size="small"
-          />
+          {loading && <Loading />}
         </Box>
       </Container>
     </Page>

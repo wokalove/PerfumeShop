@@ -4,7 +4,6 @@ import {
   Card,
   CardHeader,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -12,50 +11,13 @@ import {
   makeStyles
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import clsx from 'clsx';
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { v4 as uuid } from 'uuid';
-
-const data = [
-  {
-    id: uuid(),
-    name: 'Dropbox',
-    imageUrl: '/static/images/products/product_1.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Medium Corporation',
-    imageUrl: '/static/images/products/product_2.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Slack',
-    imageUrl: '/static/images/products/product_3.png',
-    updatedAt: moment().subtract(3, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Lyft',
-    imageUrl: '/static/images/products/product_4.png',
-    updatedAt: moment().subtract(5, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'GitHub',
-    imageUrl: '/static/images/products/product_5.png',
-    updatedAt: moment().subtract(9, 'hours')
-  }
-];
+import React, { useEffect, useState } from 'react';
+import { NavLink as RouterLink } from 'react-router-dom';
+import Loading from 'src/components/Loading';
+import axios from '../../../axiosConfig';
 
 const useStyles = makeStyles(({
-  root: {
-    height: '100%'
-  },
   image: {
     height: 48,
     width: 48
@@ -64,11 +26,22 @@ const useStyles = makeStyles(({
 
 const LatestProducts = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      setLoading(true);
+      const tmpProducts = await axios.get('/api/products');
+      setProducts(tmpProducts.data.reverse());
+      setLoading(false);
+    };
+    loadProducts();
+  }, []);
 
   return (
     <Card
-      className={clsx(classes.root, className)}
+      className={className}
       {...rest}
     >
       <CardHeader
@@ -77,7 +50,7 @@ const LatestProducts = ({ className, ...rest }) => {
       />
       <Divider />
       <List>
-        {products.map((product, i) => (
+        {products.length > 0 && products.map((product, i) => i < 5 && (
           <ListItem
             divider={i < products.length - 1}
             key={product.id}
@@ -86,23 +59,23 @@ const LatestProducts = ({ className, ...rest }) => {
               <img
                 alt="Product"
                 className={classes.image}
-                src={product.imageUrl}
+                src={`http://localhost:8000${product.image}`}
               />
             </ListItemAvatar>
             <ListItemText
               primary={product.name}
-              secondary={`Updated ${product.updatedAt.fromNow()}`}
+              secondary={`${product.volume} [ml]`}
             />
-            <IconButton
-              edge="end"
-              size="small"
-            >
-              <MoreVertIcon />
-            </IconButton>
+            <div>
+              {`Price: $${product.price}`}
+              <br />
+              {`Offer: ${product.new_price ? `$${product.new_price}` : '-'}`}
+            </div>
           </ListItem>
         ))}
       </List>
       <Divider />
+      {loading && <Loading />}
       <Box
         display="flex"
         justifyContent="flex-end"
@@ -113,6 +86,8 @@ const LatestProducts = ({ className, ...rest }) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
+          component={RouterLink}
+          to="/app/products"
         >
           View all
         </Button>
