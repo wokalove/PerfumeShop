@@ -8,10 +8,12 @@ use Doctrine\ORM\EntityManagerInterface;
 class OfferService
 {
     private EntityManagerInterface $em;
+    private ProductService $productService;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, ProductService $productService)
     {
         $this->em = $em;
+        $this->productService = $productService;
     }
 
     public function addOffer(Offer $offer) {
@@ -19,11 +21,33 @@ class OfferService
         $this->em->flush();
     }
 
-    public function addOfferByDetails(Product $product, int $newPrice) {
+    public function addOfferByDetails(Product $product, int $newPrice): Offer {
         $offer = new Offer();
         $offer->setProduct($product)
             ->setNewPrice($newPrice);
         $this->addOffer($offer);
+
+        return $offer;
+    }
+
+    public function updateOffer(Offer $offer)
+    {
+        $this->em->merge($offer);
+        $this->em->flush();
+    }
+
+    public function updateOfferByDetails(int $offerId, int $productId, int $newPrice): bool
+    {
+        if (($offer = $this->getOfferById($offerId)) == null)
+            return false;
+        if (($product = $this->productService->getProductById($productId)) == null)
+            return false;
+
+        $offer->setProduct($product)
+            ->setNewPrice($newPrice);
+
+        $this->updateOffer($offer);
+        return true;
     }
 
     public function deleteOffer(Offer $offer): bool {

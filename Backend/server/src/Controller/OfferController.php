@@ -34,8 +34,25 @@ class OfferController extends AbstractController
         if (($product = $this->productService->getProductById($productId)) == null)
             return $this->json(["message" => 'Wrong product id'], Response::HTTP_BAD_REQUEST);
 
-        $this->offerService->addOfferByDetails($product, $newPrice);
-        return $this->json(["message" => 'Offer added successfully'], Response::HTTP_CREATED);
+        $addedOffer = $this->offerService->addOfferByDetails($product, $newPrice);
+        return $this->json(["message" => 'Offer added successfully', 'id' => $addedOffer->getId()], Response::HTTP_CREATED);
+    }
+
+    /**
+     * @Route("/admin/offers/{id}", name="update_offer", methods={"PUT"})
+     */
+    public function updateOffer(Request $request, int $id): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $productId = $data["product_id"];
+        $newPrice = $data["new_price"];
+
+        if (!$this->offerService->updateOfferByDetails($id, $productId, $newPrice))
+        {
+            return $this->json(['message' => 'Wrong offer id or product id'], Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json(['message' => 'Offer updated'], Response::HTTP_OK);
     }
 
     /**
