@@ -1,13 +1,14 @@
 import axios from 'axios';
-import { BASE_URL } from 'constants/urls';
+// import { logout } from './actions/authActions';
+import store from './store';
 
 const instance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: 'http://localhost:8000',
 });
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const { token } = store.getState().auth;
     const auth = token ? `Bearer ${token}` : '';
     config.headers.common.Authorization = auth;
     return config;

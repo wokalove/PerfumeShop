@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
+  Button,
   Card,
-  Table,
+
+  makeStyles, Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
-  makeStyles, Tooltip, TableSortLabel, TextField
+  TableSortLabel, Tooltip
 } from '@material-ui/core';
+import clsx from 'clsx';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import Loading from 'src/components/Loading';
+import axios from '../../../axiosConfig';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -22,32 +25,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const status = [
-  {
-    value: 'pending',
-    label: 'pending'
-  },
-  {
-    value: 'sent',
-    label: 'sent'
-  },
-  {
-    value: 'delivered',
-    label: 'delivered'
-  }
-];
-
-const Results = ({ className, orders, ...rest }) => {
+const Results = ({
+  className,
+  orders,
+  loading,
+  setLoading,
+  loadOrders,
+  ...rest
+}) => {
   const classes = useStyles();
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-  const handleLimitChange = (event) => {
-    setLimit(event.target.value);
-  };
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
+  async function handleButtonClick(id) {
+    try {
+      setLoading(true);
+      await axios.patch(`/admin/transactions/${id}?op=replace&path=is_completed&value=true`);
+      await loadOrders();
+    } catch (e) {
+      alert(e);
+    }
+    setLoading(false);
+  }
 
   return (
     <Card
@@ -60,10 +57,16 @@ const Results = ({ className, orders, ...rest }) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order Ref
+                  User Id
                 </TableCell>
                 <TableCell>
-                  Customer
+                  Product Id
+                </TableCell>
+                <TableCell>
+                  Total Price
+                </TableCell>
+                <TableCell>
+                  Quantity
                 </TableCell>
                 <TableCell sortDirection="desc">
                   <Tooltip
@@ -90,54 +93,40 @@ const Results = ({ className, orders, ...rest }) => {
                   key={order.id}
                 >
                   <TableCell>
-                    {order.ref}
+                    {order.user_id}
                   </TableCell>
                   <TableCell>
-                    {order.customer.name}
+                    {order.product_id}
                   </TableCell>
                   <TableCell>
-                    {moment(order.createdAt).format('DD/MM/YYYY')}
+                    {`$${order.price * order.quantity}`}
                   </TableCell>
                   <TableCell>
-                    <TextField
-                      size="small"
-                      name="status"
-                      select
-                      SelectProps={{ native: true }}
-                      variant="outlined"
-                    >
-                      {status.map((option) => (
-                        <option
-                          key={option.status}
-                          value={option.status}
-                        >
-                          {option.label}
-                        </option>
-                      ))}
-                    </TextField>
+                    {order.quantity}
+                  </TableCell>
+                  <TableCell>
+                    {moment(order.date).format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell>
+                    {order.is_completed ? 'Completed' : <Button onClick={() => handleButtonClick(order.id)} variant="contained" disabled={loading}>Done</Button>}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          {loading && <Loading />}
         </Box>
       </PerfectScrollbar>
-      <TablePagination
-        component="div"
-        count={orders.length}
-        onChangePage={handlePageChange}
-        onChangeRowsPerPage={handleLimitChange}
-        page={page}
-        rowsPerPage={limit}
-        rowsPerPageOptions={[5, 10, 25]}
-      />
     </Card>
   );
 };
 
 Results.propTypes = {
   className: PropTypes.string,
-  orders: PropTypes.array.isRequired
+  orders: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  setLoading: PropTypes.func,
+  loadOrders: PropTypes.func
 };
 
 export default Results;

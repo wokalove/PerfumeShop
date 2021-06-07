@@ -10,7 +10,7 @@ export const StyledHomeSection = styled.section`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 
   & > h1 {
     font-size: 2.25rem;

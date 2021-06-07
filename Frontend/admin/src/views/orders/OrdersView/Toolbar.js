@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {
   Box,
   Card,
   CardContent,
-  TextField,
   InputAdornment,
-  SvgIcon,
-  makeStyles
+  makeStyles, SvgIcon, TextField
 } from '@material-ui/core';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import { Search as SearchIcon } from 'react-feather';
+import axios from '../../../axiosConfig';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -22,8 +21,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = ({
+  className,
+  setOrders,
+  setLoading,
+  ...rest
+}) => {
   const classes = useStyles();
+  const [searchValue, setSearchValue] = useState('');
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+      setOrders([]);
+      setLoading(true);
+      const url = `/admin/transactions${searchValue ? `?user-id=${searchValue}` : ''}`;
+      const tmpOrders = await axios.get(url);
+      setOrders(tmpOrders.data);
+    } catch (e) {
+      alert(e);
+    }
+    setLoading(false);
+  }
 
   return (
     <div
@@ -34,23 +54,26 @@ const Toolbar = ({ className, ...rest }) => {
         <Card>
           <CardContent>
             <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Search orders"
-                variant="outlined"
-              />
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SvgIcon
+                          fontSize="small"
+                          color="action"
+                        >
+                          <SearchIcon />
+                        </SvgIcon>
+                      </InputAdornment>
+                    )
+                  }}
+                  placeholder="User ID"
+                  variant="outlined"
+                />
+              </form>
             </Box>
           </CardContent>
         </Card>
@@ -60,7 +83,9 @@ const Toolbar = ({ className, ...rest }) => {
 };
 
 Toolbar.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  setOrders: PropTypes.func,
+  setLoading: PropTypes.func
 };
 
 export default Toolbar;

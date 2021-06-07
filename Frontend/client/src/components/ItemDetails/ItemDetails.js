@@ -1,6 +1,7 @@
 import { addToCart } from 'actions/cartActions';
 import Button from 'components/common/Button';
 import Counter from 'components/Counter';
+import { BASE } from 'constants/urls';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
@@ -92,27 +93,46 @@ const QuantityContainer = styled.div`
   }
 `;
 
-const ItemDetails = ({
-  imageSrc,
-  innerRef,
-  name,
-  description,
-  price,
-  hide,
-}) => {
+const Details = styled.ul`
+  list-style: none;
+  margin-top: 1rem;
+
+  & > li {
+    border-bottom: 1px solid lightgray;
+    padding: 1rem 0;
+
+    &:first-child {
+      border-top: 1px solid lightgray;
+    }
+  }
+`;
+
+const ItemDetails = ({ item, innerRef, hide }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   const handleButtonClick = () => {
-    const item = { name, description, price, imageSrc, quantity };
-    dispatch(addToCart(item));
+    dispatch(
+      addToCart({
+        name: item.name,
+        descritpion: item.description,
+        brand: item.brand,
+        forWomen: item.for_women,
+        id: item.id,
+        image: item.image,
+        price: item.price,
+        volume: item.volume,
+        baseNote: item.base_note,
+        quantity,
+      })
+    );
     hide();
   };
 
   return (
     <Container ref={innerRef}>
       <Left>
-        <Image src={imageSrc} alt="item image" />
+        <Image src={BASE + item.image} alt="item image" />
         <LeftBottom>
           <QuantityContainer>
             <h5>Quantity</h5>
@@ -124,13 +144,17 @@ const ItemDetails = ({
             width="100%"
             onClick={handleButtonClick}
           >
-            Add to Cart: ${price * quantity}
+            Add to Cart: ${(item.new_price ?? item.price) * quantity}
           </Button>
         </LeftBottom>
       </Left>
       <Right>
-        <Title>{name}</Title>
-        <Description>{description}</Description>
+        <Title>{item.name}</Title>
+        <Description>{item.description}</Description>
+        <Details>
+          <li>Base Note: {item.base_note}</li>
+          <li>Volume: {item.volume} [ml]</li>
+        </Details>
       </Right>
     </Container>
   );

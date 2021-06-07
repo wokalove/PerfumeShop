@@ -49,8 +49,6 @@ export const CheckboxGroup = styled.div`
   display: flex;
   flex-direction: column;
   padding-bottom: 0.2rem;
-  max-height: 250px;
-  overflow-y: auto;
 
   & > * {
     margin-bottom: 0.8rem;
@@ -75,5 +73,14 @@ export const ItemsContainer = styled.div`
 export const StyledBackdrop = styled(Backdrop)`
   && {
     z-index: 100;
+  }
+`;
+
+export const NumberIntputsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    width: calc(50% - 0.5rem);
   }
 `;

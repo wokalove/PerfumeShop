@@ -34,7 +34,7 @@ class ProductController extends AbstractController
         $iriSplit = explode("/", $data["image"]);
         $imageId = end($iriSplit);
 
-        if (!$this->productService->addProductByDetails(
+        $product = $this->productService->addProductByDetails(
             $name,
             $description,
             $brand,
@@ -43,11 +43,9 @@ class ProductController extends AbstractController
             $volume,
             $imageId,
             $baseNote
-        ))
-            return $this->json(["message" => "Can't link an image to the product: No such image"],
-            Response::HTTP_BAD_REQUEST);
+        );
 
-        return $this->json(["message" => "New product added"], Response::HTTP_CREATED);
+        return $this->json(["message" => "New product added", 'id' => $product->getId()], Response::HTTP_CREATED);
     }
 
     /**
@@ -159,7 +157,7 @@ class ProductController extends AbstractController
                 'new_price' => $sr["o_new_price"],
                 'volume' => $sr["p_volume"],
                 'added_at' => $sr["p_added_at"],
-                'image' => '/image/'.$sr["pi_filePath"]
+                'image' => '/images/'.$sr["pi_filePath"]
             );
         }
         return $response;

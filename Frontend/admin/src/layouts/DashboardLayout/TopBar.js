@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import {
   AppBar,
-  Badge,
+
   Box,
   Hidden,
   IconButton,
-  Toolbar,
-  makeStyles
+
+  makeStyles, Toolbar
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import MenuIcon from '@material-ui/icons/Menu';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import { logout } from 'src/actions/authActions';
 import Logo from 'src/components/Logo';
 
 const useStyles = makeStyles(() => ({
@@ -29,8 +30,12 @@ const TopBar = ({
   onMobileNavOpen,
   ...rest
 }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [notifications] = useState([]);
+
+  function handleLogout() {
+    dispatch(logout());
+  }
 
   return (
     <AppBar
@@ -44,16 +49,7 @@ const TopBar = ({
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={handleLogout}>
             <InputIcon />
           </IconButton>
         </Hidden>

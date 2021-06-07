@@ -1,37 +1,5 @@
-import axios from 'axiosConfig';
-
-export const AUTH_ACTION_TYPES = {
-  LOADING: 'LOADING',
-  REGISTER_SUCCESS: 'REGISTER_SUCCESS',
-  REGISTER_FAIL: 'REGISTER_FAIL',
-  LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-  LOGIN_FAIL: 'LOGIN_FAIL',
-  LOGOUT: 'LOGOUT',
-};
-
-export const register =
-  (name, surname, email, password) => async (dispatch) => {
-    try {
-      dispatch({
-        type: AUTH_ACTION_TYPES.LOADING,
-      });
-
-      await axios.post('register', {
-        name,
-        surname,
-        email,
-        password,
-      });
-
-      dispatch({
-        type: AUTH_ACTION_TYPES.REGISTER_SUCCESS,
-      });
-    } catch (e) {
-      dispatch({
-        type: AUTH_ACTION_TYPES.REGISTER_FAIL,
-      });
-    }
-  };
+import axios from '../axiosConfig';
+import AUTH_ACTION_TYPES from './authActionTypes';
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -39,7 +7,8 @@ export const login = (email, password) => async (dispatch) => {
       type: AUTH_ACTION_TYPES.LOADING,
     });
 
-    const res = await axios.post('login_check', { username: email, password });
+    const res = await axios.post('/api/login_check', { username: email, password });
+
     localStorage.setItem('token', res.data.token);
     const userData = JSON.parse(atob(res.data.token.split('.')[1]));
 

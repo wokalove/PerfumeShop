@@ -1,6 +1,5 @@
 import Carousel, {
   arrowsPlugin,
-  Dots,
   slidesToScrollPlugin,
   slidesToShowPlugin,
 } from '@brainhubeu/react-carousel';
@@ -61,11 +60,11 @@ const CustomCarousel = ({ children }) => {
       >
         {children}
       </StyledCarousel>
-      <Dots
+      {/* <Dots
         value={0}
         // onChange={this.onchange}
         number={5}
-      />
+      /> */}
     </div>
   );
 };

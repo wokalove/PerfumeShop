@@ -29,7 +29,7 @@ class ProductService
 
     public function addProductByDetails(string $name, string $description, string $brand,
                                         bool $forWomen, int $price, int $volume, int $imageId,
-                                        string $baseNote=null): bool
+                                        string $baseNote=null): Product
     {
         $image = $this->getProductImageById($imageId);
         if ($image == null)
@@ -51,7 +51,7 @@ class ProductService
             ->setAddedAt(new \DateTime("now", new \DateTimeZone("Europe/Warsaw")));
         $this->addProduct($product);
 
-        return true;
+        return $product;
     }
 
     public function addProductBaseByDetails(string $name, string $description, string $brand,

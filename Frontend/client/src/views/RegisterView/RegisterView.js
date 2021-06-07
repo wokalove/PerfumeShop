@@ -1,21 +1,22 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { register as registerAction } from 'actions/authActions';
+import { login, register as registerAction } from 'actions/authActions';
 import Button from 'components/common/Button';
 import TextInput from 'components/common/TextInput';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import * as yup from 'yup';
 import {
   Container,
   ExternalContainer,
   LinksWrapper,
-  StyledForm,
+  StyledForm
 } from './styles';
 
 const schema = yup.object().shape({
-  name: yup.string().required().min(3).max(100),
-  surname: yup.string().required().min(3).max(100),
+  name: yup.string().required().min(2).max(100),
+  surname: yup.string().required().min(2).max(100),
   email: yup.string().required().email().max(65),
   password: yup.string().required().min(6).max(50),
   confirm: yup
@@ -55,16 +56,22 @@ const inputs = [
 const RegisterView = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  useEffect(() => {
+    authState.isLoggedIn && navigate('/shop');
+  }, [authState.isLoggedIn]);
+
   const onSubmit = async (data) => {
     await dispatch(
       registerAction(data.name, data.surname, data.email, data.password)
     );
+    await dispatch(login(data.email, data.password));
   };
 
   return (

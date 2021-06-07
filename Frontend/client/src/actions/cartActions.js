@@ -1,7 +1,8 @@
 export const CART_ACTION_TYPES = {
-  LOADING: 'LOADING',
+  LOADING: 'LOADING_CART',
   ADD_TO_CART_SUCCESS: 'ADD_TO_CART_SUCCESS',
   ADD_TO_CART_FAIL: 'ADD_TO_CART_FAIL',
+  REMOVE_FROM_CART: 'REMOVE_FROM_CART',
 };
 
 export const addToCart = (item) => (dispatch) => {
@@ -24,4 +25,12 @@ export const addToCart = (item) => (dispatch) => {
       type: CART_ACTION_TYPES.ADD_TO_CART_FAIL,
     });
   }
+};
+
+export const removeFromCart = () => (dispatch) => {
+  localStorage.removeItem('cart');
+
+  dispatch({
+    type: CART_ACTION_TYPES.REMOVE_FROM_CART,
+  });
 };

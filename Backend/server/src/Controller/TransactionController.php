@@ -112,6 +112,7 @@ class TransactionController extends AbstractController
         foreach ($transactions as $transaction)
         {
             $response[] = array(
+		'id' => $transaction->getId(),
                 'user_id' => $transaction->getUsr()->getId(), // TODO: TODO: difference in naming between databases!!!
                 'product_id' => $transaction->getProduct()->getId(),
                 'product_name' => $transaction->getProductName(),

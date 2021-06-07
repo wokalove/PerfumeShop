@@ -1,26 +1,36 @@
-import React, { useState } from 'react';
 import {
   Box,
   Container,
   makeStyles
 } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import Page from 'src/components/Page';
+import axios from '../../../axiosConfig';
 import Results from './Results';
 import Toolbar from './Toolbar';
-import data from './data';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
-    minHeight: '100%',
     paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
   }
 }));
 
 const OrdersListView = () => {
   const classes = useStyles();
-  const [orders] = useState(data);
+  const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+
+  const loadOrders = async () => {
+    setLoading(true);
+    const tmpOrders = await axios.get('/admin/transactions');
+    setOrders(tmpOrders.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadOrders();
+  }, []);
 
   return (
     <Page
@@ -28,9 +38,14 @@ const OrdersListView = () => {
       title="Orders"
     >
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar setOrders={setOrders} setLoading={setLoading} />
         <Box mt={3}>
-          <Results orders={orders} />
+          <Results
+            orders={orders}
+            loading={loading}
+            setLoading={setLoading}
+            loadOrders={loadOrders}
+          />
         </Box>
       </Container>
     </Page>

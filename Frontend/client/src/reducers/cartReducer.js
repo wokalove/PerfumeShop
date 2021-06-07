@@ -45,6 +45,8 @@ const cartReducer = (
         ...state,
         loading: false,
       };
+    case CART_ACTION_TYPES.REMOVE_FROM_CART:
+      return initialState;
     default:
       return state;
   }

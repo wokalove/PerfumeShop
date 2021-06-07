@@ -14,21 +14,6 @@ import {
   TopHeaderContent,
 } from './styles';
 
-const topBarLinksAuth = [
-  {
-    text: 'Account',
-    to: '/#',
-  },
-  {
-    text: 'History',
-    to: '/#',
-  },
-  {
-    text: 'Log out',
-    to: '/#',
-  },
-];
-
 const topBarLinksNotAuth = [
   {
     text: 'Log in',
@@ -58,12 +43,7 @@ const Header = () => {
               {authState.isLoggedIn ? (
                 <>
                   <li>
-                    <StyledNavLink to="#" color="white">
-                      Account
-                    </StyledNavLink>
-                  </li>
-                  <li>
-                    <StyledNavLink to="#" color="white">
+                    <StyledNavLink to="/history" color="white">
                       History
                     </StyledNavLink>
                   </li>
@@ -100,11 +80,6 @@ const Header = () => {
                 <li>
                   <StyledNavLink to="/shop" color="black">
                     Shop
-                  </StyledNavLink>
-                </li>
-                <li>
-                  <StyledNavLink to="/contact" color="black">
-                    Contact
                   </StyledNavLink>
                 </li>
                 <li>
