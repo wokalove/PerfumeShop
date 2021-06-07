@@ -105,6 +105,23 @@ const ProductView = ({ className, ...rest }) => {
         volume: parseInt(data.volume, 10),
         image: product.image
       });
+
+      if (data.offer) {
+        if (product.new_price) {
+          await axios.put(`/admin/offers/${id}`, {
+            product_id: id,
+            new_price: data.offer
+          });
+        } else {
+          await axios.post('/admin/offers', {
+            product_id: id,
+            price: data.offer
+          });
+        }
+      } else if (product.new_price) {
+        await axios.delete(`/admin/offers/${product.offer_id}`);
+      }
+
       navigate('../../products');
     } catch (e) {
       alert(e);
@@ -136,7 +153,7 @@ const ProductView = ({ className, ...rest }) => {
               offer: Yup.number(),
               baseNote: Yup.string().required(),
               volume: Yup.number().required(),
-              description: Yup.string().required(),
+              description: Yup.string(),
             })
           }
           onSubmit={onSubmit}
