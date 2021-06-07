@@ -81,7 +81,7 @@ const AddProductView = ({ className, ...rest }) => {
     try {
       const response = await axios.post('/api/product_images', data, options);
 
-      await axios.post('/admin/products', {
+      const res = await axios.post('/admin/products', {
         name: object.name,
         description: object.description,
         brand: object.brand,
@@ -92,13 +92,13 @@ const AddProductView = ({ className, ...rest }) => {
         image: response.data['@id']
       });
 
-      // if (object.specialOffer) {
-      //   const offerData = {
-      //     product_id: res.data.id,
-      //     price: object.specialOffer
-      //   };
-      //   await axios.post('/admin/offers', offerData);
-      // }
+      if (object.specialOffer) {
+        const offerData = {
+          product_id: res.data.id,
+          price: object.specialOffer
+        };
+        await axios.post('/admin/offers', offerData);
+      }
 
       setSuccess(true);
     } catch (e) {

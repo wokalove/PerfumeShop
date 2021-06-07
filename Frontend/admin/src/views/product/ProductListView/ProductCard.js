@@ -15,14 +15,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    '&:hover img': {
+      transform: 'scale(1.05)'
+    }
   },
   statsItem: {
     alignItems: 'center',
     display: 'flex'
   },
   statsIcon: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    transition: 'transform ease-in-out 200ms'
   }
 }));
 
@@ -40,7 +44,12 @@ const ProductCard = ({ className, product, ...rest }) => {
           justifyContent="center"
           mb={4}
         >
-          <img src={`http://localhost:8000${product.image}`} alt="" style={{ height: '200px' }} />
+          <img
+            className={classes.statsIcon}
+            src={`http://localhost:8000${product.image}`}
+            style={{ height: '200px' }}
+            alt=""
+          />
         </Box>
         <Typography
           align="center"
